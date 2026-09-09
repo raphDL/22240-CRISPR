@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRISPR Exercises</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --panel: #ffffff;
+    --ink: #12141a;
+    --muted: #667085;
+    --line: #e4e7ec;
+    --accent: #4f46e5;
+    --accent-2: #7c3aed;
+    --accent-soft: #eef2ff;
+    --accent-ink: #4338ca;
+    --shadow: 0 1px 2px rgba(16,24,40,.04), 0 4px 12px rgba(16,24,40,.05);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 1.25rem 5rem; }
+  header.hero {
+    padding: 4.5rem 1.5rem 3rem;
+    text-align: center;
+    background: radial-gradient(900px 420px at 50% -15%, #e0e7ff 0%, transparent 65%), var(--bg);
+  }
+  .kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.1rem;
+  }
+  header.hero h1 {
+    margin: 0 0 0.7rem;
+    font-size: clamp(1.8rem, 4.2vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  header.hero p {
+    margin: 0 auto;
+    max-width: 30rem;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+  .category {
+    margin: 0 0 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--muted);
+  }
+  .category:not(:first-child) { margin-top: 2rem; }
+  a.exercise-card {
+    display: block;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  a.exercise-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(79,70,229,.15); }
+  a.exercise-card h2 {
+    margin: 0 0 0.3rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent-ink);
+  }
+  a.exercise-card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+  .exercise-card.disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .exercise-card.disabled h2 { color: var(--muted); }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-top: 2.5rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="kicker">Gene editing · design exercises</span>
+  <h1>🧬 CRISPR Exercises</h1>
+  <p>Hands-on design exercises: read the case, design the fix.</p>
+</header>
+
+<div class="wrap">
+
+  <div class="category">Base editing</div>
+  <a class="exercise-card" href="base-editing/astante-family/">
+    <h2>Cure the Astante Family</h2>
+    <p>A nonsense mutation in a real human gene. Identify it, pick your editor, design the gRNA.</p>
+  </a>
+
+  <div class="category">Prime editing</div>
+  <a class="exercise-card disabled" href="#">
+    <h2>Coming soon</h2>
+    <p>A prime editing exercise is in the works.</p>
+  </a>
+
+</div>
+
+<footer>
+  Teaching exercises built around real genes, with invented clinical scenarios and variants.
+</footer>
+
+</body>
+</html>
