@@ -293,15 +293,22 @@
     <h2><span class="num">2</span>Bring it into Benchling</h2>
     <p>
       Get the gene's reference <strong>genomic</strong> sequence, not just the mRNA or CDS, and
-      bring it into Benchling. The most reliable route: on
-      <a href="https://www.ncbi.nlm.nih.gov/nuccore" target="_blank" rel="noopener">NCBI's
-      Nucleotide database</a>, search <code>&lt;gene symbol&gt;[gene] AND Homo sapiens[orgn] AND
-      refseqgene[filter]</code>. That filters straight to the genomic RefSeqGene record (introns
-      included) and skips picking a transcript entirely. Open the result whose title matches your
-      gene, not a nearby overlapping gene, then <strong>Send to → File → GenBank (full)</strong>
-      to download a <code>.gb</code> file. Drag that straight into Benchling. Benchling's own
-      Import from Database can be flaky, this skips it entirely.
+      bring it into Benchling.
     </p>
+    <details class="hint">
+      <summary>Hint</summary>
+      <p>
+        The most reliable route: on
+        <a href="https://www.ncbi.nlm.nih.gov/nuccore" target="_blank" rel="noopener">NCBI's
+        Nucleotide database</a>, search <code>&lt;gene symbol&gt;[gene] AND Homo sapiens[orgn] AND
+        refseqgene[filter]</code>. That filters straight to the genomic RefSeqGene record (introns
+        included) and skips picking a transcript entirely. Open the result whose title matches
+        your gene, not a nearby overlapping gene, then
+        <strong>Send to → File → GenBank (full)</strong> to download a <code>.gb</code> file.
+        Drag that straight into Benchling. Benchling's own Import from Database can be flaky, this
+        skips it entirely.
+      </p>
+    </details>
   </section>
 
   <section class="card step">
