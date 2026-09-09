@@ -322,17 +322,26 @@
   <section class="card step">
     <h2><span class="num">3</span>Find the variant</h2>
     <p>
-      Align the patient sequence to the gene's reference genomic sequence. This time the patient's
-      sequence is <strong>shorter</strong> than the reference. Find where, and how much is missing.
+      Align the patient sequence to the gene's reference genomic sequence. Find where it differs
+      from the reference.
     </p>
     <p>
-      Translate the spliced coding sequence (mind the introns) on both sides to work out what's
-      missing at the protein level.
+      Translate the spliced coding sequence (mind the introns) on both sides to work out the
+      effect at the protein level.
     </p>
     <div class="field-row">
       <div>
-        <label for="step3_deleted_aa">Deleted amino acid</label>
-        <select id="step3_deleted_aa" name="step3_deleted_aa" required>
+        <label for="step3_variant_type">Type of change</label>
+        <select id="step3_variant_type" name="step3_variant_type" required>
+          <option value="">Select</option>
+          <option>Substitution</option>
+          <option>Insertion</option>
+          <option>Deletion</option>
+        </select>
+      </div>
+      <div>
+        <label for="step3_affected_aa">Affected amino acid</label>
+        <select id="step3_affected_aa" name="step3_affected_aa" required>
           <option value="">Select</option>
           <option>Ala</option><option>Arg</option><option>Asn</option><option>Asp</option>
           <option>Cys</option><option>Gln</option><option>Glu</option><option>Gly</option>
@@ -352,10 +361,7 @@
 
   <section class="card step">
     <h2><span class="num">4</span>Choose your editor</h2>
-    <p>
-      A base editor converts one base to another, it can't add or remove nucleotides. Given what
-      you found in Step 3, which class of editor does this variant actually need?
-    </p>
+    <p>Which class of editor would you use to fix this variant?</p>
     <label>Which editor would you use?</label>
     <div class="choice-group" data-choice-group>
       <label class="choice">
@@ -385,8 +391,8 @@
       reverse transcriptase copies to write the new sequence.
     </p>
     <p>
-      Find a spacer and PAM near the deletion, on either strand, ideally with the nick close to
-      the missing bases. Then work out what the PBS and RTT need to encode to put those bases back.
+      Find a spacer and PAM near the variant, on either strand, ideally with the nick close to
+      it. Then work out what the PBS and RTT need to encode to make the correction.
     </p>
     <label for="step5_grna">Spacer + PAM</label>
     <input type="text" id="step5_grna" name="step5_spacer_pam" required>
@@ -401,21 +407,40 @@
       <code>TCCCTGC_GCCCCC → TCCCTGC*A*GCCCCC</code> (a base put back where one was missing)
     </p>
     <input type="text" id="step5_edit" name="step5_expected_edit" required>
+  </section>
 
+  <section class="card step">
+    <h2><span class="num">6</span>Design a pegRNA on the other strand</h2>
+    <p>
+      Now design a second pegRNA for the same correction, using a spacer and PAM on the
+      <strong>other strand</strong> from the one you just used.
+    </p>
+    <label for="step6_grna">Spacer + PAM</label>
+    <input type="text" id="step6_grna" name="step6_spacer_pam" required>
+    <label for="step6_pbs">Primer binding site (PBS)</label>
+    <input type="text" id="step6_pbs" name="step6_pbs" required>
+    <label for="step6_rtt">RT template (RTT)</label>
+    <input type="text" id="step6_rtt" name="step6_rtt" required>
+    <label for="step6_edit">What edit do you expect to see?</label>
+    <input type="text" id="step6_edit" name="step6_expected_edit" required>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">7</span>Successful therapy?</h2>
     <label>Do you think this guide will be a successful therapy?</label>
     <div class="choice-group" data-choice-group>
       <label class="choice">
-        <input type="radio" name="step5_success" value="Yes" required> Yes
+        <input type="radio" name="step7_success" value="Yes" required> Yes
       </label>
       <label class="choice">
-        <input type="radio" name="step5_success" value="No"> No
+        <input type="radio" name="step7_success" value="No"> No
       </label>
       <label class="choice">
-        <input type="radio" name="step5_success" value="Maybe"> Maybe
+        <input type="radio" name="step7_success" value="Maybe"> Maybe
       </label>
     </div>
-    <label for="step5_success_explain">Explain</label>
-    <textarea id="step5_success_explain" name="step5_success_explain" required></textarea>
+    <label for="step7_success_explain">Explain</label>
+    <textarea id="step7_success_explain" name="step7_success_explain" required></textarea>
   </section>
 
   <section class="card">
