@@ -16,7 +16,8 @@ each one.
 │       ├── patient_variant.fasta the file students download
 │       ├── assets/               hint videos, images, etc.
 │       └── INSTRUCTOR_NOTES.md   the answer key (never linked from the page)
-└── prime-editing/                next category, empty for now
+└── prime-editing/
+    └── reyes-family/             same pattern, no assets/ yet
 ```
 
 Each exercise folder is a full copy of the same pattern: a static page with a worksheet form
@@ -55,3 +56,7 @@ exercise you want a short link for.
   standalone `22240-BE` repo, which stays live at its original URL for now (its own Formspree
   form keeps collecting submissions there) until that's archived once this move is confirmed
   working.
+- **Prime editing: Cure the Reyes Family** (`prime-editing/reyes-family/`). A small in-frame
+  deletion, deliberately not a substitution, so it's unfixable by any base editor and needs prime
+  editing. **Needs a Formspree endpoint before it's usable** (see that exercise's
+  `INSTRUCTOR_NOTES.md`, "Required setup").

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cure the Reyes Family, a prime editing exercise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --panel: #ffffff;
+    --ink: #12141a;
+    --muted: #667085;
+    --line: #e4e7ec;
+    --accent: #4f46e5;
+    --accent-2: #7c3aed;
+    --accent-soft: #eef2ff;
+    --accent-ink: #4338ca;
+    --good: #067647;
+    --bad: #b42318;
+    --shadow: 0 1px 2px rgba(16,24,40,.04), 0 4px 12px rgba(16,24,40,.05);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 1.25rem 5rem; }
+  header.hero {
+    position: relative;
+    padding: 4.5rem 1.5rem 3.5rem;
+    text-align: center;
+    background: radial-gradient(900px 420px at 50% -15%, #e0e7ff 0%, transparent 65%), var(--bg);
+    overflow: hidden;
+  }
+  .kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.1rem;
+  }
+  header.hero h1 {
+    margin: 0 0 0.7rem;
+    font-size: clamp(1.8rem, 4.2vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  header.hero p.tagline {
+    margin: 0 auto;
+    max-width: 30rem;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  section.card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 1.75rem 1.9rem;
+    margin-bottom: 1.25rem;
+  }
+  p { margin: 0 0 0.85rem; }
+  p:last-child { margin-bottom: 0; }
+  .pedigree-note {
+    font-size: 0.9rem;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border-radius: 10px;
+    padding: 0.6rem 0.9rem;
+    margin: 0.9rem 0;
+  }
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    text-decoration: none;
+    padding: 0.7rem 1.4rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 0.4rem;
+    box-shadow: 0 2px 8px rgba(79,70,229,.35);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .download-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(79,70,229,.4); }
+  .filehint { font-size: 0.85rem; color: var(--muted); margin-top: 0.6rem; }
+  .step .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    margin: 0.9rem 0 0.35rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  label:first-of-type { margin-top: 0.5rem; }
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg);
+    color: var(--ink);
+    resize: vertical;
+    transition: border-color .12s ease, box-shadow .12s ease;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  textarea { min-height: 4.5rem; }
+  .field-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .field-row > div { flex: 1; min-width: 10rem; }
+  .honeypot { position: absolute; left: -9999px; }
+  .submit-bar { text-align: center; padding: 0.5rem 0 0.25rem; }
+  .submit-bar button {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    border: none;
+    font-size: 0.98rem;
+    font-weight: 700;
+    padding: 0.9rem 2rem;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(79,70,229,.35);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .submit-bar button:disabled { opacity: 0.55; cursor: default; transform: none; box-shadow: none; }
+  .submit-bar button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(79,70,229,.4); }
+  #submit-status { margin-top: 0.9rem; font-size: 0.88rem; }
+  #submit-status.ok { color: var(--good); }
+  #submit-status.err { color: var(--bad); }
+  code {
+    font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 0.83rem;
+    background: var(--accent-soft);
+    padding: 0.1rem 0.35rem;
+    border-radius: 5px;
+  }
+  .muted-note { font-size: 0.82rem; color: var(--muted); }
+  .choice-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 0.4rem 0 0.2rem;
+  }
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    background: var(--bg);
+    cursor: pointer;
+    transition: border-color .12s ease, background .12s ease, color .12s ease;
+  }
+  .choice input { accent-color: var(--accent); margin: 0; }
+  .choice.selected {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-weight: 700;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-top: 2.5rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="kicker">Prime editing · design exercise</span>
+  <h1>🧬 Cure the Reyes Family</h1>
+  <p class="tagline">Find the deletion. Design the fix.</p>
+</header>
+
+<div class="wrap">
+
+  <section class="card">
+    <h2>The case</h2>
+    <p>
+      A newborn in the Reyes family was diagnosed with severe, persistent high blood sugar in the
+      first weeks of life, well outside the usual range for a healthy infant. No one else in the
+      family has diabetes. Genetic testing was ordered to look for a cause.
+    </p>
+    <p>
+      The clinical genetics lab sequenced the full genomic locus of one candidate gene from the
+      infant's blood. That's the file below. No gene name attached, that's step 1.
+    </p>
+    <p class="pedigree-note">
+      <strong>Your job:</strong> figure out what's broken, decide whether it's fixable, and design
+      the edit that would do it.
+    </p>
+    <a class="download-btn" href="patient_variant.fasta" download>⬇ Download patient_variant.fasta</a>
+    <div class="filehint">One FASTA record, ~1.7 kb of genomic sequence.</div>
+  </section>
+
+  <section class="card">
+    <h2>Tools</h2>
+    <p>You'll use <strong>Benchling</strong> and <strong>BLAST</strong> for this exercise.</p>
+  </section>
+
+  <form id="worksheet" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+  <section class="card">
+    <h2>Before you start</h2>
+    <label for="student_name">Your name</label>
+    <input type="text" id="student_name" name="student_name" required>
+    <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
+    <p class="muted-note" style="margin-top:0.7rem;">
+      Not graded, just for stats. Fill in each box as you go, then submit once at the end.
+    </p>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">1</span>Which gene is this?</h2>
+    <p>
+      BLAST the FASTA against the human genome or RefSeq mRNA database to find the top hit.
+      Keep each answer to a few words.
+    </p>
+    <label for="step1_gene_name">Gene name</label>
+    <input type="text" id="step1_gene_name" name="step1_gene_name" required>
+    <label for="step1_gene_function">What does it normally do?</label>
+    <input type="text" id="step1_gene_function" name="step1_gene_function" required>
+    <label for="step1_case_fit">Why does it fit this case?</label>
+    <input type="text" id="step1_case_fit" name="step1_case_fit" required>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">2</span>Bring it into Benchling</h2>
+    <p>
+      In Benchling, use <strong>Import from Database</strong> (or the "+" menu, Import Data) and
+      search for the gene you identified in Step 1. Import its reference <strong>genomic</strong>
+      sequence, not just the mRNA or CDS. You'll align the patient FASTA against it next.
+    </p>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">3</span>Find the variant</h2>
+    <p>
+      Align the patient sequence to the gene's reference genomic sequence. This time the patient's
+      sequence is <strong>shorter</strong> than the reference. Find where, and how much is missing.
+    </p>
+    <p>
+      Translate the spliced coding sequence (mind the introns) on both sides to work out what's
+      missing at the protein level.
+    </p>
+    <div class="field-row">
+      <div>
+        <label for="step3_deleted_aa">Deleted amino acid</label>
+        <select id="step3_deleted_aa" name="step3_deleted_aa" required>
+          <option value="">Select</option>
+          <option>Ala</option><option>Arg</option><option>Asn</option><option>Asp</option>
+          <option>Cys</option><option>Gln</option><option>Glu</option><option>Gly</option>
+          <option>His</option><option>Ile</option><option>Leu</option><option>Lys</option>
+          <option>Met</option><option>Phe</option><option>Pro</option><option>Ser</option>
+          <option>Thr</option><option>Trp</option><option>Tyr</option><option>Val</option>
+        </select>
+      </div>
+      <div>
+        <label for="step3_position">Position (residue number)</label>
+        <input type="number" id="step3_position" name="step3_position" min="1" step="1" required>
+      </div>
+    </div>
+    <label for="step3_why">Why is this problematic?</label>
+    <textarea id="step3_why" name="step3_why_problematic" required></textarea>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">4</span>Choose your editor</h2>
+    <p>
+      A base editor converts one base to another, it can't add or remove nucleotides. Given what
+      you found in Step 3, which class of editor does this variant actually need?
+    </p>
+    <label>Which editor would you use?</label>
+    <div class="choice-group" data-choice-group>
+      <label class="choice">
+        <input type="radio" name="step4_editor" value="CBE" required> CBE
+      </label>
+      <label class="choice">
+        <input type="radio" name="step4_editor" value="ABE"> ABE
+      </label>
+      <label class="choice">
+        <input type="radio" name="step4_editor" value="Prime editor"> Prime editor
+      </label>
+      <label class="choice">
+        <input type="radio" name="step4_editor" value="Other"> Other
+      </label>
+    </div>
+    <label for="step4_why">Why?</label>
+    <textarea id="step4_why" name="step4_editor_why" required></textarea>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">5</span>Design the pegRNA</h2>
+    <p>
+      A prime editor pairs a Cas9 nickase with a reverse transcriptase, guided by a pegRNA. The
+      spacer and PAM direct the nick, same idea as a normal gRNA. The pegRNA's 3' extension does
+      the rest: the <strong>primer binding site (PBS)</strong> anneals to the nicked strand's
+      exposed 3' end and primes synthesis; the <strong>RT template (RTT)</strong> is what the
+      reverse transcriptase copies to write the new sequence.
+    </p>
+    <p>
+      Find a spacer and PAM near the deletion, on either strand, ideally with the nick close to
+      the missing bases. Then work out what the PBS and RTT need to encode to put those bases back.
+    </p>
+    <label for="step5_grna">Spacer + PAM</label>
+    <input type="text" id="step5_grna" name="step5_spacer_pam" required>
+    <label for="step5_pbs">Primer binding site (PBS)</label>
+    <input type="text" id="step5_pbs" name="step5_pbs" required>
+    <label for="step5_rtt">RT template (RTT)</label>
+    <input type="text" id="step5_rtt" name="step5_rtt" required>
+
+    <label for="step5_edit">What edit do you expect to see?</label>
+    <p class="muted-note" style="margin:0.2rem 0 0.4rem;">
+      Show the before and after sequence, marking every base that changes. Example:
+      <code>TCCCTGC_GCCCCC → TCCCTGC*A*GCCCCC</code> (a base put back where one was missing)
+    </p>
+    <input type="text" id="step5_edit" name="step5_expected_edit" required>
+
+    <label>Do you think this guide will be a successful therapy?</label>
+    <div class="choice-group" data-choice-group>
+      <label class="choice">
+        <input type="radio" name="step5_success" value="Yes" required> Yes
+      </label>
+      <label class="choice">
+        <input type="radio" name="step5_success" value="No"> No
+      </label>
+      <label class="choice">
+        <input type="radio" name="step5_success" value="Maybe"> Maybe
+      </label>
+    </div>
+    <label for="step5_success_explain">Explain</label>
+    <textarea id="step5_success_explain" name="step5_success_explain" required></textarea>
+  </section>
+
+  <section class="card">
+    <div class="submit-bar">
+      <button type="submit" id="submit-btn">Submit worksheet</button>
+      <div id="submit-status"></div>
+    </div>
+  </section>
+
+  </form>
+
+</div>
+
+<script>
+  document.getElementById('worksheet').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = document.getElementById('submit-btn');
+    const status = document.getElementById('submit-status');
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    status.className = '';
+    status.textContent = '';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error('Submission service returned an error');
+      status.className = 'ok';
+      status.textContent = '✅ Submitted. Your instructor will follow up with the answer key.';
+      btn.textContent = 'Submitted';
+    } catch (err) {
+      status.className = 'err';
+      status.textContent = '⚠️ Could not reach the submission service. Check your connection and try again.';
+      btn.disabled = false;
+      btn.textContent = 'Submit worksheet';
+    }
+  });
+
+  document.querySelectorAll('[data-choice-group]').forEach(function (group) {
+    group.addEventListener('change', function (e) {
+      group.querySelectorAll('.choice').forEach(el => el.classList.remove('selected'));
+      e.target.closest('.choice').classList.add('selected');
+    });
+  });
+</script>
+
+<footer>
+  Teaching exercise built around a real human gene with an invented clinical scenario and variant.
+</footer>
+
+</body>
+</html>
