@@ -60,3 +60,10 @@ exercise you want a short link for.
 - **Prime editing: Cure the Reyes Family** (`prime-editing/reyes-family/`). A small in-frame
   deletion, deliberately not a substitution, so it's unfixable by any base editor and needs prime
   editing.
+
+## Course feedback
+
+`feedback/` (short link `fb/`) is a single anonymous feedback form for both lectures: a 1-10
+rating plus three open questions each, posting to its own Formspree form. It's not an exercise, so
+it's not on the hub's exercise list, just a small link in the hub's footer, meant to be shared
+directly (e.g. on a lecture's last slide) via `https://raphdl.github.io/22240-CRISPR/fb/`.
