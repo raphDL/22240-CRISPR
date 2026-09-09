@@ -17,7 +17,7 @@ each one.
 │       ├── assets/               hint videos, images, etc.
 │       └── INSTRUCTOR_NOTES.md   the answer key (never linked from the page)
 └── prime-editing/
-    └── reyes-family/             same pattern, no assets/ yet
+    └── reyes-family/             same pattern
 ```
 
 Each exercise folder is a full copy of the same pattern: a static page with a worksheet form
