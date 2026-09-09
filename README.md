@@ -41,6 +41,14 @@ Repo **Settings → Pages** → Source: "Deploy from a branch" → Branch: `main
 The hub will be live at `https://raphdl.github.io/22240-CRISPR/`, and each exercise at its own
 path underneath (e.g. `https://raphdl.github.io/22240-CRISPR/base-editing/astante-family/`).
 
+### Short links
+
+The full per-exercise paths are long to read out in class, so each exercise can have a short
+alias folder at the repo root that just redirects. `be/` redirects to
+`base-editing/astante-family/`, so `https://raphdl.github.io/22240-CRISPR/be/` works too. Add one
+of these (an `index.html` with a meta-refresh, see `be/index.html` for the pattern) for any new
+exercise you want a short link for.
+
 ## Current exercises
 
 - **Base editing: Cure the Astante Family** (`base-editing/astante-family/`). Migrated from the
