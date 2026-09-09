@@ -1,0 +1,79 @@
+LOCUS       CRYGD-201_(ENST00000264 2989 bp ds-DNA     linear       09-SEP-2026
+DEFINITION  .
+COMMENT     Imported from genome: GRCh38 (Ensembl release 116)
+            Gene: ENSG00000118231
+            Location: chromosome:GRCh38:2:208121607:208124595:-1
+            Transcript: CRYGD-201 (ENST00000264376)
+FEATURES             Location/Qualifiers
+     gene            1..2989
+                     /label="CRYGD"
+                     /ApEinfo_revcolor="#84b0dc"
+                     /ApEinfo_fwdcolor="#84b0dc"
+     exon            72..131
+                     /label="CRYGD-201 Exon 1"
+                     /ApEinfo_revcolor="#b4abac"
+                     /ApEinfo_fwdcolor="#b4abac"
+     CDS             join(123..131,242..484,2651..2923)
+                     /ApEinfo_revcolor="#84b0dc"
+                     /ApEinfo_fwdcolor="#84b0dc"
+                     /translation="MGKITLYEDRGFQGRHYECSSDHPNLQPYLSRCNSARVDSGCWMLYEQPNYSGLQYFLRRGDYADHQQWMGLSDSVRSCRLIPHSGSHRIRLYEREDYRGQMIEFTEDCSCLQDRFRFNEIHSLNVLEGSWVLYELSNYRGRQYLLMPGDYRRYQDWGATNARVGSLRRVIDFS*"
+     exon            242..484
+                     /label="CRYGD-201 Exon 2"
+                     /ApEinfo_revcolor="#75c6a9"
+                     /ApEinfo_fwdcolor="#75c6a9"
+     exon            2651..2989
+                     /label="CRYGD-201 Exon 3"
+                     /ApEinfo_revcolor="#faac61"
+                     /ApEinfo_fwdcolor="#faac61"
+ORIGIN
+        1 CCCCTTTTGT GCGGTTCTTG CCAACGCAGC AGCCCTCCTG CTATATAGCC CGCCgcgccg
+       61 cagccccacc cgctcagcgc cgccgcccca ccagctcagc accgccgTGC GCCCAGCCAG
+      121 CCATGGGGAA GGTGAGCCCA GCCTGCGCCC CGGGACCCCG GAGCTTCCTC CATCGCGGGG
+      181 GCCAGAGACT GGGGCAGGAG CAGGCCTGTG AGACCTCGCC TTGTCCCGCC TTGCCTTGCA
+      241 GATCACCCTC TACGAGGACC GGGGCTTCCA GGGCCGCCAC TATGAATGCA GCAGCGACCA
+      301 CCCCAACCTG CAGCCCTACT TGAGCCGCTG CAACTCGGCG CGCGTGGACA GCGGCTGCTG
+      361 GATGCTCTAT GAGCAGCCCA ACTACTCGGG CCTCCAGTAC TTCCTGCGCC GCGGCGACTA
+      421 TGCCGACCAC CAGCAGTGGA TGGGCCTCAG CGACTCGGTC CGCTCCTGCC GCCTCATCCC
+      481 CCACGTGAGT ACATCCTCAA GTCAGGACCC AGGCCCTCAG GACACTCACT GGATGGTTTC
+      541 AAGCAAAAGT TAAACATTAG AAGTAGTGAT CAGTCACAAT AACTGAGAGT GGACAAAAGA
+      601 TGAACTATAG TGGATTAAGT CAATAGAGTT TGCTCCCCAC ATAAGCAAAG TATTACCCAG
+      661 ACACCAGTTA ATCACAATTA ATCCACAAAT ATGTATTGAG TAGGAATGTG TCTCCTGCCC
+      721 TAGGGGTTGT ATAAGACTTA AGTCCTATTC TGGAATCATT TAGAATGGAG TTGTAGAAAA
+      781 ACCACTAATA CCCAATAGAA GAATAAATGC TAGAGCGTAC AGCAGTTACT GAGCAAACAG
+      841 GGTAATTTCT TTTGAGACTT TTTCCCGTTT TTGCTCCTCT CTTGCATATT TTGGGTTTTC
+      901 CCAACCTATA TAAGTAAGAC TTTCCTTCAA AGGAGAGCAA CACACATATT TTACACATGT
+      961 GTCCCTTTTA TCCCATATGT GTGTTAGAAC ACTAAAGTTT ATGCAAAATT CGTCCTTGGA
+     1021 CTTACTGATG TTTCTTCCTC CATTTTTCTT CATTGCATTC ACAAGTTATT GACTTAGAAT
+     1081 TAATTGTTCt ttaatatatg aagatattta acattttata ttttaatata ttttaaatat
+     1141 ttatatttta atatatttaa aacacttata ttttgaatag aaggcttata tatttaacat
+     1201 attttattta tgtcattgat ttaaatgatg cattatcatt taattcaata tattaaatga
+     1261 tatatttaat atattttaaa tacttatatt taaaatacat atttttatat tttaaatata
+     1321 tttacattaa atatatttaa tgaatataat gtatttaata atatatttat ttaataaata
+     1381 tgtatttaat atatttatat aactacataa attatattat attttaaata tatttaacat
+     1441 attttaaata tattttaata tatttttaat atatttcatt tacattatat gtgtgtatat
+     1501 atatattttt gttgttgttg ttttgttttt gttttttgaa acagagtctc actctgacgc
+     1561 ccaggctgga gtgcagtggt gcaatctcgg ctcactgcaa cctccgcctc ctggattcaa
+     1621 atgattctcg tctctcagtc tcctgagtag ctggagttac aggagcacgc caccacaccc
+     1681 agctaatttt tgtattttta tttttatttt attttatttt attatttatt attattattt
+     1741 tttttgacga agtcttgctc tgttccccac gctggagtgc agtggcatga tctcggcaca
+     1801 ctgcaacctc tgcttcctgg gccctagcaa ttttcttccc aagtagctgg gattacaggc
+     1861 acccgccacc acacctggct aatttttgta tttttagtat agacaaggtt tcgccatatt
+     1921 cgtcaggctg gtcttgaact cctgacctca agtgatccac ctgcctcggc ttcccagggt
+     1981 gctgggacta caggcatgag ccactgcccc ACCCCttata tttctgtatt ttaaatatat
+     2041 tttatttata ttttagtaaa gttattttaa aataaaatat aatttgtaaa ataaatataa
+     2101 ttttaattta tacttataaa atataatttg aatataatta ttaaaataaa atatgattaa
+     2161 ctttaaataa aatataattt tatacatttt ataatatatt ttaaatatag tatataatta
+     2221 aatatgtatt agatatcata tgtatattaa aattatacat tatttaaata tatttcttta
+     2281 taatttaatg tttattttaa tattaaaaCA TTTCTTCAAA ATGGTATAAA ATAGTAATAA
+     2341 GCTGTTACAG GTTTGGATTT GCATGTGGTA CAGGATACTG AGCCTAGGAG GCAGCTCATC
+     2401 CTAAGAAATA GCTGAATATA TTAAAGAGTG AGATTTCCTT CTCAATTTCT TCACCACACT
+     2461 TCATAATCTT GAAAAGGTAC TGAATCTCTG TGCTCGGTAA TGAGGAGTTT ATAAATATTC
+     2521 AGAATTAATT AAATTTTACC ATGTATTTCA AAATGGCTTG AGCGGGTCCT CACCAAGCTG
+     2581 GACTGCCTAA CAATGCATTG GAATCATTTC ACACTTGCTT TTCTTCTCTT TTTATTTCTG
+     2641 GGTCCGCCAG TCTGGCTCTC ACAGGATCAG ACTCTATGAG AGAGAGGACT ACAGAGGCCA
+     2701 GATGATAGAG TTCACTGAGG ACTGCTCCTG TCTTCAGGAC CGCTTCCGCT TCAATGAAAT
+     2761 CCACTCCCTC AACGTGCTGG AGGGCTCCTG GGTCCTCTAC GAGCTGTCCA ACTACCGAGG
+     2821 ACGGCAGTAC CTGCTGATGC CAGGGGACTA TAGGCGCTAC CAGGACTGGG GGGCCACGAA
+     2881 TGCCAGAGTG GGCTCTCTGA GGAGAGTCAT AGATTTCTCC TGAAATATGT CCTCTTTTGT
+     2941 TGTTTCTTAA TTTGGAAACT AATAAAATAT TTTCTGTGTG TTCCTGGCA
+//
