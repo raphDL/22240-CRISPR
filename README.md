@@ -58,5 +58,4 @@ exercise you want a short link for.
   working.
 - **Prime editing: Cure the Reyes Family** (`prime-editing/reyes-family/`). A small in-frame
   deletion, deliberately not a substitution, so it's unfixable by any base editor and needs prime
-  editing. **Needs a Formspree endpoint before it's usable** (see that exercise's
-  `INSTRUCTOR_NOTES.md`, "Required setup").
+  editing.

@@ -112,11 +112,9 @@ Formspree dashboard.
 - Step 5: `step5_spacer_pam`, `step5_pbs`, `step5_rtt`, `step5_expected_edit`,
   `step5_success` (`Yes`/`No`/`Maybe`), `step5_success_explain`
 
-## Required setup: Formspree
-`index.html` currently points at a placeholder endpoint
-(`https://formspree.io/f/YOUR_FORM_ID`). Create a new, separate Formspree form for this exercise
-(don't reuse the Astante exercise's form, or submissions from both exercises land in one inbox)
-and swap the endpoint in before publishing.
+## Formspree
+The worksheet posts to `https://formspree.io/f/mnpqldje`, a separate form from the Astante
+exercise's, so submissions from the two exercises don't land in one inbox.
 
 ## Hosting privacy
 Same as the other exercises in this repo: if this repo is public, this file (and its git history)
