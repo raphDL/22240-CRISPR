@@ -385,7 +385,7 @@
     <input type="text" id="step4_edit" name="step4_expected_edit" required>
 
     <label>Do you think this guide will be a successful therapy?</label>
-    <div class="choice-group" data-choice-group id="success-choice-group">
+    <div class="choice-group" data-choice-group>
       <label class="choice">
         <input type="radio" name="step4_success" value="Yes" required> Yes
       </label>
@@ -393,7 +393,8 @@
         <input type="radio" name="step4_success" value="No"> No
       </label>
     </div>
-    <textarea id="step4_success_explain" name="step4_success_explain" placeholder="If no, explain why…" hidden></textarea>
+    <label for="step4_success_explain">Explain</label>
+    <textarea id="step4_success_explain" name="step4_success_explain" required></textarea>
   </section>
 
   <section class="card">
@@ -450,16 +451,6 @@
     });
   });
 
-  // "Do you think this guide will be a successful therapy?" only needs an
-  // explanation box when the answer is "No".
-  const successGroup = document.getElementById('success-choice-group');
-  const successExplain = document.getElementById('step4_success_explain');
-  successGroup.addEventListener('change', function (e) {
-    const isNo = e.target.value === 'No';
-    successExplain.hidden = !isNo;
-    successExplain.required = isNo;
-    if (!isNo) successExplain.value = '';
-  });
 </script>
 
 <footer>

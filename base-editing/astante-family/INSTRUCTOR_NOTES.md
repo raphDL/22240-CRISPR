@@ -116,7 +116,7 @@ labeled `step2_*` corresponds to the page's Step 3, `step3_*` to Step 4, and `st
 - Step 3: `step2_wt_aa`, `step2_mut_aa`, `step2_position`, `step2_why_problematic`
 - Step 4: `step3_editor` (`CBE`/`ABE`/`Other`), `step3_editor_why`
 - Step 5: `step4_grna`, `step4_expected_edit`, `step4_success` (`Yes`/`No`),
-  `step4_success_explain` (only filled in if they picked "No")
+  `step4_success_explain` (required regardless of Yes/No)
 
 ## Hosting privacy
 If this repo is public, anyone can read this file (and see it in git history even if later
