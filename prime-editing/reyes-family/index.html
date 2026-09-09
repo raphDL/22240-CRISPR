@@ -294,16 +294,14 @@
     <p>
       Get the gene's reference <strong>genomic</strong> sequence, not just the mRNA or CDS, and
       bring it into Benchling. The most reliable route: on
-      <a href="https://www.ncbi.nlm.nih.gov/nuccore" target="_blank" rel="noopener">NCBI</a>,
-      search for the gene, open the RefSeq dropdown, pick the MANE transcript (<code>NM_*</code>),
-      then <strong>Send to → File → GenBank (full)</strong> to download a <code>.gb</code> file.
-      Drag that straight into Benchling. Benchling's own Import from Database can be flaky, this
-      skips it entirely.
+      <a href="https://www.ncbi.nlm.nih.gov/nuccore" target="_blank" rel="noopener">NCBI's
+      Nucleotide database</a>, search <code>&lt;gene symbol&gt;[gene] AND Homo sapiens[orgn] AND
+      refseqgene[filter]</code>. That filters straight to the genomic RefSeqGene record (introns
+      included) and skips picking a transcript entirely. Open the result whose title matches your
+      gene, not a nearby overlapping gene, then <strong>Send to → File → GenBank (full)</strong>
+      to download a <code>.gb</code> file. Drag that straight into Benchling. Benchling's own
+      Import from Database can be flaky, this skips it entirely.
     </p>
-    <details class="hint">
-      <summary>🎥 Need a hint? How to pull the GenBank file from NCBI</summary>
-      <video src="assets/ncbi-import-hint.mp4" controls playsinline muted></video>
-    </details>
   </section>
 
   <section class="card step">
