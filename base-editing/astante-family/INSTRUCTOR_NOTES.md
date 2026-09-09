@@ -89,8 +89,9 @@ on," not just "is the SNP in a window."
   limitation of this locus with a standard ABE, not a design mistake. Good discussion point on why
   bystander profiling, narrower-window, or higher-fidelity editor variants matter in real
   therapeutic design. This is also the answer the "successful therapy?" question in step 5 is
-  fishing for: **No**, or at least "not without caveats," because of this unavoidable bystander
-  edit, plus the position-4 edge-of-window placement.
+  fishing for: **No, or Maybe**, because of this unavoidable bystander edit, plus the position-4
+  edge-of-window placement. Either is defensible as long as the explanation names the bystander;
+  a flat, unqualified **Yes** with no caveat named is the answer to push back on.
 
 ## Suggested rubric (rough, adapt as needed)
 1. **Gene ID (step 1)**: correctly names CRYGD, its normal function, and why it fits the case, in a
@@ -103,7 +104,7 @@ on," not just "is the SNP in a window."
    transversion distinction, and that the base needing correction is an A that must become a G.
 5. **gRNA design (step 5)**: chosen guide is the plus-strand PAM@456 guide; the expected-edit box
    shows an A to G change (not the fake example format literally, that's just there to show the
-   before/after notation); the "successful therapy?" answer is No (or a qualified yes), with the
+   before/after notation); the "successful therapy?" answer is No or Maybe, with the
    Met70Val bystander named as the reason.
 
 ## Where student answers land
@@ -115,8 +116,8 @@ labeled `step2_*` corresponds to the page's Step 3, `step3_*` to Step 4, and `st
 - Step 1: `step1_gene_name`, `step1_gene_function`, `step1_case_fit`
 - Step 3: `step2_wt_aa`, `step2_mut_aa`, `step2_position`, `step2_why_problematic`
 - Step 4: `step3_editor` (`CBE`/`ABE`/`Other`), `step3_editor_why`
-- Step 5: `step4_grna`, `step4_expected_edit`, `step4_success` (`Yes`/`No`),
-  `step4_success_explain` (required regardless of Yes/No)
+- Step 5: `step4_grna`, `step4_expected_edit`, `step4_success` (`Yes`/`No`/`Maybe`),
+  `step4_success_explain` (required regardless of which one)
 
 ## Hosting privacy
 If this repo is public, anyone can read this file (and see it in git history even if later
