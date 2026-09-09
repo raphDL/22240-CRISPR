@@ -290,7 +290,16 @@
   </section>
 
   <section class="card step">
-    <h2><span class="num">2</span>Find the variant</h2>
+    <h2><span class="num">2</span>Bring it into Benchling</h2>
+    <p>
+      In Benchling, use <strong>Import from Database</strong> (or the "+" menu, Import Data) and
+      search for the gene you identified in Step 1. Import its reference <strong>genomic</strong>
+      sequence, not just the mRNA or CDS. You'll align the patient FASTA against it next.
+    </p>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">3</span>Find the variant</h2>
     <p>
       Align the patient sequence to the gene's reference <strong>genomic</strong> sequence. A
       genomic to genomic alignment gives a single clean hit with no gaps. Find the one mismatch.
@@ -337,7 +346,7 @@
   </section>
 
   <section class="card step">
-    <h2><span class="num">3</span>Choose your editor</h2>
+    <h2><span class="num">4</span>Choose your editor</h2>
     <p>
       The classic base editors, CBE and ABE, only install specific transitions, never
       transversions. Which class does this variant need, if either?
@@ -359,7 +368,7 @@
   </section>
 
   <section class="card step">
-    <h2><span class="num">4</span>Design the guide RNA</h2>
+    <h2><span class="num">5</span>Design the guide RNA</h2>
     <p>
       Scan for every SpCas9 <code>NGG</code> PAM within about 25 bp of the SNP, on both strands.
       Check whether the SNP falls in the editing window (protospacer positions 4 to 8), and whether

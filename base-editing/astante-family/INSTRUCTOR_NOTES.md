@@ -88,19 +88,20 @@ on," not just "is the SNP in a window."
   Met70Val. There is no alternative plus-strand guide in range that avoids this; it's an inherent
   limitation of this locus with a standard ABE, not a design mistake. Good discussion point on why
   bystander profiling, narrower-window, or higher-fidelity editor variants matter in real
-  therapeutic design. This is also the answer the "successful therapy?" question in step 4 is
+  therapeutic design. This is also the answer the "successful therapy?" question in step 5 is
   fishing for: **No**, or at least "not without caveats," because of this unavoidable bystander
   edit, plus the position-4 edge-of-window placement.
 
 ## Suggested rubric (rough, adapt as needed)
 1. **Gene ID (step 1)**: correctly names CRYGD, its normal function, and why it fits the case, in a
    few words each.
-2. **Variant call (step 2)**: WT amino acid = Trp, edited amino acid = Stop, position = 69
+2. **Bring it into Benchling (step 2)**: an action step, not a question. No fields to grade.
+3. **Variant call (step 3)**: WT amino acid = Trp, edited amino acid = Stop, position = 69
    (protein-level codon numbering), and an explanation that a premature stop truncates the protein
    before it can fold.
-3. **Editor choice (step 3)**: picks **ABE**, with reasoning that names the transition (G>A) versus
+4. **Editor choice (step 4)**: picks **ABE**, with reasoning that names the transition (G>A) versus
    transversion distinction, and that the base needing correction is an A that must become a G.
-4. **gRNA design (step 4)**: chosen guide is the plus-strand PAM@456 guide; the expected-edit box
+5. **gRNA design (step 5)**: chosen guide is the plus-strand PAM@456 guide; the expected-edit box
    shows an A to G change (not the fake example format literally, that's just there to show the
    before/after notation); the "successful therapy?" answer is No (or a qualified yes), with the
    Met70Val bystander named as the reason.
@@ -108,11 +109,13 @@ on," not just "is the SNP in a window."
 ## Where student answers land
 The worksheet on `index.html` never reveals any answer key; submitting just posts the form to
 Formspree, so you'll get each student's name and every field's answer by email and in your
-Formspree dashboard. Field names, by step:
+Formspree dashboard. Field names keep their original numbering from before step 2 (Bring it into
+Benchling) was inserted, so they're offset by one from the displayed step numbers below: what's
+labeled `step2_*` corresponds to the page's Step 3, `step3_*` to Step 4, and `step4_*` to Step 5.
 - Step 1: `step1_gene_name`, `step1_gene_function`, `step1_case_fit`
-- Step 2: `step2_wt_aa`, `step2_mut_aa`, `step2_position`, `step2_why_problematic`
-- Step 3: `step3_editor` (`CBE`/`ABE`/`Other`), `step3_editor_why`
-- Step 4: `step4_grna`, `step4_expected_edit`, `step4_success` (`Yes`/`No`),
+- Step 3: `step2_wt_aa`, `step2_mut_aa`, `step2_position`, `step2_why_problematic`
+- Step 4: `step3_editor` (`CBE`/`ABE`/`Other`), `step3_editor_why`
+- Step 5: `step4_grna`, `step4_expected_edit`, `step4_success` (`Yes`/`No`),
   `step4_success_explain` (only filled in if they picked "No")
 
 ## Hosting privacy
