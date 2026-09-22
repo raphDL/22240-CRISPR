@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turn Down the Volume, a CRISPRi exercise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --panel: #ffffff;
+    --ink: #12141a;
+    --muted: #667085;
+    --line: #e4e7ec;
+    --accent: #4f46e5;
+    --accent-2: #7c3aed;
+    --accent-soft: #eef2ff;
+    --accent-ink: #4338ca;
+    --good: #067647;
+    --bad: #b42318;
+    --shadow: 0 1px 2px rgba(16,24,40,.04), 0 4px 12px rgba(16,24,40,.05);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 1.25rem 5rem; }
+  header.hero {
+    position: relative;
+    padding: 4.5rem 1.5rem 3.5rem;
+    text-align: center;
+    background: radial-gradient(900px 420px at 50% -15%, #e0e7ff 0%, transparent 65%), var(--bg);
+    overflow: hidden;
+  }
+  .kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.1rem;
+  }
+  header.hero h1 {
+    margin: 0 0 0.7rem;
+    font-size: clamp(1.8rem, 4.2vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  header.hero p.tagline {
+    margin: 0 auto;
+    max-width: 30rem;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  section.card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 1.75rem 1.9rem;
+    margin-bottom: 1.25rem;
+  }
+  p { margin: 0 0 0.85rem; }
+  p:last-child { margin-bottom: 0; }
+  .pedigree-note {
+    font-size: 0.9rem;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border-radius: 10px;
+    padding: 0.6rem 0.9rem;
+    margin: 0.9rem 0;
+  }
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    text-decoration: none;
+    padding: 0.7rem 1.4rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 0.4rem;
+    box-shadow: 0 2px 8px rgba(79,70,229,.35);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .download-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(79,70,229,.4); }
+  .filehint { font-size: 0.85rem; color: var(--muted); margin-top: 0.6rem; }
+  .step .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    margin: 0.9rem 0 0.35rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  label:first-of-type { margin-top: 0.5rem; }
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg);
+    color: var(--ink);
+    resize: vertical;
+    transition: border-color .12s ease, box-shadow .12s ease;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  textarea { min-height: 4.5rem; }
+  .field-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .field-row > div { flex: 1; min-width: 10rem; }
+  .honeypot { position: absolute; left: -9999px; }
+  .submit-bar { text-align: center; padding: 0.5rem 0 0.25rem; }
+  .submit-bar button {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    border: none;
+    font-size: 0.98rem;
+    font-weight: 700;
+    padding: 0.9rem 2rem;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(79,70,229,.35);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .submit-bar button:disabled { opacity: 0.55; cursor: default; transform: none; box-shadow: none; }
+  .submit-bar button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(79,70,229,.4); }
+  #submit-status { margin-top: 0.9rem; font-size: 0.88rem; }
+  #submit-status.ok { color: var(--good); }
+  #submit-status.err { color: var(--bad); }
+  code {
+    font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 0.83rem;
+    background: var(--accent-soft);
+    padding: 0.1rem 0.35rem;
+    border-radius: 5px;
+  }
+  .muted-note { font-size: 0.82rem; color: var(--muted); }
+  details.hint {
+    margin: 0 0 0.85rem;
+    background: var(--accent-soft);
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+  }
+  details.hint summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--accent-ink);
+    list-style: none;
+  }
+  details.hint summary::-webkit-details-marker { display: none; }
+  .choice-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 0.4rem 0 0.2rem;
+  }
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    background: var(--bg);
+    cursor: pointer;
+    transition: border-color .12s ease, background .12s ease, color .12s ease;
+  }
+  .choice input { accent-color: var(--accent); margin: 0; }
+  .choice.selected {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-weight: 700;
+  }
+  .choice-col { flex-direction: column; align-items: stretch; }
+  .choice-col .choice { justify-content: flex-start; border-radius: 10px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.6rem 0 0.2rem;
+    font-size: 0.9rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 0.5rem 0.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+  th {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--muted);
+  }
+  td code { background: none; padding: 0; }
+  .num-col { text-align: right; white-space: nowrap; }
+  .table-scroll { overflow-x: auto; }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-top: 2.5rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="kicker">CRISPRi · design exercise</span>
+  <h1>🧬 Turn Down the Volume</h1>
+  <p class="tagline">Same gene. No edits. Less protein.</p>
+</header>
+
+<div class="wrap">
+
+  <section class="card">
+    <h2>The case</h2>
+    <p>
+      A 48-year-old has LDL cholesterol that stays dangerously high on the maximum tolerated dose
+      of a statin. Hepatocytes clear LDL from the blood using LDL receptors on their surface. This
+      patient's liver makes a secreted protein that binds those receptors and sends them to be
+      degraded, so fewer receptors survive to do the clearing.
+    </p>
+    <p>
+      The team wants to test whether turning down that protein helps this patient. Because it's a
+      first-in-patient study, they want an intervention they can <strong>stop</strong>. Nothing
+      permanent.
+    </p>
+    <p class="pedigree-note">
+      <strong>Your job:</strong> nothing here is mutated. Work out which tool fits the brief, then
+      design where to aim it.
+    </p>
+    <a class="download-btn" href="target_locus.fasta" download>⬇ Download target_locus.fasta</a>
+    <div class="filehint">One FASTA record, 3 kb of reference genomic sequence.</div>
+  </section>
+
+  <section class="card">
+    <h2>Tools</h2>
+    <p>You'll use <strong>Benchling</strong> and <strong>BLAST</strong> for this exercise.</p>
+  </section>
+
+  <form id="worksheet" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+  <section class="card">
+    <h2>Before you start</h2>
+    <label for="student_name">Your name</label>
+    <input type="text" id="student_name" name="student_name" required>
+    <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
+    <p class="muted-note" style="margin-top:0.7rem;">
+      Not graded, just for stats. Fill in each box as you go, then submit once at the end.
+    </p>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">1</span>Which gene is this?</h2>
+    <p>
+      BLAST the FASTA against the human genome or RefSeq mRNA database to find the top hit.
+      Keep each answer to a few words.
+    </p>
+    <label for="step1_gene_name">Gene name</label>
+    <input type="text" id="step1_gene_name" name="step1_gene_name" required>
+    <label for="step1_gene_function">What does it normally do?</label>
+    <input type="text" id="step1_gene_function" name="step1_gene_function" required>
+    <label for="step1_case_fit">Why does it fit this case?</label>
+    <input type="text" id="step1_case_fit" name="step1_case_fit" required>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">2</span>Bring it into Benchling</h2>
+    <p>
+      Get the gene's reference <strong>genomic</strong> sequence, not just the mRNA or CDS, and
+      bring it into Benchling.
+    </p>
+    <details class="hint">
+      <summary>Hint</summary>
+      <p>
+        Click the <strong>+</strong> in the top left → DNA/RNA sequence → DNA/RNA sequence →
+        Import DNA/RNA sequence → Import from database → Gene → search for your gene →
+        Genome: Homo sapiens → Import.
+      </p>
+    </details>
+    <details class="hint">
+      <summary>If it doesn't work, click here</summary>
+      <p>
+        The most reliable route: on
+        <a href="https://www.ncbi.nlm.nih.gov/nuccore" target="_blank" rel="noopener">NCBI's
+        Nucleotide database</a>, search <code>&lt;gene symbol&gt;[gene] AND Homo sapiens[orgn] AND
+        refseqgene[filter]</code>. That filters straight to the genomic RefSeqGene record (introns
+        included) and skips picking a transcript entirely. Open the result whose title matches
+        your gene, not a nearby overlapping gene, then
+        <strong>Send to → File → GenBank (full)</strong> to download a <code>.gb</code> file.
+        Drag that straight into Benchling. Benchling's own Import from Database can be flaky, this
+        skips it entirely.
+      </p>
+    </details>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">3</span>Find the start</h2>
+    <p>
+      Align the downloaded file to the reference you just imported. You're not looking for a
+      mutation this time. You're looking for the first base that gets transcribed, the
+      <strong>transcription start site (TSS)</strong>, which is where exon 1 begins.
+    </p>
+    <p>
+      Careful: the TSS is not the start codon. Transcription begins before translation does.
+    </p>
+    <div class="field-row">
+      <div>
+        <label for="step3_tss">TSS position in the downloaded file</label>
+        <input type="number" id="step3_tss" name="step3_tss_position" min="1" step="1" required>
+      </div>
+      <div>
+        <label for="step3_atg">Start codon position, for comparison</label>
+        <input type="number" id="step3_atg" name="step3_atg_position" min="1" step="1" required>
+      </div>
+    </div>
+    <label for="step3_how">How did you find the TSS?</label>
+    <textarea id="step3_how" name="step3_how_found" required></textarea>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">4</span>Choose your system</h2>
+    <p>Which of these would you use here?</p>
+    <label>Which system?</label>
+    <div class="choice-group" data-choice-group>
+      <label class="choice">
+        <input type="radio" name="step4_system" value="Cas9 nuclease" required> Cas9 nuclease
+      </label>
+      <label class="choice">
+        <input type="radio" name="step4_system" value="Base editor"> Base editor
+      </label>
+      <label class="choice">
+        <input type="radio" name="step4_system" value="dCas9-KRAB"> dCas9-KRAB
+      </label>
+      <label class="choice">
+        <input type="radio" name="step4_system" value="dCas9-VPR"> dCas9-VPR
+      </label>
+    </div>
+    <label for="step4_why">Why? What ruled out the others?</label>
+    <textarea id="step4_why" name="step4_system_why" required></textarea>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">5</span>Pick your guides</h2>
+    <p>
+      First, commit to a principle: relative to the TSS, where do you expect a guide to work best?
+    </p>
+    <label>Best place to aim</label>
+    <div class="choice-group choice-col" data-choice-group>
+      <label class="choice">
+        <input type="radio" name="step5_region" value="Far upstream enhancer" required>
+        Far upstream, in a distal enhancer
+      </label>
+      <label class="choice">
+        <input type="radio" name="step5_region" value="Around the TSS">
+        In a window right around the TSS
+      </label>
+      <label class="choice">
+        <input type="radio" name="step5_region" value="Deep in an intron">
+        Deep inside an intron
+      </label>
+      <label class="choice">
+        <input type="radio" name="step5_region" value="In a late exon">
+        In a late exon, over the coding sequence
+      </label>
+    </div>
+    <p style="margin-top:1.1rem;">
+      Now here are five real guides from this locus. The offset is the distance from the TSS to the
+      middle of the protospacer, negative upstream, positive downstream.
+    </p>
+    <div class="table-scroll">
+      <table>
+        <tr>
+          <th>Guide</th><th>Protospacer (5' to 3')</th><th>PAM</th><th>Strand</th>
+          <th class="num-col">Offset</th>
+        </tr>
+        <tr><td>A</td><td><code>CCAGGCAGGAGGATGAAAAG</code></td><td><code>GGG</code></td><td>−</td><td class="num-col">−645</td></tr>
+        <tr><td>B</td><td><code>GCGCGTAATCTGACGCTGTT</code></td><td><code>TGG</code></td><td>+</td><td class="num-col">−80</td></tr>
+        <tr><td>C</td><td><code>GCGGAAACCTTCTAGGGTGT</code></td><td><code>GGG</code></td><td>−</td><td class="num-col">+62</td></tr>
+        <tr><td>D</td><td><code>GCGGAATCCTGGCTGGGAGC</code></td><td><code>TGG</code></td><td>−</td><td class="num-col">+213</td></tr>
+        <tr><td>E</td><td><code>CGTGGGCAGGCAGCTGTGAG</code></td><td><code>TGG</code></td><td>−</td><td class="num-col">+1799</td></tr>
+      </table>
+    </div>
+    <label for="step5_pick">Which would you test first, and why?</label>
+    <textarea id="step5_pick" name="step5_guide_pick" required></textarea>
+    <label for="step5_reject">Which would you not bother with, and why?</label>
+    <textarea id="step5_reject" name="step5_guide_reject" required></textarea>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">6</span>Did it work?</h2>
+    <p>
+      You test all five in hepatocytes and measure the target's mRNA by qRT-PCR, relative to a
+      non-targeting control guide.
+    </p>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Guide</th><th class="num-col">Target mRNA (% of control)</th></tr>
+        <tr><td>Non-targeting control</td><td class="num-col">100%</td></tr>
+        <tr><td>A</td><td class="num-col">92%</td></tr>
+        <tr><td>B</td><td class="num-col">28%</td></tr>
+        <tr><td>C</td><td class="num-col">12%</td></tr>
+        <tr><td>D</td><td class="num-col">39%</td></tr>
+        <tr><td>E</td><td class="num-col">96%</td></tr>
+      </table>
+    </div>
+    <label for="step6_forward">Which guide would you take forward, and does this match what you predicted?</label>
+    <textarea id="step6_forward" name="step6_take_forward" required></textarea>
+    <label>What would you measure next?</label>
+    <div class="choice-group choice-col" data-choice-group>
+      <label class="choice">
+        <input type="radio" name="step6_next" value="Target gene DNA sequence" required>
+        The target gene's DNA sequence
+      </label>
+      <label class="choice">
+        <input type="radio" name="step6_next" value="Target protein in blood">
+        The target protein in blood
+      </label>
+      <label class="choice">
+        <input type="radio" name="step6_next" value="LDL receptor on hepatocytes">
+        LDL receptor levels on hepatocytes
+      </label>
+      <label class="choice">
+        <input type="radio" name="step6_next" value="Nothing else needed">
+        Nothing else, the mRNA result is enough
+      </label>
+    </div>
+    <label for="step6_next_why">Why that one?</label>
+    <textarea id="step6_next_why" name="step6_next_why" required></textarea>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">7</span>Two weeks later</h2>
+    <p>
+      The machinery was delivered transiently. Two weeks on, the target's mRNA is back to about
+      95% of control.
+    </p>
+    <label>What best explains this?</label>
+    <div class="choice-group choice-col" data-choice-group>
+      <label class="choice">
+        <input type="radio" name="step7_why" value="Guide mutated the gene" required>
+        The guide mutated the gene and the mutation reverted
+      </label>
+      <label class="choice">
+        <input type="radio" name="step7_why" value="Repression needs the machinery present">
+        This kind of repression generally lasts only while the machinery is still around
+      </label>
+      <label class="choice">
+        <input type="radio" name="step7_why" value="Polymerase became resistant">
+        RNA polymerase became resistant to the repressor
+      </label>
+      <label class="choice">
+        <input type="radio" name="step7_why" value="Guide degraded the mRNA">
+        The guide was degrading the mRNA directly, and ran out
+      </label>
+    </div>
+    <label for="step7_persist">How could you make the repression outlast the machinery?</label>
+    <textarea id="step7_persist" name="step7_persist" required></textarea>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">8</span>New patient, opposite problem</h2>
+    <p>
+      Different patient, different gene: this one makes too <em>little</em> of a protein, and the
+      goal is to raise its expression. The gene itself is intact.
+    </p>
+    <label for="step8_swap">What changes about your design?</label>
+    <textarea id="step8_swap" name="step8_swap" required></textarea>
+    <label>And where do the guides go now, relative to the TSS?</label>
+    <div class="choice-group choice-col" data-choice-group>
+      <label class="choice">
+        <input type="radio" name="step8_window" value="Same window" required>
+        Same window as before
+      </label>
+      <label class="choice">
+        <input type="radio" name="step8_window" value="Shifted upstream">
+        Shifted upstream of the TSS
+      </label>
+      <label class="choice">
+        <input type="radio" name="step8_window" value="Shifted downstream">
+        Shifted further downstream, into the gene body
+      </label>
+      <label class="choice">
+        <input type="radio" name="step8_window" value="Position stops mattering">
+        Position stops mattering
+      </label>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="submit-bar">
+      <button type="submit" id="submit-btn">Submit worksheet</button>
+      <div id="submit-status"></div>
+    </div>
+  </section>
+
+  </form>
+
+</div>
+
+<script>
+  document.getElementById('worksheet').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = document.getElementById('submit-btn');
+    const status = document.getElementById('submit-status');
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    status.className = '';
+    status.textContent = '';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error('Submission service returned an error');
+      status.className = 'ok';
+      status.textContent = '✅ Submitted. Your instructor will follow up with the answer key.';
+      btn.textContent = 'Submitted';
+    } catch (err) {
+      status.className = 'err';
+      status.textContent = '⚠️ Could not reach the submission service. Check your connection and try again.';
+      btn.disabled = false;
+      btn.textContent = 'Submit worksheet';
+    }
+  });
+
+  document.querySelectorAll('[data-choice-group]').forEach(function (group) {
+    group.addEventListener('change', function (e) {
+      group.querySelectorAll('.choice').forEach(el => el.classList.remove('selected'));
+      e.target.closest('.choice').classList.add('selected');
+    });
+  });
+</script>
+
+<footer>
+  Teaching exercise built around a real human gene with an invented clinical scenario.
+</footer>
+
+</body>
+</html>
