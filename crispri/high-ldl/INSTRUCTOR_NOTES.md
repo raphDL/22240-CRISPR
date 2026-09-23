@@ -85,9 +85,19 @@ So the gene box starts 103 bp early only because the NMD isoform PCSK9-208 start
 framing for discussion: **genes don't have a TSS, transcripts do.** The transcript that matters here
 is the one in the patient's RNA-seq, PCSK9-201 = `NM_174936.4`, and its 5' end is Exon 1 at 1,104.
 
-This is the single most confusing point in the exercise and it is worth pre-empting in class. The
-page states it twice now, once in the step 3 body text and once at length in the hint, in both
-cases without giving the number. The reliable escape hatch is the one the exercise is built on:
+This is the single most confusing point in the exercise and it is worth pre-empting in class. It
+used to be explained inside a collapsed hint whose summary read "How to get the genomic sequence
+into Benchling", which a student stuck on *where the TSS is* would never think to open. Step 3 now
+has two separately titled hints:
+
+- **"How do I get the genomic sequence into Benchling?"** The import steps and the GenBank download.
+- **"Where exactly is the TSS?"** The gene-versus-Exon-1 distinction, plus a small schematic showing
+  the three starts (gene annotation, Exon 1 marking the TSS, and the ATG inside it) on one line,
+  labelled and explicitly not to scale. It also rules out the ATG, since "transcription starts
+  before translation does" is the other half of the same confusion.
+
+The step 3 body text now points at that hint by name rather than saying "see the hint below". Both
+still avoid giving any number. The reliable escape hatch is the one the exercise is built on:
 **the contig's first base is the TSS by definition**, so aligning it settles the question without
 reading any annotation at all.
 

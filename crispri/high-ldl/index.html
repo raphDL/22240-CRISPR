@@ -291,6 +291,7 @@
     background: rgba(16,185,129,.35);
     border-top: 2px solid #10b981;
   }
+  .tss-diagram { display: block; width: 100%; max-width: 30rem; margin: 0.7rem 0 0; }
   .field-hint { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; line-height: 1.5; }
   .field-hint em { font-style: normal; font-weight: 700; color: var(--accent-ink); }
   #tss-readout {
@@ -450,10 +451,11 @@
       <strong>genomic</strong> sequence into Benchling and align the contig to it. Where the
       contig's first base lands is the <strong>transcription start site (TSS)</strong>, the first
       base that gets transcribed. It is not the start codon, and it is not where the
-      <code>gene</code> annotation begins either (see the hint below for why).
+      <code>gene</code> annotation begins either. If that distinction is not obvious, open
+      "Where exactly is the TSS?" below before you go any further.
     </p>
     <details class="hint">
-      <summary>How to get the genomic sequence into Benchling</summary>
+      <summary>How do I get the genomic sequence into Benchling?</summary>
       <p>
         Click the <strong>+</strong> in the top left → DNA/RNA sequence → Import DNA/RNA sequence →
         <strong>Import from database</strong>. Type your gene symbol under
@@ -462,19 +464,43 @@
         set <strong>Upstream bases</strong> to <code>1000</code> so you get the promoter as well as
         the gene.
       </p>
-      <p>
-        <strong>One trap.</strong> The imported sequence has both a <code>gene</code> annotation and
-        an <strong>Exon 1</strong> annotation, and they do not start in the same place. The
-        <code>gene</code> box spans every annotated isoform at once, so it begins wherever the
-        earliest one begins, which is usually upstream of the transcript you actually imported.
-        <strong>It is not a TSS.</strong> Genes don't have one TSS, transcripts do. Use the
-        <strong>Exon 1</strong> annotation of your transcript, and confirm it against where your
-        contig aligns: the contig's first base is the TSS by definition.
-      </p>
       <p style="margin-bottom:0;">
         If the import fails or is too slow, here is the same sequence as a GenBank file. Download
         it and drag it into Benchling.<br>
         <a class="download-btn" style="margin-top:0.6rem;" href="target_gene_grch38.gb" download>⬇ Download target_gene_grch38.gb</a>
+      </p>
+    </details>
+    <details class="hint">
+      <summary>Where exactly is the TSS?</summary>
+      <p>
+        Your imported sequence has several starts near each other, and only one of them is the TSS.
+      </p>
+      <svg class="tss-diagram" viewBox="0 0 640 140" role="img"
+           aria-label="A gene annotation starting first, then Exon 1 of your transcript marking the TSS, then the ATG inside it.">
+        <rect x="70" y="26" width="550" height="13" rx="3" fill="#c7d2fe"/>
+        <text x="76" y="21" font-size="10.5" fill="#667085">gene annotation, spans every isoform</text>
+        <rect x="200" y="64" width="330" height="13" rx="3" fill="#5b21b6"/>
+        <text x="206" y="59" font-size="10.5" font-weight="600" fill="#4338ca">Exon 1 of your transcript</text>
+        <line x1="20" y1="104" x2="620" y2="104" stroke="#e4e7ec" stroke-width="1.5"/>
+        <line x1="70" y1="26" x2="70" y2="110" stroke="#98a2b3" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <text x="70" y="124" font-size="10" fill="#667085" text-anchor="middle">gene starts</text>
+        <line x1="200" y1="64" x2="200" y2="110" stroke="#b42318" stroke-width="1.6" stroke-dasharray="3 3"/>
+        <text x="200" y="124" font-size="11" font-weight="700" fill="#b42318" text-anchor="middle">TSS</text>
+        <line x1="330" y1="70" x2="330" y2="110" stroke="#98a2b3" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <text x="330" y="124" font-size="10" fill="#667085" text-anchor="middle">ATG</text>
+      </svg>
+      <p class="muted-note" style="margin-top:0.2rem;">Not to scale.</p>
+      <p>
+        The <code>gene</code> box spans every annotated isoform at once, so it starts wherever the
+        <em>earliest</em> one starts, which is usually upstream of the transcript you imported.
+        <strong>It is not a TSS.</strong> Genes don't have one TSS, transcripts do. The
+        <code>ATG</code> is not it either: transcription starts before translation does, so there is
+        untranslated sequence between them.
+      </p>
+      <p style="margin-bottom:0;">
+        Use the <strong>Exon 1</strong> annotation of the transcript you imported, and confirm it
+        against where your contig aligns. The contig is the transcript, so its first base is the TSS
+        by definition.
       </p>
     </details>
     <p>
