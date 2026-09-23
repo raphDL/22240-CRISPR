@@ -356,7 +356,7 @@ Formspree dashboard.
 - Step 1: `step1_gene_name`, `step1_gene_function`, `step1_case_fit`
 - Step 2: `step2_system` (`Cas9 nuclease`/`Base editor`/`dCas9-KRAB`/`dCas9-VPR`), `step2_system_why`
 - Step 3: `step3_pasted_window`, `step3_tss_in_window`, `step3_selected_guides` (auto-filled from
-  the picks list), `step3_justify`
+  the picks list), `step3_pick_log` (auto-filled, see below), `step3_justify`
 - Step 4: `step4_measured` (auto-filled: every row of the table they were shown, so you can see
   exactly what data they were reasoning about), `step4_read`, `step4_next` (**multi-select**, any of
   `Target gene DNA sequence`/`Target protein in blood`/`LDL receptor on hepatocytes`/
@@ -365,6 +365,47 @@ Formspree dashboard.
 Note that `step3_pasted_window` will be ~350 characters per submission. That's deliberate: it's
 the only way to check the window they actually built, and it makes the TSS position they reported
 verifiable.
+
+## Known limits of the tool, and how to grade around them
+
+**Step 4 updates live, so picks can be revised after seeing the results.** Nothing stops a student
+from picking two guides, reading their knockdown in step 4, dropping them and picking better ones,
+then writing a justification that looks prescient. Locking the picks would be the heavy fix; instead
+the page logs every take and drop in order, with the score and the measured value at the time, into
+**`step3_pick_log`**. A worksheet that reads:
+
+```
+took +168 (score 90, 66%) | took +253 (score 67, 69%) | dropped +168 ... | dropped +253 ...
+| took +65 (score 100, 13%) | took +72 (score 100, 13%)
+```
+
+tells you exactly what happened. A clean log (two or three takes, no drops) means they committed
+before seeing anything. Read it alongside `step3_justify`: a confident justification on top of a log
+full of drops is the thing to push back on. Note that iterating is not itself cheating, and a
+student who noticed the +168 guide failed and said so in step 4 has learned the actual lesson.
+
+**Three wrong windows the tool cannot detect.** In each case it runs happily and produces a
+plausible plot, so these have to be caught by eye:
+
+1. **Window anchored on the ATG instead of the TSS.** Offsets still span −50 to +300, so no warning
+   fires. Check `step3_tss_in_window` against `step3_pasted_window`; if the window was built 290 bp
+   downstream, the pasted sequence will start with the 5' UTR rather than the promoter.
+2. **Reverse complement pasted.** Scanning both strands of a reverse-complemented window finds the
+   same number of protospacers, so the count looks right while every offset is mirrored. The label
+   asks for the plus strand, which is the only guard. For a gene on the minus strand this wording
+   would itself be wrong, so revise it if you reuse this exercise for a different target.
+3. **A window of roughly the right span built around the wrong base.** Same as (1), no warning.
+
+**The TSS may legitimately sit outside the pasted window.** A student following the dCas9-VPR row of
+the window table builds −400 to −50, which does not contain the TSS at all; they enter 401 and the
+tool works, plots their guides on the falling edge of the profile, and step 4 returns 80 to 100% for
+all of them. That consequence is intended. The field is labelled "counting from the first base you
+pasted" so it stays answerable either way.
+
+**No cap on picks.** A student can tick a dozen guides and get a dozen rows in step 4. The label
+says "aim for 2 or 3" and the submit gate requires at least two, but nothing enforces an upper
+bound. A long picks list usually means they were browsing rather than choosing, which the pick log
+will also show.
 
 ## Hosting privacy
 Same as the other exercises in this repo: if this repo is public, this file (and its git history)

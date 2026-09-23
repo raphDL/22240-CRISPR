@@ -482,7 +482,7 @@
     <textarea id="win" class="seq" name="step3_pasted_window" spellcheck="false" required></textarea>
     <div class="field-row">
       <div>
-        <label for="tsspos">Position of the TSS within what you pasted</label>
+        <label for="tsspos">Position of the TSS, counting from the first base you pasted</label>
         <input type="number" id="tsspos" name="step3_tss_in_window" min="0" step="1" value="0" required>
       </div>
     </div>
@@ -514,6 +514,7 @@
       <label style="margin-top:1.2rem;">Your picks (aim for 2 or 3)</label>
       <div id="picked-list"><div class="empty">Nothing picked yet. Click a guide above.</div></div>
       <input type="hidden" name="step3_selected_guides" id="selected-guides">
+      <input type="hidden" name="step3_pick_log" id="pick-log">
       <label for="step3_justify">Why these, and why not the others?</label>
       <textarea id="step3_justify" name="step3_justify"></textarea>
     </div>
@@ -622,9 +623,9 @@
   }
 
   // ---- interactive track -----------------------------------------------
-  var GUIDES = [], PICKED = {}, VIEW = null;
+  var GUIDES = [], PICKED = {}, VIEW = null, PICKLOG = [];
 
-  function fmtOff(n) { return n < 0 ? '\u2212' + (-n) : '+' + n; }
+  function fmtOff(n) { return n === 0 ? '0' : (n < 0 ? '\u2212' + (-n) : '+' + n); }
 
   function scoreColor(score) {
     var t = Math.max(0, Math.min(1, (score - 40) / 60));
@@ -733,6 +734,8 @@
         if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(el.dataset.id); }
       });
       el.addEventListener('mouseenter', function (ev) { showTip(el.dataset.id, ev); });
+      el.addEventListener('focus', function () { showTipAt(el); });
+      el.addEventListener('blur', hideTip);
       el.addEventListener('mousemove', function (ev) { showTip(el.dataset.id, ev); });
       el.addEventListener('mouseleave', hideTip);
     });
@@ -754,6 +757,17 @@
     tip.style.left = Math.max(wrap.scrollLeft + 2, Math.min(lx - tip.offsetWidth / 2, maxL)) + 'px';
     tip.style.top = (ly - tip.offsetHeight - 12 < 0 ? ly + 16 : ly - tip.offsetHeight - 12) + 'px';
   }
+  // keyboard focus has no cursor position, so anchor the tooltip to the guide itself
+  function showTipAt(el) {
+    var wrap = document.getElementById('viz-wrap');
+    var r = el.getBoundingClientRect(), w = wrap.getBoundingClientRect();
+    showTip(el.dataset.id, {
+      clientX: r.left + r.width / 2,
+      clientY: r.top
+    });
+    if (el.getBoundingClientRect().left < w.left || r.right > w.right) el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }
+
   function hideTip() { document.getElementById('tip').style.opacity = '0'; }
 
   // The measured knockdown. This is a different, hidden model from the one that
@@ -831,6 +845,14 @@
   function toggle(id) {
     if (PICKED[id]) delete PICKED[id];
     else PICKED[id] = true;
+    // Step 4's results update live, so a student can look at them and then change their picks.
+    // Log every take and drop in order so the submission shows what was actually tried.
+    var g = GUIDES.filter(function (q) { return q.id === id; })[0];
+    if (g) {
+      PICKLOG.push((PICKED[id] ? 'took ' : 'dropped ') + (g.off > 0 ? '+' : '') + g.off +
+                   ' (score ' + g.score + ', ' + measure(g) + '%)');
+      document.getElementById('pick-log').value = PICKLOG.join(' | ');
+    }
     draw();
     refreshSelection();
   }
@@ -862,6 +884,21 @@
     renderResults();
   }
 
+  function toolError(text) {
+    var msg = document.getElementById('tool-msg');
+    msg.className = 'err';
+    msg.textContent = '⚠️ ' + text;
+    // never leave a previous run's plot sitting under an error
+    GUIDES = []; PICKED = {}; VIEW = null;
+    document.getElementById('results').hidden = true;
+    document.getElementById('selected-guides').value = '';
+    document.getElementById('pick-log').value = '';
+    PICKLOG = [];
+    document.getElementById('step4-measured').value = '';
+    document.getElementById('results-4').innerHTML =
+      '<p class="muted-note">Pick your guides in step 3 and your results will appear here.</p>';
+  }
+
   document.getElementById('find-btn').addEventListener('click', function () {
     var msg = document.getElementById('tool-msg');
     var raw = document.getElementById('win').value;
@@ -870,27 +907,24 @@
 
     msg.className = '';
     if (/[^ACGT]/.test(seq)) {
-      msg.className = 'err';
-      msg.textContent = '⚠️ That contains characters other than A, C, G and T. Paste plain DNA.';
+      toolError('That contains characters other than A, C, G and T. Paste plain DNA.');
       return;
     }
     if (seq.length < 100) {
-      msg.className = 'err';
-      msg.textContent = '⚠️ That is only ' + seq.length + ' bp. Paste the whole window.';
+      toolError('That is only ' + seq.length + ' bp. Paste the whole window.');
       return;
     }
-    if (!tss || tss < 1 || tss > seq.length) {
-      msg.className = 'err';
-      msg.textContent = '⚠️ The TSS has to sit somewhere inside what you pasted, between 1 and ' +
-        seq.length + '. Where in your window does the transcript actually start?';
+    // the TSS may legitimately fall outside the pasted span, so only reject absurd values
+    if (!tss || tss < 1 || tss > seq.length + 2000) {
+      toolError('Enter the position of the TSS, counting from the first base you pasted. ' +
+                'Where does the transcript actually start?');
       return;
     }
 
     GUIDES = findGuides(seq, tss);
     PICKED = {};
     if (!GUIDES.length) {
-      msg.className = 'err';
-      msg.textContent = '⚠️ No NGG protospacers found in that sequence. Check what you pasted.';
+      toolError('No NGG protospacers found in that sequence. Check what you pasted.');
       return;
     }
     var capped = 0;
