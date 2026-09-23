@@ -176,8 +176,22 @@ profile, and in step 4 they measure 80 to 100% with no repression. That is a leg
 outcome, and worth watching for when grading, because their step 4 answer will read as confusion
 rather than as the intended lesson. Cross-check `step2_system` before grading their step 4.
 
-The TSS field defaults to `0`, which is deliberately not a usable answer: clicking Find guides with
-it returns "the TSS has to sit somewhere inside what you pasted... where in your window does the
+**The TSS field is where students get stuck.** It defaults to `0`, which is deliberately not a
+usable answer, and the question is asking for a coordinate in a sequence they just created, which is
+not a coordinate system they have used before. Three things now carry that:
+
+- The label is a short, concrete question: "Which base of that sequence is the TSS?"
+- A hint underneath gives the arithmetic without giving a number: "Count the first base you pasted
+  as base 1. If your window starts *N* bases upstream of the TSS, then the TSS is base *N* + 1."
+- A **live readout** under the field updates as they type and states what their two answers imply:
+  "351 bp pasted. With the TSS at base 51, your window runs −50 to +300 relative to the TSS."
+
+The readout is neutral: it reports their own numbers back rather than judging them, so a student who
+chose dCas9-VPR sees "−400 to −50" and can check it against the window table two rows above without
+being told which row is right. It replaces the old flow, where the only feedback came from pressing
+the button and reading an error.
+
+Clicking Find guides with the TSS still at `0` returns "the TSS has to sit somewhere inside what you pasted... where in your window does the
 transcript actually start?" and nothing else. If they paste something well outside the expected span
 the tool still runs but flags it, without naming the correct window (it points them back at the
 table, so a VPR-picker checking the table finds their own window confirmed and nothing is leaked).

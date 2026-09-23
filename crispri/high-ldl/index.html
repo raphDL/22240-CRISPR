@@ -291,6 +291,18 @@
     background: rgba(16,185,129,.35);
     border-top: 2px solid #10b981;
   }
+  .field-hint { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; line-height: 1.5; }
+  .field-hint em { font-style: normal; font-weight: 700; color: var(--accent-ink); }
+  #tss-readout {
+    display: none;
+    font-size: 0.83rem;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    margin-top: 0.8rem;
+  }
+  #tss-readout b { font-weight: 700; }
   .scroll-hint { display: none; font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem; }
   @media (max-width: 620px) { .scroll-hint { display: block; } }
   #results-4 table { margin-top: 0.4rem; }
@@ -482,10 +494,15 @@
     <textarea id="win" class="seq" name="step3_pasted_window" spellcheck="false" required></textarea>
     <div class="field-row">
       <div>
-        <label for="tsspos">Position of the TSS, counting from the first base you pasted</label>
+        <label for="tsspos">Which base of that sequence is the TSS?</label>
         <input type="number" id="tsspos" name="step3_tss_in_window" min="0" step="1" value="0" required>
+        <p class="field-hint">
+          Count the first base you pasted as base 1. If your window starts
+          <em>N</em> bases upstream of the TSS, then the TSS is base <em>N</em> + 1.
+        </p>
       </div>
     </div>
+    <div id="tss-readout"></div>
     <button type="button" class="tool-btn" id="find-btn">Find guides</button>
     <div id="tool-msg"></div>
 
@@ -899,10 +916,34 @@
       '<p class="muted-note">Pick your guides in step 3 and your results will appear here.</p>';
   }
 
+  // Tell students what their two answers imply, as they type, instead of making them
+  // press the button and read an error.
+  function cleanSeq(raw) {
+    return raw.replace(/^>.*$/gm, '').replace(/[^A-Za-z]/g, '').toUpperCase();
+  }
+
+  function updateReadout() {
+    var box = document.getElementById('tss-readout');
+    var len = cleanSeq(document.getElementById('win').value).length;
+    var tss = parseInt(document.getElementById('tsspos').value, 10);
+    if (!len) { box.style.display = 'none'; return; }
+    box.style.display = 'block';
+    if (!tss || tss < 1) {
+      box.innerHTML = '<b>' + len + ' bp</b> pasted. Fill in the base number above and this will ' +
+                      'tell you what window that gives you.';
+      return;
+    }
+    box.innerHTML = '<b>' + len + ' bp</b> pasted. With the TSS at base ' + tss +
+                    ', your window runs <b>' + fmtOff(1 - tss) + ' to ' + fmtOff(len - tss) +
+                    '</b> relative to the TSS.';
+  }
+  document.getElementById('win').addEventListener('input', updateReadout);
+  document.getElementById('tsspos').addEventListener('input', updateReadout);
+
   document.getElementById('find-btn').addEventListener('click', function () {
     var msg = document.getElementById('tool-msg');
     var raw = document.getElementById('win').value;
-    var seq = raw.replace(/^>.*$/gm, '').replace(/[^A-Za-z]/g, '').toUpperCase();
+    var seq = cleanSeq(raw);
     var tss = parseInt(document.getElementById('tsspos').value, 10);
 
     msg.className = '';
