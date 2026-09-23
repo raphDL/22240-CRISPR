@@ -72,7 +72,13 @@ exercise you want a short link for.
 
 ## Course feedback
 
-`feedback/` (short link `fb/`) is a single anonymous feedback form for both lectures: a 1-10
-rating plus three open questions each, posting to its own Formspree form. It's not an exercise, so
-it's not on the hub's exercise list, just a small link in the hub's footer, meant to be shared
-directly (e.g. on a lecture's last slide) via `https://raphdl.github.io/22240-CRISPR/fb/`.
+Two anonymous feedback forms, one per pair of lectures. Each is a 1-10 rating plus three open
+questions per lecture, posting to its own Formspree form. Ratings are optional so that someone who
+attended only one of the two can still submit, but at least one of the two has to be filled in.
+They're not exercises, so they're not on the hub's exercise list, just links in the hub's footer,
+meant to be shared directly (e.g. on a lecture's last slide).
+
+| Lectures | Folder | Short link | Formspree |
+|---|---|---|---|
+| 1 and 2 | `feedback/` | `fb/` | `mgaerzvg` |
+| 3 (Delivery, Rasmus) and 4 (Epigenetic and RNA editing, Raphael) | `feedback2/` | `fb2/` | `moevwkdb` |

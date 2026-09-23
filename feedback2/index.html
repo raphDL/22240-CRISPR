@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture Feedback, Lectures 3 and 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --panel: #ffffff;
+    --ink: #12141a;
+    --muted: #667085;
+    --line: #e4e7ec;
+    --accent: #4f46e5;
+    --accent-2: #7c3aed;
+    --accent-soft: #eef2ff;
+    --accent-ink: #4338ca;
+    --good: #067647;
+    --bad: #b42318;
+    --shadow: 0 1px 2px rgba(16,24,40,.04), 0 4px 12px rgba(16,24,40,.05);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 1.25rem 5rem; }
+  header.hero {
+    padding: 4rem 1.5rem 3rem;
+    text-align: center;
+    background: radial-gradient(900px 420px at 50% -15%, #e0e7ff 0%, transparent 65%), var(--bg);
+  }
+  .kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.1rem;
+  }
+  header.hero h1 {
+    margin: 0 0 0.7rem;
+    font-size: clamp(1.7rem, 4vw, 2.3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  header.hero p {
+    margin: 0 auto;
+    max-width: 28rem;
+    color: var(--muted);
+    font-size: 1.02rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    letter-spacing: -0.01em;
+  }
+  .lecture-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem 0.7rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .lecture-head h2 { margin: 0; }
+  .lecturer {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  section.card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 1.75rem 1.9rem;
+    margin-bottom: 1.25rem;
+  }
+  p { margin: 0 0 0.85rem; }
+  p:last-child { margin-bottom: 0; }
+  label {
+    display: block;
+    font-weight: 600;
+    margin: 0.9rem 0 0.35rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  label:first-of-type { margin-top: 0; }
+  textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg);
+    color: var(--ink);
+    resize: vertical;
+    min-height: 4rem;
+    transition: border-color .12s ease, box-shadow .12s ease;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .honeypot { position: absolute; left: -9999px; }
+  .scale {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin: 0.4rem 0 0.2rem;
+  }
+  .scale label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    margin: 0;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg);
+    cursor: pointer;
+    transition: border-color .12s ease, background .12s ease, color .12s ease;
+  }
+  .scale input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .scale label:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-weight: 700;
+  }
+  .scale-caption {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--muted);
+    max-width: 23.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .submit-bar { text-align: center; padding: 0.5rem 0 0.25rem; }
+  .submit-bar button {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    border: none;
+    font-size: 0.98rem;
+    font-weight: 700;
+    padding: 0.9rem 2rem;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(79,70,229,.35);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .submit-bar button:disabled { opacity: 0.55; cursor: default; transform: none; box-shadow: none; }
+  .submit-bar button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(79,70,229,.4); }
+  #submit-status { margin-top: 0.9rem; font-size: 0.88rem; }
+  #submit-status.ok { color: var(--good); }
+  #submit-status.err { color: var(--bad); }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-top: 2.5rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="kicker">Course feedback · lectures 3 and 4</span>
+  <h1>📝 Lecture Feedback</h1>
+  <p>Anonymous, takes about two minutes. Be honest, it helps.<br>If you only came to one lecture, just fill in that section.</p>
+</header>
+
+<div class="wrap">
+
+<form id="feedback-form" action="https://formspree.io/f/moevwkdb" method="POST">
+  <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
+
+  <section class="card">
+    <div class="lecture-head">
+      <h2>Lecture 3: Delivery</h2>
+      <span class="lecturer">Rasmus</span>
+    </div>
+    <label>On a scale of 1 to 10, how much did you like the delivery lecture?</label>
+    <div class="scale-caption"><span>Not at all</span><span>Loved it</span></div>
+    <div class="scale">
+      <label>1<input type="radio" name="lecture3_rating" value="1"></label>
+      <label>2<input type="radio" name="lecture3_rating" value="2"></label>
+      <label>3<input type="radio" name="lecture3_rating" value="3"></label>
+      <label>4<input type="radio" name="lecture3_rating" value="4"></label>
+      <label>5<input type="radio" name="lecture3_rating" value="5"></label>
+      <label>6<input type="radio" name="lecture3_rating" value="6"></label>
+      <label>7<input type="radio" name="lecture3_rating" value="7"></label>
+      <label>8<input type="radio" name="lecture3_rating" value="8"></label>
+      <label>9<input type="radio" name="lecture3_rating" value="9"></label>
+      <label>10<input type="radio" name="lecture3_rating" value="10"></label>
+    </div>
+
+    <label for="lecture3_liked">What did you like about the lecture?</label>
+    <textarea id="lecture3_liked" name="lecture3_liked"></textarea>
+
+    <label for="lecture3_difficult">What was difficult to understand or grasp?</label>
+    <textarea id="lecture3_difficult" name="lecture3_difficult"></textarea>
+
+    <label for="lecture3_change">What would you have liked done differently?</label>
+    <textarea id="lecture3_change" name="lecture3_change"></textarea>
+  </section>
+
+  <section class="card">
+    <div class="lecture-head">
+      <h2>Lecture 4: Epigenetic editing and RNA editing</h2>
+      <span class="lecturer">Raphael</span>
+    </div>
+    <label>On a scale of 1 to 10, how much did you like the epigenetic and RNA editing lecture?</label>
+    <div class="scale-caption"><span>Not at all</span><span>Loved it</span></div>
+    <div class="scale">
+      <label>1<input type="radio" name="lecture4_rating" value="1"></label>
+      <label>2<input type="radio" name="lecture4_rating" value="2"></label>
+      <label>3<input type="radio" name="lecture4_rating" value="3"></label>
+      <label>4<input type="radio" name="lecture4_rating" value="4"></label>
+      <label>5<input type="radio" name="lecture4_rating" value="5"></label>
+      <label>6<input type="radio" name="lecture4_rating" value="6"></label>
+      <label>7<input type="radio" name="lecture4_rating" value="7"></label>
+      <label>8<input type="radio" name="lecture4_rating" value="8"></label>
+      <label>9<input type="radio" name="lecture4_rating" value="9"></label>
+      <label>10<input type="radio" name="lecture4_rating" value="10"></label>
+    </div>
+
+    <label for="lecture4_liked">What did you like about the lecture?</label>
+    <textarea id="lecture4_liked" name="lecture4_liked"></textarea>
+
+    <label for="lecture4_difficult">What was difficult to understand or grasp?</label>
+    <textarea id="lecture4_difficult" name="lecture4_difficult"></textarea>
+
+    <label for="lecture4_change">What would you have liked done differently?</label>
+    <textarea id="lecture4_change" name="lecture4_change"></textarea>
+  </section>
+
+  <section class="card">
+    <div class="submit-bar">
+      <button type="submit" id="submit-btn">Submit feedback</button>
+      <div id="submit-status"></div>
+    </div>
+  </section>
+</form>
+
+</div>
+
+<script>
+  document.getElementById('feedback-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = document.getElementById('submit-btn');
+    const status = document.getElementById('submit-status');
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    if (!form.querySelector('input[name="lecture3_rating"]:checked') &&
+        !form.querySelector('input[name="lecture4_rating"]:checked')) {
+      status.className = 'err';
+      status.textContent = '⚠️ Rate at least one of the two lectures. If you only attended one, leave the other blank.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    status.className = '';
+    status.textContent = '';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error('Submission service returned an error');
+      status.className = 'ok';
+      status.textContent = '✅ Thanks for the feedback!';
+      btn.textContent = 'Submitted';
+    } catch (err) {
+      status.className = 'err';
+      status.textContent = '⚠️ Could not reach the submission service. Check your connection and try again.';
+      btn.disabled = false;
+      btn.textContent = 'Submit feedback';
+    }
+  });
+</script>
+
+<footer>
+  Feedback on lecture 3 (delivery, Rasmus) and lecture 4 (epigenetic and RNA editing, Raphael).
+</footer>
+
+</body>
+</html>
