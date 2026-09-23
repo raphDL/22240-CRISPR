@@ -430,7 +430,8 @@
       Your contig is a transcript, so it has no promoter in it. Pull the gene's reference
       <strong>genomic</strong> sequence into Benchling and align the contig to it. Where the
       contig's first base lands is the <strong>transcription start site (TSS)</strong>, the first
-      base that gets transcribed. It is not the start codon.
+      base that gets transcribed. It is not the start codon, and it is not where the
+      <code>gene</code> annotation begins either (see the hint below for why).
     </p>
     <details class="hint">
       <summary>How to get the genomic sequence into Benchling</summary>
@@ -443,10 +444,13 @@
         the gene.
       </p>
       <p>
-        One trap: the <code>gene</code> annotation on the imported sequence starts where the gene's
-        earliest isoform starts, which is not necessarily where <em>your</em> transcript starts.
-        Use the <strong>Exon 1</strong> annotation on the transcript you imported, and check it
-        against where your contig aligns.
+        <strong>One trap.</strong> The imported sequence has both a <code>gene</code> annotation and
+        an <strong>Exon 1</strong> annotation, and they do not start in the same place. The
+        <code>gene</code> box spans every annotated isoform at once, so it begins wherever the
+        earliest one begins, which is usually upstream of the transcript you actually imported.
+        <strong>It is not a TSS.</strong> Genes don't have one TSS, transcripts do. Use the
+        <strong>Exon 1</strong> annotation of your transcript, and confirm it against where your
+        contig aligns: the contig's first base is the TSS by definition.
       </p>
       <p style="margin-bottom:0;">
         If the import fails or is too slow, here is the same sequence as a GenBank file. Download

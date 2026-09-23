@@ -72,11 +72,31 @@ against the sequence in `step3_pasted_window`.
 ### ⚠️ Two traps in the import, both expected
 
 **1. The `gene` annotation is not the TSS.** In `target_gene_grch38.gb` the `gene` feature starts at
-**1,001** (because they asked for 1,000 bp upstream, and Ensembl measures that from the start of the
-gene's *earliest* isoform). But PCSK9-201's own **Exon 1 starts at 1,104**, 103 bp further along.
-A student who assumes "1,000 upstream means the TSS is at 1,001" is off by 103 bp. The step 3 hint
-warns about this without giving the number: it tells them to use the Exon 1 annotation and check it
-against where their contig aligns. Both are available to them, so this is catchable.
+**1,001**, but PCSK9-201's own **Exon 1 starts at 1,104**, 103 bp further along. Students notice the
+gap and reasonably conclude the TSS must be the earlier one. It isn't.
+
+Ensembl's `gene` feature spans the **union of every annotated isoform**, so it begins wherever the
+earliest one does. PCSK9 (`ENSG00000169174`) has **16 transcripts starting at 8 different
+positions** (confirmed against the Ensembl REST API):
+
+| | Start (GRCh38 chr1) | Position in the import |
+|---|---|---|
+| `PCSK9` gene feature | 55,039,445 | 1,001 |
+| PCSK9-208 (`ENST00000713785`, NMD) | 55,039,445 | 1,001 |
+| PCSK9-204 (NMD) | 55,039,447 | 1,003 |
+| PCSK9-207/209/211/212/216 | 55,039,456 | 1,012 |
+| **PCSK9-201 (`ENST00000302118`, canonical/MANE)** | **55,039,548** | **1,104** |
+| PCSK9-205 | 55,040,295 | 1,851 |
+
+So the gene box starts 103 bp early only because the NMD isoform PCSK9-208 starts there. The right
+framing for discussion: **genes don't have a TSS, transcripts do.** The transcript that matters here
+is the one in the patient's RNA-seq, PCSK9-201 = `NM_174936.4`, and its 5' end is Exon 1 at 1,104.
+
+This is the single most confusing point in the exercise and it is worth pre-empting in class. The
+page states it twice now, once in the step 3 body text and once at length in the hint, in both
+cases without giving the number. The reliable escape hatch is the one the exercise is built on:
+**the contig's first base is the TSS by definition**, so aligning it settles the question without
+reading any annotation at all.
 
 **2. NCBI's RefSeqGene annotates an older transcript.** `NG_009061.1`'s feature table is built on
 **`NM_174936.3`**, whose exon 1 begins at NG **4,930**, 72 bp upstream of `NM_174936.4`'s 5' end at
