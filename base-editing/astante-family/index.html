@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cure the Astante Family, a base editing exercise</title>
+<title>Cure the Astante Family</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -232,7 +232,7 @@
 <body>
 
 <header class="hero">
-  <span class="kicker">Base editing · design exercise</span>
+  <span class="kicker">Gene editing · design exercise</span>
   <h1>🧬 Cure the Astante Family</h1>
   <p class="tagline">Find the mutation. Design the fix.</p>
 </header>
@@ -368,11 +368,8 @@
 
   <section class="card step">
     <h2><span class="num">4</span>Choose your editor</h2>
-    <p>
-      The classic base editors, CBE and ABE, only install specific transitions, never
-      transversions. Which class does this variant need, if either?
-    </p>
-    <label>Which base editor would you use?</label>
+    <p>Which class of editor would you use to fix this variant?</p>
+    <label>Which editor would you use?</label>
     <div class="choice-group" data-choice-group>
       <label class="choice">
         <input type="radio" name="step3_editor" value="CBE" required> CBE
@@ -392,8 +389,8 @@
     <h2><span class="num">5</span>Design the guide RNA</h2>
     <p>
       Scan for every SpCas9 <code>NGG</code> PAM within about 25 bp of the SNP, on both strands.
-      Check whether the SNP falls in the editing window (protospacer positions 4 to 8), and whether
-      the strand is chemically valid for your chosen editor.
+      The editing window is protospacer positions 4 to 8, counted from the PAM-distal 5' end.
+      Work out which candidate your editor could actually act on.
     </p>
     <label for="step4_grna">Which guide RNA did you choose?</label>
     <input type="text" id="step4_grna" name="step4_grna" required placeholder="Protospacer + PAM">

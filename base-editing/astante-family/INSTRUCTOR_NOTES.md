@@ -54,7 +54,7 @@ or remove any real candidates versus an earlier CDS-only draft; it only shifts t
 | A | + | `CGG` @ 456-458 | `GTGAATGGGCCTCAGCGACT` (nt 436-455) | 4 | **Yes: the intended answer** |
 | n/a | + | `TGG` @ 441-443 | (nt 421-440) | 19 | No, SNP outside window |
 | n/a | + | `GGG` @ 442-444 | (nt 422-441) | 18 | No, SNP outside window |
-| B | − | `CGG` (minus-strand PAM; plus-strand `CCG` @ 423-425) | `GCCCATCCACTGCTGGTGGT` | 7 | **No: wrong strand (trap, see below)** |
+| B | − | `CGG` (minus-strand PAM; plus-strand `CCG` @ 423-425) | `GCCCATTCACTGCTGGTGGT` | 7 | **No: wrong strand (trap, see below)** |
 | n/a | − | `TGG` (plus-strand `CCA` @ 427-429) | n/a | 11 | No, outside window and wrong strand |
 | n/a | − | `TGG` (plus-strand `CCA` @ 430-432) | n/a | 14 | No, outside window and wrong strand |
 
@@ -118,6 +118,27 @@ labeled `step2_*` corresponds to the page's Step 3, `step3_*` to Step 4, and `st
 - Step 4: `step3_editor` (`CBE`/`ABE`/`Other`), `step3_editor_why`
 - Step 5: `step4_grna`, `step4_expected_edit`, `step4_success` (`Yes`/`No`/`Maybe`),
   `step4_success_explain` (required regardless of which one)
+
+## What the page deliberately does not say
+
+The exercise asks students to name the technique themselves, so the page must not name it anywhere
+they can read before answering. Removed for that reason:
+
+- The `<title>`, which read "Cure the Astante Family, a base editing exercise".
+- The hero kicker, which read "Base editing · design exercise". Now "Gene editing · design
+  exercise". It mattered because step 4 offers **Other** as a choice, and the kicker pre-empted it.
+- Step 4's lead-in, which read "The classic base editors, CBE and ABE, only install specific
+  transitions, never transversions." That is the reasoning step 4 is asking for. Now just "Which
+  class of editor would you use to fix this variant?"
+- Step 5's instruction to check "whether the strand is chemically valid for your chosen editor",
+  which telegraphed that a strand trap exists and so gave away most of the work. The editing window
+  (protospacer positions 4 to 8) is still stated, as neutral technical reference.
+- The hub card, which read "A nonsense mutation in a real human gene" and so handed over step 3's
+  Trp to Stop. Now "A single-base variant in a real human gene".
+
+Still leaking, and structural: the URL is `/base-editing/astante-family/` and the hub lists the exercise under a
+technique-named category heading. Anyone reading the address bar has it. Fixing that means renaming
+the folder and breaking links already handed out, so it was left alone deliberately.
 
 ## Hosting privacy
 If this repo is public, anyone can read this file (and see it in git history even if later

@@ -172,7 +172,7 @@
 <header class="hero">
   <span class="kicker">Course feedback</span>
   <h1>📝 Lecture Feedback</h1>
-  <p>Anonymous, takes about two minutes. Be honest, it helps.</p>
+  <p>Anonymous, takes about two minutes. Be honest, it helps.<br>If you only came to one lecture, just fill in that section.</p>
 </header>
 
 <div class="wrap">
@@ -185,7 +185,7 @@
     <label>On a scale of 1 to 10, how much did you like Lecture 1?</label>
     <div class="scale-caption"><span>Not at all</span><span>Loved it</span></div>
     <div class="scale">
-      <label>1<input type="radio" name="lecture1_rating" value="1" required></label>
+      <label>1<input type="radio" name="lecture1_rating" value="1"></label>
       <label>2<input type="radio" name="lecture1_rating" value="2"></label>
       <label>3<input type="radio" name="lecture1_rating" value="3"></label>
       <label>4<input type="radio" name="lecture1_rating" value="4"></label>
@@ -212,7 +212,7 @@
     <label>On a scale of 1 to 10, how much did you like Lecture 2?</label>
     <div class="scale-caption"><span>Not at all</span><span>Loved it</span></div>
     <div class="scale">
-      <label>1<input type="radio" name="lecture2_rating" value="1" required></label>
+      <label>1<input type="radio" name="lecture2_rating" value="1"></label>
       <label>2<input type="radio" name="lecture2_rating" value="2"></label>
       <label>3<input type="radio" name="lecture2_rating" value="3"></label>
       <label>4<input type="radio" name="lecture2_rating" value="4"></label>
@@ -253,6 +253,13 @@
 
     if (!form.checkValidity()) {
       form.reportValidity();
+      return;
+    }
+
+    if (!form.querySelector('input[name="lecture1_rating"]:checked') &&
+        !form.querySelector('input[name="lecture2_rating"]:checked')) {
+      status.className = 'err';
+      status.textContent = '⚠️ Rate at least one of the two lectures. If you only attended one, leave the other blank.';
       return;
     }
 

@@ -25,10 +25,15 @@ this exercise is built around.
   locus (5' flank, the coding exon containing the signal peptide and B-chain, intron, the coding
   exon containing C-peptide and A-chain, 3' flank), with 3 nucleotides deleted. Built from NCBI
   RefSeqGene `NG_007114.1`.
-- **Real exon structure in this file** (fragment-relative, 1-based, confirmed by comparing against
-  the RefSeq CDS): first coding exon = CDS nt 1-187 at fragment nt 325-511, then the intron
-  (fragment nt 512-1298), then the second coding exon = CDS nt 188-333 at fragment nt 1299-1444.
-  The deletion sits at fragment nt 448-450, 62 nt clear of the intron, so it and every candidate
+- **Real exon structure in this file** (fragment-relative, 1-based, i.e. numbering the patient file
+  as given, with the 3 nt already missing; re-derived by aligning the file against the RefSeq CDS):
+  first coding exon = fragment nt **325-508** (184 nt, carrying the deletion), then the intron
+  (fragment nt **509-1295**), then the second coding exon = CDS nt 188-333 at fragment nt
+  **1296-1441**.
+  The **deletion junction** sits between fragment nt **447 and 448**: fragment 447 is the last base
+  of CDS codon 41, and fragment 448 is CDS nt 127. In wild-type numbering the missing bases are CDS
+  nt 124-126, which is where "448-450" comes from, but those are *wild-type* coordinates and do not
+  exist in the patient file. The junction is 61 nt clear of the intron, so it and every candidate
   guide near it are safely inside the exon.
 - **Variant:** an invented in-frame deletion of CDS nt 124-126 (`GTG`, codon 42), removing residue
   **Val42** from preproinsulin (equivalently, Val B18 in mature-insulin B-chain numbering, one
@@ -136,6 +141,26 @@ Formspree dashboard.
 ## Formspree
 The worksheet posts to `https://formspree.io/f/mnpqldje`, a separate form from the Astante
 exercise's, so submissions from the two exercises don't land in one inbox.
+
+## What the page deliberately does not say
+
+The exercise asks students to name the technique themselves, so the page must not name it anywhere
+they can read before answering. Removed for that reason:
+
+- The `<title>`, which read "Cure the Reyes Family, a prime editing exercise".
+- The hero kicker, which read "Prime editing · design exercise". Step 4 asks students to choose
+  between CBE, ABE, Prime editor and Other, so the kicker literally answered a graded question.
+- The tagline, which read "Find the deletion. Design the fix." Step 3 asks them to choose between
+  Substitution, Insertion and Deletion. Now "Find the variant. Design the fix."
+- The hub card, which read "A small deletion no base editor can touch. Identify it, then design the
+  pegRNA." That gave away step 3 and step 4 together, before the student opened the page.
+
+Step 7's wording was also fixed: it asked about "this guide" after steps 5 and 6 had produced two
+pegRNAs. It now reads "Do you think this would be a successful therapy?".
+
+Still leaking, and structural: the URL is `/prime-editing/reyes-family/` and the hub lists the exercise under a
+technique-named category heading. Anyone reading the address bar has it. Fixing that means renaming
+the folder and breaking links already handed out, so it was left alone deliberately.
 
 ## Hosting privacy
 Same as the other exercises in this repo: if this repo is public, this file (and its git history)
