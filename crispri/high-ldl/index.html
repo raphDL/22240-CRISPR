@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Patient with high LDL, a CRISPRi exercise</title>
+<title>Patient with high LDL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -52,16 +52,10 @@
     margin-bottom: 1.1rem;
   }
   header.hero h1 {
-    margin: 0 0 0.7rem;
+    margin: 0;
     font-size: clamp(1.8rem, 4.2vw, 2.5rem);
     font-weight: 800;
     letter-spacing: -0.02em;
-  }
-  header.hero p.tagline {
-    margin: 0 auto;
-    max-width: 30rem;
-    color: var(--muted);
-    font-size: 1.05rem;
   }
   h2 {
     font-size: 1.1rem;
@@ -358,9 +352,8 @@
 <body>
 
 <header class="hero">
-  <span class="kicker">CRISPRi · design exercise</span>
+  <span class="kicker">Gene regulation · design exercise</span>
   <h1>🧬 Patient with high LDL</h1>
-  <p class="tagline">Same gene. No edits. Less protein.</p>
 </header>
 
 <div class="wrap">
@@ -473,11 +466,19 @@
       </p>
     </details>
     <p>
-      dCas9-KRAB only represses from a narrow window around the TSS. Take the region from
-      <strong>50 bp upstream to 300 bp downstream</strong> of the TSS (351 bp) and paste it below,
-      then say where the TSS sits inside it.
+      Each system acts over a different region, so the window you need depends on what you chose in
+      step 2. Look yours up, take that region around the TSS, and paste it below.
     </p>
-    <label for="win">Paste the 351 bp window (plus strand, 5' to 3')</label>
+    <div class="table-scroll">
+      <table>
+        <tr><th>System</th><th>Effective window</th></tr>
+        <tr><td>Cas9 nuclease</td><td>No window. Cuts wherever you target it.</td></tr>
+        <tr><td>Base editor</td><td>No window. Edits inside the protospacer, wherever that sits.</td></tr>
+        <tr><td>dCas9-KRAB</td><td><code>&minus;50</code> to <code>+300</code> from the TSS</td></tr>
+        <tr><td>dCas9-VPR</td><td><code>&minus;400</code> to <code>&minus;50</code> from the TSS</td></tr>
+      </table>
+    </div>
+    <label for="win">Paste your window (plus strand, 5' to 3')</label>
     <textarea id="win" class="seq" name="step3_pasted_window" spellcheck="false" required></textarea>
     <div class="field-row">
       <div>
@@ -491,7 +492,7 @@
     <div id="results" hidden>
       <p style="margin-top:1.2rem;">
         Every SpCas9 protospacer (20 nt + <code>NGG</code>) in your window, on both strands, drawn
-        where it sits relative to the TSS. The green curve is the predicted repression profile.
+        where it sits relative to the TSS. The green curve is the predicted effect profile.
         <strong>Click a guide to pick it.</strong>
       </p>
       <div id="viz-wrap">
@@ -499,7 +500,7 @@
         <div id="tip"></div>
       </div>
       <div class="legend">
-        <span><span class="line"></span>predicted repression</span>
+        <span><span class="line"></span>predicted effect</span>
         <span><span class="swatch"></span>guide score, low to high</span>
         <span>+ / − are the two strands</span>
       </div>
@@ -507,7 +508,7 @@
       <p class="muted-note" style="margin-top:0.8rem;">
         The score is a simplified teaching model built for this exercise: position relative to the
         TSS, GC content, and a penalty for a <code>TTTT</code> run (which terminates Pol III
-        transcription of the guide). It is not a published CRISPRi predictor, and it knows nothing
+        transcription of the guide). It is not a published predictor, and it knows nothing
         about chromatin.
       </p>
       <label style="margin-top:1.2rem;">Your picks (aim for 2 or 3)</label>
@@ -691,7 +692,7 @@
     var line = pts.map(function (p, j) { return (j ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
     o.push('<path d="' + line + ' L' + x(hi).toFixed(1) + ' ' + (M.t + PH) + ' L' + x(lo).toFixed(1) + ' ' + (M.t + PH) + ' Z" fill="rgba(16,185,129,.18)" clip-path="url(#clip)"/>');
     o.push('<path d="' + line + '" fill="none" stroke="#10b981" stroke-width="1.6" clip-path="url(#clip)"/>');
-    o.push('<text x="' + M.l + '" y="' + (M.t + 11) + '" font-size="9.5" fill="#667085">predicted repression</text>');
+    o.push('<text x="' + M.l + '" y="' + (M.t + 11) + '" font-size="9.5" fill="#667085">predicted effect</text>');
 
     // TSS marker
     if (lo <= 0 && hi >= 0) {
@@ -908,8 +909,8 @@
     if (capped) note = ' Showing the 200 highest-scoring of ' + capped + '.';
     if (loOff < -120 || loOff > -20 || hiOff < 200 || hiOff > 400) {
       note += ' Heads up: that window runs ' + fmtOff(loOff) + ' to ' + fmtOff(hiOff) +
-              ' relative to the TSS, not \u221250 to +300. ' +
-              'Check the sequence and the TSS position you entered.';
+              ' relative to the TSS. Check that against the table above for the system you chose,' +
+              ' and check the TSS position you entered.';
       msg.className = 'err';
     }
     msg.textContent = seq.length + ' bp scanned, ' + (capped || GUIDES.length) +

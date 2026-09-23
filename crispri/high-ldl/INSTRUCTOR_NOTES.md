@@ -108,6 +108,28 @@ which guides rank near the top. Grade the window they built and the reasoning, n
 number. The canonical numbers above use the transcript 5' end, because that is what aligning the
 contig they were given actually produces.
 
+## What the page no longer says
+
+Step 2 asks which system to use, so the page must not name it anywhere a student can read before
+answering. Removed for that reason:
+
+- The hero kicker, which read "CRISPRi · design exercise". Now "Gene regulation · design exercise".
+- The `<title>`, which read "Patient with high LDL, a CRISPRi exercise". Now just the case name.
+- The step 3 instruction, which read "dCas9-KRAB only represses from a narrow window around the
+  TSS". Replaced by the neutral four-system window table described below.
+- The guide plot's profile label and caption, which said "predicted repression" and "not a published
+  CRISPRi predictor". Repression presumes KRAB; both now say "effect" and "predictor".
+
+`dCas9-KRAB` now appears exactly twice on the student page: once as an option in step 2, once as a
+row in step 3's window table. Both are neutral.
+
+⚠️ **Still leaking, and your call whether to fix:** the URL is `/crispri/high-ldl/` (and the short
+link `/cri/`), and the hub page lists the exercise under a "CRISPRi" category heading. A student who
+reads the address bar has step 2's answer. Fixing that means renaming the folder, which breaks the
+pattern the other two exercises follow (`base-editing/`, `prime-editing/`) and any link already
+handed out. If it matters, rename the folder to something case-based and keep the hub category
+heading generic.
+
 ## Expected answers
 
 ### Step 1: which gene is this?
@@ -142,12 +164,30 @@ actual footprint, coloured by score, plus strand above and minus strand below. H
 its sequence, PAM, strand, offset, GC and score; clicking it adds it to the picks list underneath,
 which is what posts with the form.
 
-**Why the window is −50/+300 and not wider.** That is roughly the dCas9-KRAB effective window, so
-asking for it means the *window call itself* is part of the assignment rather than something the
-tool hands them. The TSS field defaults to `0`, which is deliberately not a usable answer: clicking
-Find guides with it returns "the TSS has to sit somewhere inside what you pasted... where in your
-window does the transcript actually start?" and nothing else. Nothing on the page states the answer.
-If they paste something well outside −50/+300 the tool still runs but flags the mismatch.
+**Why the window is −50/+300, and why the page doesn't say so.** That is roughly the dCas9-KRAB
+effective window, so asking students to build it makes the *window call itself* part of the
+assignment. But naming the system in step 3 would hand them step 2's answer, so step 3 instead
+carries a neutral lookup table of all four systems:
+
+| System | Effective window (as shown to students) |
+|---|---|
+| Cas9 nuclease | No window. Cuts wherever you target it. |
+| Base editor | No window. Edits inside the protospacer, wherever that sits. |
+| dCas9-KRAB | −50 to +300 from the TSS |
+| dCas9-VPR | −400 to −50 from the TSS |
+
+The instruction is "look yours up, take that region around the TSS, and paste it". A student who got
+step 2 right builds −50/+300. A student who picked VPR will build −400/−50 instead, and the
+consequence is real: their guides all sit upstream, the plot shows them on the falling edge of the
+profile, and in step 4 they measure 80 to 100% with no repression. That is a legitimate, if harsh,
+outcome, and worth watching for when grading, because their step 4 answer will read as confusion
+rather than as the intended lesson. Cross-check `step2_system` before grading their step 4.
+
+The TSS field defaults to `0`, which is deliberately not a usable answer: clicking Find guides with
+it returns "the TSS has to sit somewhere inside what you pasted... where in your window does the
+transcript actually start?" and nothing else. If they paste something well outside the expected span
+the tool still runs but flags it, without naming the correct window (it points them back at the
+table, so a VPR-picker checking the table finds their own window confirmed and nothing is leaked).
 
 **The scoring model** (`scoreGuide()` in `index.html`, ~10 lines of JS). A simplified teaching
 heuristic invented for this exercise, **not** a published CRISPRi predictor, and the page says so
