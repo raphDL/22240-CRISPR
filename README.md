@@ -66,8 +66,9 @@ exercise you want a short link for.
   wild-type and the goal is to lower its expression, which moves the design problem from "what
   sequence do I write" to "where do I aim relative to the TSS". Students are given an assembled
   RNA-seq transcript, so there is no promoter in the file and they have to fetch the genomic
-  region themselves; the page then runs their pasted window through an on-page guide finder that
-  ranks every protospacer with a simplified CRISPRi score.
+  region themselves; the page then plots every protospacer in their pasted window on an
+  interactive track, scored by a simplified CRISPRi model, and they click the ones they'd take
+  into the lab.
   **Needs a Formspree endpoint before it's usable** (see that exercise's `INSTRUCTOR_NOTES.md`,
   "Required setup").
 

@@ -245,17 +245,94 @@
   td code { background: none; padding: 0; font-size: 0.78rem; }
   .num-col { text-align: right; white-space: nowrap; }
   .table-scroll { overflow-x: auto; }
-  #guide-table tbody tr.picked { background: var(--accent-soft); }
-  #guide-table input[type="checkbox"] { accent-color: var(--accent); }
-  .bar {
-    display: inline-block;
-    height: 7px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-2));
-    vertical-align: middle;
-    margin-right: 0.45rem;
-  }
   .flag { color: var(--bad); font-weight: 600; font-size: 0.78rem; }
+  #viz-wrap { position: relative; overflow-x: auto; margin-top: 1rem; }
+  #viz { display: block; width: 100%; min-width: 520px; }
+  #viz .guide { cursor: pointer; }
+  #viz .guide rect.body { transition: stroke .1s ease; }
+  #viz .guide:hover rect.body { stroke: var(--ink); stroke-width: 1.4; }
+  #viz .guide.picked rect.body { stroke: var(--ink); stroke-width: 1.8; }
+  #viz .guide:focus { outline: none; }
+  #viz .guide:focus rect.body { stroke: var(--ink); stroke-width: 1.8; }
+  #viz text { font-family: "Inter", sans-serif; }
+  #tip {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .1s ease;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.5rem 0.65rem;
+    font-size: 0.76rem;
+    line-height: 1.45;
+    white-space: nowrap;
+    z-index: 5;
+    box-shadow: 0 4px 14px rgba(16,24,40,.25);
+  }
+  #tip code { background: rgba(255,255,255,.14); color: #fff; font-size: 0.74rem; }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    align-items: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.6rem;
+  }
+  .legend span.swatch {
+    display: inline-block;
+    width: 34px; height: 8px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-right: 0.35rem;
+    background: linear-gradient(90deg, #c7d2fe, #5b21b6);
+  }
+  .legend span.line {
+    display: inline-block;
+    width: 18px; height: 8px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-right: 0.35rem;
+    background: rgba(16,185,129,.35);
+    border-top: 2px solid #10b981;
+  }
+  .scroll-hint { display: none; font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem; }
+  @media (max-width: 620px) { .scroll-hint { display: block; } }
+  #picked-list { margin-top: 1rem; }
+  #picked-list .empty { font-size: 0.85rem; color: var(--muted); }
+  .picked-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.45rem;
+    background: var(--bg);
+    font-size: 0.83rem;
+  }
+  .picked-row code { background: none; padding: 0; font-size: 0.8rem; }
+  .picked-row .meta { color: var(--muted); }
+  .picked-row .score-chip {
+    margin-left: auto;
+    font-weight: 700;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border-radius: 999px;
+    padding: 0.1rem 0.55rem;
+  }
+  .picked-row button {
+    border: none;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    padding: 0 0.2rem;
+  }
+  .picked-row button:hover { color: var(--bad); }
   footer {
     text-align: center;
     color: var(--muted);
@@ -355,28 +432,39 @@
       contig's first base lands is the <strong>transcription start site (TSS)</strong>, the first
       base that gets transcribed. It is not the start codon.
     </p>
-    <p>
-      Take the region from <strong>1,000 bp upstream to 300 bp downstream</strong> of the TSS
-      (1,301 bp total) and paste it below.
-    </p>
     <details class="hint">
-      <summary>If Benchling's import doesn't work, click here</summary>
+      <summary>How to get the genomic sequence into Benchling</summary>
       <p>
-        On <a href="https://www.ncbi.nlm.nih.gov/nuccore" target="_blank" rel="noopener">NCBI's
-        Nucleotide database</a>, search <code>&lt;gene symbol&gt;[gene] AND Homo sapiens[orgn] AND
-        refseqgene[filter]</code>. That filters straight to the genomic RefSeqGene record (introns
-        and flanking sequence included) and skips picking a transcript entirely. Open the result
-        whose title matches your gene, not a nearby overlapping gene, then
-        <strong>Send to → File → GenBank (full)</strong> to download a <code>.gb</code> file and
-        drag that into Benchling.
+        Click the <strong>+</strong> in the top left → DNA/RNA sequence → Import DNA/RNA sequence →
+        <strong>Import from database</strong>. Type your gene symbol under
+        <strong>Sequence</strong>, put <code>GRCh38</code> under <strong>Genome</strong>, and hit
+        Search. Pick the transcript you want, set <strong>Import as: Genomic sequence</strong>, and
+        set <strong>Upstream bases</strong> to <code>1000</code> so you get the promoter as well as
+        the gene.
+      </p>
+      <p>
+        One trap: the <code>gene</code> annotation on the imported sequence starts where the gene's
+        earliest isoform starts, which is not necessarily where <em>your</em> transcript starts.
+        Use the <strong>Exon 1</strong> annotation on the transcript you imported, and check it
+        against where your contig aligns.
+      </p>
+      <p style="margin-bottom:0;">
+        If the import fails or is too slow, here is the same sequence as a GenBank file. Download
+        it and drag it into Benchling.<br>
+        <a class="download-btn" style="margin-top:0.6rem;" href="target_gene_grch38.gb" download>⬇ Download target_gene_grch38.gb</a>
       </p>
     </details>
-    <label for="win">Paste the 1,301 bp window (plus strand, 5' to 3')</label>
+    <p>
+      dCas9-KRAB only represses from a narrow window around the TSS. Take the region from
+      <strong>50 bp upstream to 300 bp downstream</strong> of the TSS (351 bp) and paste it below,
+      then say where the TSS sits inside it.
+    </p>
+    <label for="win">Paste the 351 bp window (plus strand, 5' to 3')</label>
     <textarea id="win" class="seq" name="step3_pasted_window" spellcheck="false" required></textarea>
     <div class="field-row">
       <div>
         <label for="tsspos">Position of the TSS within what you pasted</label>
-        <input type="number" id="tsspos" name="step3_tss_in_window" min="1" step="1" value="1001" required>
+        <input type="number" id="tsspos" name="step3_tss_in_window" min="0" step="1" value="0" required>
       </div>
     </div>
     <button type="button" class="tool-btn" id="find-btn">Find guides</button>
@@ -384,28 +472,28 @@
 
     <div id="results" hidden>
       <p style="margin-top:1.2rem;">
-        Every SpCas9 protospacer (20 nt + <code>NGG</code>) in your window, on both strands, ranked.
-        <strong>Offset</strong> is the distance from the TSS to the middle of the protospacer,
-        negative upstream, positive downstream.
+        Every SpCas9 protospacer (20 nt + <code>NGG</code>) in your window, on both strands, drawn
+        where it sits relative to the TSS. The green curve is the predicted repression profile.
+        <strong>Click a guide to pick it.</strong>
       </p>
-      <div class="table-scroll">
-        <table id="guide-table">
-          <thead>
-            <tr>
-              <th>Pick</th><th>Protospacer (5' to 3')</th><th>PAM</th><th>Strand</th>
-              <th class="num-col">Offset</th><th class="num-col">GC</th><th class="num-col">Score</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+      <div id="viz-wrap">
+        <svg id="viz" role="img" aria-label="Guides plotted across the window around the TSS"></svg>
+        <div id="tip"></div>
       </div>
+      <div class="legend">
+        <span><span class="line"></span>predicted repression</span>
+        <span><span class="swatch"></span>guide score, low to high</span>
+        <span>+ / − are the two strands</span>
+      </div>
+      <div class="scroll-hint">Drag the plot sideways to see the whole window.</div>
       <p class="muted-note" style="margin-top:0.8rem;">
         The score is a simplified teaching model built for this exercise: position relative to the
         TSS, GC content, and a penalty for a <code>TTTT</code> run (which terminates Pol III
         transcription of the guide). It is not a published CRISPRi predictor, and it knows nothing
         about chromatin.
       </p>
-      <label>Tick the 2 or 3 you would take into the lab, then justify your picks.</label>
+      <label style="margin-top:1.2rem;">Your picks (aim for 2 or 3)</label>
+      <div id="picked-list"><div class="empty">Nothing picked yet. Click a guide above.</div></div>
       <input type="hidden" name="step3_selected_guides" id="selected-guides">
       <label for="step3_justify">Why these, and why not the others?</label>
       <textarea id="step3_justify" name="step3_justify"></textarea>
@@ -485,42 +573,207 @@
   }
 
   function findGuides(seq, tss) {
-    var out = [];
-    var i, pam, proto, mid, off, gc, s;
+    var out = [], i, pam, proto, off, gc, sc;
     for (i = 0; i + 23 <= seq.length; i++) {
-      // plus strand: protospacer then NGG
+      // plus strand: 20 nt protospacer then NGG, occupying 1-based i+1 .. i+23
       pam = seq.substr(i + 20, 3);
       if (pam[1] === 'G' && pam[2] === 'G') {
         proto = seq.substr(i, 20);
-        mid = i + 10;                       // 0-based centre
-        off = (mid + 1) - tss;              // 1-based centre minus TSS
-        gc = Math.round(100 * (proto.replace(/[^GC]/g, '').length) / 20);
-        s = scoreGuide(off, gc, proto);
-        out.push({ proto: proto, pam: pam, strand: '+', off: off, gc: gc, score: s.score, polyT: s.polyT });
+        off = (i + 11) - tss;                                   // protospacer midpoint
+        gc = Math.round(100 * proto.replace(/[^GC]/g, '').length / 20);
+        sc = scoreGuide(off, gc, proto);
+        out.push({
+          id: 'p' + i, proto: proto, pam: pam, strand: '+', off: off, gc: gc,
+          score: sc.score, polyT: sc.polyT,
+          start: (i + 1) - tss, end: (i + 24) - tss,
+          pamStart: (i + 21) - tss, pamEnd: (i + 24) - tss
+        });
       }
-      // minus strand: CCN on the plus strand
+      // minus strand: CCN on the plus strand, so the PAM is at the left of the footprint
       pam = rc(seq.substr(i, 3));
       if (pam[1] === 'G' && pam[2] === 'G') {
         proto = rc(seq.substr(i + 3, 20));
-        mid = i + 13;
-        off = (mid + 1) - tss;
-        gc = Math.round(100 * (proto.replace(/[^GC]/g, '').length) / 20);
-        s = scoreGuide(off, gc, proto);
-        out.push({ proto: proto, pam: pam, strand: '−', off: off, gc: gc, score: s.score, polyT: s.polyT });
+        off = (i + 14) - tss;
+        gc = Math.round(100 * proto.replace(/[^GC]/g, '').length / 20);
+        sc = scoreGuide(off, gc, proto);
+        out.push({
+          id: 'm' + i, proto: proto, pam: pam, strand: '-', off: off, gc: gc,
+          score: sc.score, polyT: sc.polyT,
+          start: (i + 1) - tss, end: (i + 24) - tss,
+          pamStart: (i + 1) - tss, pamEnd: (i + 4) - tss
+        });
       }
     }
-    out.sort(function (a, b) { return b.score - a.score; });
+    out.sort(function (a, b) { return a.start - b.start || a.strand.localeCompare(b.strand); });
     return out;
   }
 
-  function refreshSelection() {
-    var picked = [];
-    document.querySelectorAll('#guide-table tbody tr').forEach(function (tr) {
-      var box = tr.querySelector('input[type="checkbox"]');
-      tr.classList.toggle('picked', box.checked);
-      if (box.checked) picked.push(box.value);
+  // ---- interactive track -----------------------------------------------
+  var GUIDES = [], PICKED = {}, VIEW = null;
+
+  function fmtOff(n) { return n < 0 ? '\u2212' + (-n) : '+' + n; }
+
+  function scoreColor(score) {
+    var t = Math.max(0, Math.min(1, (score - 40) / 60));
+    var a = [199, 210, 254], b = [91, 33, 182];
+    return 'rgb(' + a.map(function (v, i) { return Math.round(v + (b[i] - v) * t); }).join(',') + ')';
+  }
+
+  function packLanes(list, x) {
+    var lanes = [];
+    list.slice().sort(function (p, q) { return p.start - q.start; }).forEach(function (g) {
+      var x0 = x(g.start), x1 = x(g.end);
+      for (var i = 0; i < lanes.length; i++) {
+        if (lanes[i] + 3 <= x0) { lanes[i] = x1; g.lane = i; return; }
+      }
+      g.lane = lanes.length;
+      lanes.push(x1);
     });
-    document.getElementById('selected-guides').value = picked.join(' | ');
+    return lanes.length;
+  }
+
+  function niceTicks(lo, hi) {
+    var span = hi - lo, step = 50;
+    [10, 25, 50, 100, 250, 500, 1000].some(function (s) {
+      if (span / s <= 9) { step = s; return true; }
+      return false;
+    });
+    var out = [], t = Math.ceil(lo / step) * step;
+    for (; t <= hi; t += step) out.push(t);
+    if (out.indexOf(0) === -1 && lo <= 0 && hi >= 0) out.push(0);
+    return out;
+  }
+
+  function draw() {
+    var W = 720, M = { l: 26, r: 14, t: 6, b: 34 }, PH = 62, GAP = 14, LH = 10, LG = 3, SG = 16;
+    var lo = VIEW.lo, hi = VIEW.hi;
+    var iw = W - M.l - M.r;
+    var x = function (off) { return M.l + (off - lo) / (hi - lo) * iw; };
+
+    var plus = GUIDES.filter(function (g) { return g.strand === '+'; });
+    var minus = GUIDES.filter(function (g) { return g.strand === '-'; });
+    var nP = packLanes(plus, x), nM = packLanes(minus, x);
+    var plusTop = M.t + PH + GAP;
+    var plusH = Math.max(1, nP) * (LH + LG);
+    var minusTop = plusTop + plusH + SG;
+    var minusH = Math.max(1, nM) * (LH + LG);
+    var axisY = minusTop + minusH + 6;
+    var H = axisY + M.b;
+
+    var o = [];
+    o.push('<defs><clipPath id="clip"><rect x="' + M.l + '" y="' + M.t + '" width="' + iw + '" height="' + PH + '"/></clipPath></defs>');
+
+    // the pasted window, highlighted against the wider context
+    var bx = x(VIEW.winLo), bw = x(VIEW.winHi) - x(VIEW.winLo);
+    o.push('<rect x="' + bx.toFixed(1) + '" y="' + M.t + '" width="' + bw.toFixed(1) + '" height="' + (PH + GAP) + '" fill="rgba(217,119,6,.13)"/>');
+    o.push('<text x="' + (bx + bw / 2).toFixed(1) + '" y="' + (M.t + PH + 10) + '" font-size="9.5" font-weight="600" fill="#b45309" text-anchor="middle">your window</text>');
+
+    // repression profile
+    var pts = [], i;
+    for (i = 0; i <= 160; i++) {
+      var off = lo + (hi - lo) * i / 160;
+      var sigma = off < 75 ? 150 : 200;
+      var v = Math.exp(-Math.pow(off - 75, 2) / (2 * sigma * sigma));
+      pts.push([x(off), M.t + PH - v * (PH - 6)]);
+    }
+    var line = pts.map(function (p, j) { return (j ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+    o.push('<path d="' + line + ' L' + x(hi).toFixed(1) + ' ' + (M.t + PH) + ' L' + x(lo).toFixed(1) + ' ' + (M.t + PH) + ' Z" fill="rgba(16,185,129,.18)" clip-path="url(#clip)"/>');
+    o.push('<path d="' + line + '" fill="none" stroke="#10b981" stroke-width="1.6" clip-path="url(#clip)"/>');
+    o.push('<text x="' + M.l + '" y="' + (M.t + 11) + '" font-size="9.5" fill="#667085">predicted repression</text>');
+
+    // TSS marker
+    if (lo <= 0 && hi >= 0) {
+      o.push('<line x1="' + x(0).toFixed(1) + '" y1="' + M.t + '" x2="' + x(0).toFixed(1) + '" y2="' + axisY + '" stroke="#b42318" stroke-width="1.2" stroke-dasharray="3 3"/>');
+      o.push('<text x="' + (x(0) + 4).toFixed(1) + '" y="' + (M.t + PH + 10) + '" font-size="10" font-weight="700" fill="#b42318">TSS</text>');
+    }
+
+    // strand labels
+    o.push('<text x="2" y="' + (plusTop + 8) + '" font-size="11" font-weight="700" fill="#667085">+</text>');
+    o.push('<text x="2" y="' + (minusTop + 8) + '" font-size="11" font-weight="700" fill="#667085">&#8722;</text>');
+
+    // guides
+    GUIDES.forEach(function (g) {
+      var top = (g.strand === '+' ? plusTop : minusTop) + g.lane * (LH + LG);
+      var gx = x(g.start), gw = Math.max(2.5, x(g.end) - x(g.start));
+      var px = x(g.pamStart), pw = Math.max(1.5, x(g.pamEnd) - x(g.pamStart));
+      o.push('<g class="guide' + (PICKED[g.id] ? ' picked' : '') + '" data-id="' + g.id + '" tabindex="0" role="button" aria-label="guide at offset ' + fmtOff(g.off) + ', score ' + g.score + '">');
+      o.push('<rect class="body" x="' + gx.toFixed(1) + '" y="' + top + '" width="' + gw.toFixed(1) + '" height="' + LH + '" rx="2.5" fill="' + scoreColor(g.score) + '" stroke="rgba(0,0,0,0)"/>');
+      o.push('<rect x="' + px.toFixed(1) + '" y="' + (top + 2) + '" width="' + pw.toFixed(1) + '" height="' + (LH - 4) + '" rx="1.5" fill="#12141a" opacity="' + (PICKED[g.id] ? '.75' : '.35') + '"/>');
+      o.push('</g>');
+    });
+
+    // axis
+    o.push('<line x1="' + M.l + '" y1="' + axisY + '" x2="' + (W - M.r) + '" y2="' + axisY + '" stroke="#e4e7ec" stroke-width="1"/>');
+    niceTicks(lo, hi).forEach(function (t) {
+      var tx = x(t);
+      o.push('<line x1="' + tx.toFixed(1) + '" y1="' + axisY + '" x2="' + tx.toFixed(1) + '" y2="' + (axisY + 4) + '" stroke="#98a2b3" stroke-width="1"/>');
+      o.push('<text x="' + tx.toFixed(1) + '" y="' + (axisY + 15) + '" font-size="9.5" fill="#667085" text-anchor="middle">' + (t === 0 ? '0' : fmtOff(t)) + '</text>');
+    });
+    o.push('<text x="' + (M.l + iw / 2).toFixed(1) + '" y="' + (axisY + 27) + '" font-size="9.5" fill="#98a2b3" text-anchor="middle">position relative to TSS (bp)</text>');
+
+    var svg = document.getElementById('viz');
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.innerHTML = o.join('');
+    svg.querySelectorAll('.guide').forEach(function (el) {
+      el.addEventListener('click', function () { toggle(el.dataset.id); });
+      el.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(el.dataset.id); }
+      });
+      el.addEventListener('mouseenter', function (ev) { showTip(el.dataset.id, ev); });
+      el.addEventListener('mousemove', function (ev) { showTip(el.dataset.id, ev); });
+      el.addEventListener('mouseleave', hideTip);
+    });
+  }
+
+  function showTip(id, ev) {
+    var g = GUIDES.filter(function (q) { return q.id === id; })[0];
+    if (!g) return;
+    var tip = document.getElementById('tip'), wrap = document.getElementById('viz-wrap');
+    tip.innerHTML = '<code>' + g.proto + '</code> <code>' + g.pam + '</code><br>' +
+      'strand ' + (g.strand === '+' ? '+' : '&#8722;') + ' &middot; offset ' +
+      fmtOff(g.off) + ' &middot; GC ' + g.gc + '%' +
+      (g.polyT ? ' &middot; <b>TTTT</b>' : '') + '<br>score <b>' + g.score + '</b>';
+    var r = wrap.getBoundingClientRect();
+    tip.style.opacity = '1';
+    var lx = ev.clientX - r.left + wrap.scrollLeft;
+    var ly = ev.clientY - r.top;
+    var maxL = wrap.scrollLeft + wrap.clientWidth - tip.offsetWidth - 2;
+    tip.style.left = Math.max(wrap.scrollLeft + 2, Math.min(lx - tip.offsetWidth / 2, maxL)) + 'px';
+    tip.style.top = (ly - tip.offsetHeight - 12 < 0 ? ly + 16 : ly - tip.offsetHeight - 12) + 'px';
+  }
+  function hideTip() { document.getElementById('tip').style.opacity = '0'; }
+
+  function toggle(id) {
+    if (PICKED[id]) delete PICKED[id];
+    else PICKED[id] = true;
+    draw();
+    refreshSelection();
+  }
+
+  function refreshSelection() {
+    var list = document.getElementById('picked-list');
+    var chosen = GUIDES.filter(function (g) { return PICKED[g.id]; })
+                       .sort(function (a, b) { return a.off - b.off; });
+    list.innerHTML = '';
+    if (!chosen.length) {
+      list.innerHTML = '<div class="empty">Nothing picked yet. Click a guide above.</div>';
+    }
+    chosen.forEach(function (g) {
+      var row = document.createElement('div');
+      row.className = 'picked-row';
+      row.innerHTML = '<code>' + g.proto + '</code> <code class="meta">' + g.pam + '</code>' +
+        '<span class="meta">' + (g.strand === '+' ? '+' : '&#8722;') + ' strand &middot; ' +
+        fmtOff(g.off) + ' bp &middot; GC ' + g.gc + '%' +
+        (g.polyT ? ' &middot; <span class="flag">TTTT</span>' : '') + '</span>' +
+        '<span class="score-chip">' + g.score + '</span>' +
+        '<button type="button" title="Remove">&times;</button>';
+      row.querySelector('button').addEventListener('click', function () { toggle(g.id); });
+      list.appendChild(row);
+    });
+    document.getElementById('selected-guides').value = chosen.map(function (g) {
+      return g.proto + ' ' + g.pam + ' (' + g.strand + ', offset ' + (g.off > 0 ? '+' : '') + g.off +
+             ', GC ' + g.gc + '%, score ' + g.score + ')';
+    }).join(' | ');
   }
 
   document.getElementById('find-btn').addEventListener('click', function () {
@@ -542,33 +795,43 @@
     }
     if (!tss || tss < 1 || tss > seq.length) {
       msg.className = 'err';
-      msg.textContent = '⚠️ The TSS position has to be a number between 1 and ' + seq.length + '.';
+      msg.textContent = '⚠️ The TSS has to sit somewhere inside what you pasted, between 1 and ' +
+        seq.length + '. Where in your window does the transcript actually start?';
       return;
     }
 
-    var all = findGuides(seq, tss);
-    var top = all.slice(0, 15);
-    var body = document.querySelector('#guide-table tbody');
-    body.innerHTML = '';
+    GUIDES = findGuides(seq, tss);
+    PICKED = {};
+    if (!GUIDES.length) {
+      msg.className = 'err';
+      msg.textContent = '⚠️ No NGG protospacers found in that sequence. Check what you pasted.';
+      return;
+    }
+    var capped = 0;
+    if (GUIDES.length > 200) {
+      capped = GUIDES.length;
+      GUIDES = GUIDES.slice().sort(function (a, b) { return b.score - a.score; })
+                     .slice(0, 200)
+                     .sort(function (a, b) { return a.start - b.start; });
+    }
 
-    top.forEach(function (g) {
-      var tr = document.createElement('tr');
-      var id = g.proto + ' ' + g.pam + ' (' + g.strand + ', offset ' + (g.off > 0 ? '+' : '') + g.off + ', score ' + g.score + ')';
-      tr.innerHTML =
-        '<td><input type="checkbox"></td>' +
-        '<td><code>' + g.proto + '</code>' + (g.polyT ? ' <span class="flag">TTTT</span>' : '') + '</td>' +
-        '<td><code>' + g.pam + '</code></td>' +
-        '<td>' + g.strand + '</td>' +
-        '<td class="num-col">' + (g.off > 0 ? '+' : '') + g.off + '</td>' +
-        '<td class="num-col">' + g.gc + '%</td>' +
-        '<td class="num-col"><span class="bar" style="width:' + Math.max(2, g.score * 0.4) + 'px"></span>' + g.score + '</td>';
-      tr.querySelector('input').value = id;
-      tr.querySelector('input').addEventListener('change', refreshSelection);
-      body.appendChild(tr);
-    });
+    var loOff = 1 - tss, hiOff = seq.length - tss;
+    var pad = Math.max(60, Math.round((hiOff - loOff) * 0.34));
+    VIEW = { winLo: loOff, winHi: hiOff, lo: loOff - pad, hi: hiOff + pad };
 
-    msg.textContent = seq.length + ' bp scanned, ' + all.length + ' protospacers found. Top 15 shown.';
+    var note = '';
+    if (capped) note = ' Showing the 200 highest-scoring of ' + capped + '.';
+    if (loOff < -120 || loOff > -20 || hiOff < 200 || hiOff > 400) {
+      note += ' Heads up: that window runs ' + fmtOff(loOff) + ' to ' + fmtOff(hiOff) +
+              ' relative to the TSS, not \u221250 to +300. ' +
+              'Check the sequence and the TSS position you entered.';
+      msg.className = 'err';
+    }
+    msg.textContent = seq.length + ' bp scanned, ' + (capped || GUIDES.length) +
+                      ' protospacers found.' + note;
+
     document.getElementById('results').hidden = false;
+    draw();
     refreshSelection();
   });
 

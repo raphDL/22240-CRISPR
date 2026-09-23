@@ -32,6 +32,11 @@ rather than reading a pre-made table, so the ranking is theirs to defend.
   `>contig_00417 | assembled transcript, liver biopsy RNA-seq`. It is the full `NM_174936.4`
   sequence, verbatim, relabelled as an assembly product. Verified base-for-base against the RefSeq
   record.
+- **Shipped fallback file:** `target_gene_grch38.gb`, 26,408 bp, the Benchling/Ensembl export of
+  PCSK9-201 (`ENST00000302118`) as genomic sequence with 1,000 bp upstream
+  (`chr1:55,038,445-55,064,852`, GRCh38, plus strand). Linked from inside the collapsed hint in
+  step 3 for students whose Benchling import fails. Named neutrally on purpose: the filename would
+  otherwise give away step 1.
 - **Why it's a transcript and not a genomic fragment:** deliberate. A transcript **contains no
   promoter**, so it cannot be used for guide design. Students have to go and fetch the genomic
   region themselves, which makes step 3's Benchling work load-bearing instead of busywork.
@@ -44,34 +49,44 @@ rather than reading a pre-made table, so the ranking is theirs to defend.
 
 ### Coordinates
 
-All three coordinate systems below refer to the same base. Students will only ever see the last
-one, since they build the window themselves.
+Students build the window themselves, so they'll be working in whichever coordinate system their
+import produced. The three that come up:
 
-| Landmark | `NG_009061.1` | The 1,301 bp window |
-|---|---|---|
-| Window start (TSS − 1000) | 4,002 | 1 |
-| **TSS (transcript 5' end)** | **5,002** | **1,001** |
-| Start codon (ATG) | 5,292 | 1,291 |
-| Window end (TSS + 300) | 5,302 | 1,301 |
+| Landmark | `target_gene_grch38.gb` (Ensembl) | `NG_009061.1` (NCBI) | The 351 bp window |
+|---|---|---|---|
+| Window start (TSS − 50) | 1,054 | 4,952 | 1 |
+| **TSS (transcript 5' end)** | **1,104** | **5,002** | **51** |
+| Start codon (ATG) | 1,394 | 5,292 | 341 |
+| Window end (TSS + 300) | 1,404 | 5,302 | 351 |
 
-Exon 1 runs 498 nt contiguously from the TSS, so the entire +300 half of the window is inside exon
-1 with no splice junction to worry about. The 5' UTR is 290 nt, which is why the ATG sits 290 bp
-downstream of the TSS and *not* at the TSS. Students who confuse the two will build their window
-around 5,292 and land ~290 bp off; the offsets in their guide table will still look plausible, so
-check the TSS number they report in `step3_tss_in_window` against their pasted window.
+Verified: the Ensembl PCSK9-201 5' end and the RefSeq `NM_174936.4` 5' end are the **same base**,
+and both records put the ATG 290 bp downstream of it. The 351 bp window extracted from the Ensembl
+file is identical to the corresponding slice of the NCBI RefSeqGene record.
 
-### ⚠️ TSS version discrepancy (expect both answers)
+Exon 1 runs 498 nt from the TSS, so the whole +300 half of the window sits inside exon 1 with no
+splice junction in it. The 5' UTR is 290 nt, which is why the ATG is 290 bp downstream of the TSS
+and **not** at the TSS. A student who builds the window around the ATG instead will be ~290 bp off;
+their offsets will still look plausible, so check the number they report in `step3_tss_in_window`
+against the sequence in `step3_pasted_window`.
 
-`NG_009061.1`'s own feature table annotates **`NM_174936.3`**, whose exon 1 begins at
-**NG 4,930**. The current transcript is **`NM_174936.4`**, whose 5' end is at **NG 5,002**, i.e.
-**72 bp downstream**. Both records agree on the ATG at NG 5,292.
+### ⚠️ Two traps in the import, both expected
 
-- A student who aligns the contig they were given (the intended workflow) gets **5,002**.
-- A student who reads the GenBank exon-1 annotation instead gets **4,930**.
+**1. The `gene` annotation is not the TSS.** In `target_gene_grch38.gb` the `gene` feature starts at
+**1,001** (because they asked for 1,000 bp upstream, and Ensembl measures that from the start of the
+gene's *earliest* isoform). But PCSK9-201's own **Exon 1 starts at 1,104**, 103 bp further along.
+A student who assumes "1,000 upstream means the TSS is at 1,001" is off by 103 bp. The step 3 hint
+warns about this without giving the number: it tells them to use the Exon 1 annotation and check it
+against where their contig aligns. Both are available to them, so this is catchable.
 
-**Treat both as correct.** A 72 bp shift moves every offset in the guide table by 72 and does not
-change which region wins or which guides rank near the top. Take 5,002 as canonical for this key
-because it is what the students' own alignment produces.
+**2. NCBI's RefSeqGene annotates an older transcript.** `NG_009061.1`'s feature table is built on
+**`NM_174936.3`**, whose exon 1 begins at NG **4,930**, 72 bp upstream of `NM_174936.4`'s 5' end at
+NG **5,002**. Both agree on the ATG.
+
+**Treat all of these as correct if the student is internally consistent.** A shift of 72 or 103 bp
+moves every offset in the guide plot by the same amount and changes neither which region wins nor
+which guides rank near the top. Grade the window they built and the reasoning, not the absolute
+number. The canonical numbers above use the transcript 5' end, because that is what aligning the
+contig they were given actually produces.
 
 ## Expected answers
 
@@ -100,65 +115,67 @@ because it is what the students' own alignment produces.
 
 ### Step 3: design your guides
 
-Students paste their 1,301 bp window and the TSS position into the on-page tool, which scans both
-strands for `N20 + NGG`, scores every hit, and shows the top 15.
+Students paste their 351 bp window and the TSS position into the on-page tool, which scans both
+strands for `N20 + NGG`, scores every hit, and plots them on an interactive track: a repression
+profile curve over a wider context, the pasted window shaded, and every guide drawn as a bar at its
+actual footprint, coloured by score, plus strand above and minus strand below. Hovering a bar shows
+its sequence, PAM, strand, offset, GC and score; clicking it adds it to the picks list underneath,
+which is what posts with the form.
 
-**The scoring model** (defined in `scoreGuide()` in `index.html`, ~30 lines of JS). It is a
-simplified teaching heuristic invented for this exercise, **not** a published CRISPRi predictor,
-and the page says so on the results table. Three terms, multiplied:
+**Why the window is −50/+300 and not wider.** That is roughly the dCas9-KRAB effective window, so
+asking for it means the *window call itself* is part of the assignment rather than something the
+tool hands them. The TSS field defaults to `0`, which is deliberately not a usable answer: clicking
+Find guides with it returns "the TSS has to sit somewhere inside what you pasted... where in your
+window does the transcript actually start?" and nothing else. Nothing on the page states the answer.
+If they paste something well outside −50/+300 the tool still runs but flags the mismatch.
 
-1. **Position.** A Gaussian centred at **offset +75** (offset = TSS to the middle of the
-   protospacer, negative upstream). σ = 150 bp upstream of the peak, 200 bp downstream, so the
-   curve falls off slightly faster on the upstream side.
-2. **GC content.** Flat 1.0 between 35% and 75% GC, then a linear penalty outside that, floored at
-   0.5.
+**The scoring model** (`scoreGuide()` in `index.html`, ~10 lines of JS). A simplified teaching
+heuristic invented for this exercise, **not** a published CRISPRi predictor, and the page says so
+directly under the plot. Three terms, multiplied:
+
+1. **Position.** A Gaussian centred at **offset +75** (offset = TSS to the midpoint of the
+   protospacer, negative upstream). σ = 150 bp upstream of the peak, 200 bp downstream, so it falls
+   off slightly faster on the upstream side. This is the curve drawn behind the guides.
+2. **GC content.** Flat 1.0 between 35% and 75% GC, then a linear penalty outside that, floored
+   at 0.5.
 3. **Poly-T.** A `TTTT` run anywhere in the protospacer multiplies the score by 0.35, because four
-   or more T's terminate Pol III transcription of the guide. Flagged in red in the table.
+   or more T's terminate Pol III transcription of the guide.
 
-The shape of term 1 is the real teaching content: **the CRISPRi-effective window is roughly −50 to
-+300 around the TSS**, and dCas9-KRAB works on either strand (unlike base editing, where the base to
-be edited has to exist on the protospacer strand, so the strand choice is forced). Students coming
-straight from the BE exercise often expect a strand trap here; there isn't one, and noticing that is
-a good answer.
+**What the tool produces for the canonical window** (351 bp, TSS at position 51): **69
+protospacers**, 30 on the plus strand and 39 on the minus, scoring **48 to 100**. Verified against
+an independent Python implementation of the same model; both return the identical set.
 
-**What the tool produces for the canonical window** (TSS at window position 1,001): 211
-protospacers in total, 70 of them inside −50/+300. Every one of the top 15 falls between offset
-**+48 and +113**, scoring 98 to 100. The top few:
-
-| Protospacer | PAM | Strand | Offset | GC | Score |
-|---|---|---|---|---|---|
-| `TGAGCCTGGAGGAGTGAGCC` | `AGG` | + | +65 | 65% | 100 |
-| `ACTGCCTGGCTCACTCCTCC` | `AGG` | − | +72 | 65% | 100 |
-| `AGTGAGCCAGGCAGTGAGAC` | `TGG` | + | +77 | 60% | 100 |
-| `GCCAGGCAGTGAGACTGGCT` | `CGG` | + | +82 | 65% | 100 |
-| `CCAGGCAGTGAGACTGGCTC` | `GGG` | + | +83 | 65% | 100 |
-| `CCCGAGCCAGTCTCACTGCC` | `TGG` | − | +86 | 70% | 100 |
-| `GGCAGTGAGACTGGCTCGGG` | `CGG` | + | +86 | 70% | 100 |
-
-These were cross-checked against an independent Python implementation of the same model; both
-return the identical set. Exact ordering among the 100-scoring ties is not meaningful.
+- The top scorers cluster at **offset +65 to +87**, all scoring 100, e.g.
+  `TGAGCCTGGAGGAGTGAGCC` `AGG` (+, +65), `ACTGCCTGGCTCACTCCTCC` `AGG` (−, +72),
+  `AGTGAGCCAGGCAGTGAGAC` `TGG` (+, +77).
+- The lowest scorers are all at the far downstream end **and all 85% GC**, e.g.
+  `CCGTGCGCGGTCCACGCCGG` `CGG` (−, +235, score 48). This promoter is GC-rich, so in this window
+  **GC content is what separates the guides**, more than position does.
+- ⚠️ **No guide in this window trips the `TTTT` flag** (the region is too GC-rich to contain one),
+  so that term never fires here. Don't expect students to mention it, and don't mark them down for
+  not doing so. It is in the model so the rule is visible, and it would fire on a different gene.
 
 **Grading `step3_justify`.** There is no single right pick. Grade the reasoning:
 
-- ✅ Picks guides in the high-scoring cluster, i.e. downstream of the TSS and inside the first few
-  hundred bp. That is the window call, and it is the point of the step.
-- ✅ **Notices the top 15 overlap each other by 1 or 2 bp** and deliberately spreads the picks out,
-  or picks guides on both strands, so that the two or three being tested are actually independent
-  attempts rather than the same guide three times. This is the best available answer and worth
-  calling out in discussion; a student who ticks the top 3 rows without looking at the offsets has
-  effectively tested one guide.
-- ✅ Rejects anything with a `TTTT` flag, and says why (Pol III termination).
+- ✅ Picks guides in the high-scoring cluster, i.e. downstream of the TSS and in the first ~150 bp.
+- ✅ **Notices that the top-scoring bars physically overlap each other** (this is obvious in the
+  plot in a way it never was in a table: the highest bars are stacked lanes of near-identical
+  footprints) and deliberately spreads the picks out, or takes one from each strand, so that the
+  two or three being tested are independent attempts rather than the same guide three times. This
+  is the best available answer and worth raising in discussion. A student who clicks three adjacent
+  dark bars has effectively tested one guide.
 - ✅ Says something about what the score does *not* cover: chromatin accessibility, nucleosome
   positioning, off-target sites elsewhere in the genome. The tool scores none of these. A student
-  who treats the number as authoritative has missed the caveat printed directly under the table.
-- ❌ Picks far-upstream guides (offset around −600 and beyond) on the theory that "the promoter is
-  upstream". Distal sites are largely outside the dCas9-KRAB window; this is the misconception the
-  step 4 data is built to correct.
-- ❌ Picks deep into the gene body (offset in the high hundreds or beyond). Outside the window.
+  who treats the number as authoritative has missed the caveat printed under the plot.
+- ✅ Notes that dCas9-KRAB works from either strand, so unlike the base editing exercise there is
+  no strand constraint to satisfy. Students arriving from that exercise often look for one.
+- ❌ Picks only from the far downstream end of the window. Those are the 48-to-60 scorers, and the
+  plot shows both the curve falling and the colours lightening there.
+- ❌ Justification that only restates the score ("I picked the highest numbers").
 
-`step3_pasted_window` contains their full pasted sequence, so you can confirm they built the right
-window; `step3_selected_guides` is filled automatically from the tick boxes and records the
-protospacer, PAM, strand, offset and score of each guide they picked.
+`step3_pasted_window` contains their full pasted sequence, so you can confirm the window they
+built; `step3_selected_guides` is filled automatically from the picks and records the protospacer,
+PAM, strand, offset, GC and score of each.
 
 ### Step 4: did it work?
 
@@ -184,6 +201,8 @@ where it is wrong**:
   the −150 / +180 inversion.
 - Students whose own picks (step 3) clustered around +50 to +90 should notice they'd have landed
   near the best-performing guide. Say so; it's the payoff for the step.
+- The −620 and +850 rows sit outside the window students were asked to build, which is the point:
+  the window boundary was a real design decision, not an arbitrary crop.
 
 `step4_next`: **LDL receptor levels on hepatocytes**. The mRNA result only proves the guide
 represses transcription. The therapeutic chain is PCSK9 down → LDL receptor spared from degradation
@@ -199,9 +218,9 @@ reason above.
 1. **Gene ID (step 1)**: names PCSK9, its role in LDL receptor degradation, and ties it to the case.
 2. **System choice (step 2)**: picks **dCas9-KRAB**, and rules out at least the base editor (nothing
    to correct) and dCas9-VPR (wrong direction). Credit for the reversibility argument.
-3. **Guide design (step 3)**: correct window built around the TSS (not the ATG), picks inside the
-   high-scoring cluster, and a justification that engages with overlap, poly-T, or the model's
-   blind spots rather than just reading the top row.
+3. **Guide design (step 3)**: correct window built around the TSS (not the ATG, and not the `gene`
+   annotation), picks inside the high-scoring cluster, and a justification that engages with
+   overlap, GC content, or the model's blind spots rather than just reading off the darkest bar.
 4. **Interpretation (step 4)**: reads the window/no-window split correctly, notices the −150 vs
    +180 inversion, and picks a next measurement that advances the therapeutic argument.
 
@@ -212,11 +231,11 @@ Formspree dashboard.
 - Step 1: `step1_gene_name`, `step1_gene_function`, `step1_case_fit`
 - Step 2: `step2_system` (`Cas9 nuclease`/`Base editor`/`dCas9-KRAB`/`dCas9-VPR`), `step2_system_why`
 - Step 3: `step3_pasted_window`, `step3_tss_in_window`, `step3_selected_guides` (auto-filled from
-  the tick boxes), `step3_justify`
+  the picks list), `step3_justify`
 - Step 4: `step4_read`, `step4_next` (`Target gene DNA sequence`/`Target protein in blood`/
   `LDL receptor on hepatocytes`/`Nothing else needed`), `step4_next_why`
 
-Note that `step3_pasted_window` will be ~1,300 characters per submission. That's deliberate: it's
+Note that `step3_pasted_window` will be ~350 characters per submission. That's deliberate: it's
 the only way to check the window they actually built, and it makes the TSS position they reported
 verifiable.
 
@@ -227,9 +246,12 @@ the answer key to stay instructor-only.
 
 ## Regenerating or varying the case
 `rnaseq_contig.fasta` is `NM_174936.4` pulled live from NCBI (`efetch fasta`), with only the header
-rewritten. To build a second case: pick any gene whose overexpression is the problem, take its MANE
-transcript as the "contig", confirm its 5' end against the matching RefSeqGene record to fix the
-TSS, and re-derive the expected guide table by running the same window through the page's own tool.
+rewritten. `target_gene_grch38.gb` is a Benchling "Import from database" export (Ensembl release
+116, GRCh38, PCSK9-201, import as genomic sequence, 1,000 bp upstream, 0 downstream). To build a
+second case: pick any gene whose overexpression is the problem, take its MANE transcript as the
+"contig", confirm its 5' end against both an Ensembl transcript record and the matching RefSeqGene
+record (they will not always agree, see the traps above), and re-derive the expected guides by
+running the new window through the page's own tool.
 Don't work the coordinates out by hand; the page's tool is the reference implementation, and the
 NM/NG version mismatch documented above is exactly the kind of thing that only shows up when you
 check.
