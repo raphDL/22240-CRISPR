@@ -272,15 +272,31 @@ fixed conclusion:
   inside the model's per-guide variation, and by extension inside qRT-PCR noise. Worth raising: how
   many replicates would you need before ranking two guides that close?
 
-`step4_next`: **LDL receptor levels on hepatocytes**. The mRNA result only proves the guide
-represses transcription. The therapeutic chain is PCSK9 down → LDL receptor spared from degradation
-→ more receptors at the surface → more LDL cleared, and the receptor is the first link in that chain
-that is not already assumed. "The target protein in blood" is a defensible second choice (secreted
-PCSK9 is the actual circulating drug target, and it confirms the knockdown reached protein level)
-and deserves credit if `step4_next_why` argues it well. "The target gene's DNA sequence" is the
-instructive wrong answer: CRISPRi does not change the sequence, so there is nothing to find, and a
-student picking it has not internalised what dCas9 does. "Nothing else needed" is wrong for the
-reason above.
+**`step4_next` is multi-select**, because three of the four options are genuinely things you would
+do, and they answer different questions. Forcing one would have tested compliance rather than
+understanding. Posts as repeated `step4_next` values; Formspree shows them as a list.
+
+| Option | Verdict | What it actually establishes |
+|---|---|---|
+| The target protein in blood | ✅ | That the knockdown propagated past mRNA to protein. Secreted PCSK9 is the circulating drug target, so this is the closest thing to a pharmacodynamic readout. |
+| LDL receptor levels on hepatocytes | ✅ | That the mechanism reached the therapeutic target: fewer PCSK9 means receptors spared from degradation. The first link in the chain that isn't already assumed. |
+| Whether the repression fades once the machinery is gone | ✅ | That the intervention meets the brief. The case explicitly asked for something they could stop, and that claim is still untested at this point. |
+| The target gene's DNA sequence | ❌ | Nothing. CRISPRi doesn't change the sequence, so there is nothing to find. A student ticking this has not internalised what dCas9 does, and it is the one option worth marking down. |
+
+The therapeutic chain is PCSK9 down → LDL receptor spared from degradation → more receptors at the
+surface → more LDL cleared. Protein-in-blood and receptor-levels sit at different points on it, and
+a strong answer says so rather than treating them as interchangeable.
+
+**Grading `step4_next_why`.** The question asks which they'd do *first*, so the ordering is where
+the reasoning shows:
+- ✅ Receptor levels first, because it tests the mechanism the whole therapy rests on, and a
+  knockdown that somehow failed to spare receptors would kill the approach fastest.
+- ✅ Protein first, because it is the cheapest, most direct confirmation that mRNA knockdown
+  translated into less protein, and everything downstream is moot if it didn't.
+- ✅ Durability first, if they argue that the reversibility requirement was a stated condition of
+  the study and there is no point characterising a therapy that can't meet it.
+- All three orderings are defensible. Grade the argument, not the order.
+- ❌ Ticking everything with no stated priority, which dodges the question.
 
 ## Suggested rubric (rough, adapt as needed)
 1. **Gene ID (step 1)**: names PCSK9, its role in LDL receptor degradation, and ties it to the case.
@@ -290,8 +306,8 @@ reason above.
    annotation), picks inside the high-scoring cluster, and a justification that engages with
    overlap, GC content, or the model's blind spots rather than just reading off the darkest bar.
 4. **Interpretation (step 4)**: reads the window/no-window split correctly (references A and C),
-   notices that reference B scored 90 and still failed, and picks a next measurement that advances
-   the therapeutic argument.
+   notices that reference B scored 90 and still failed, and picks next measurements that advance the
+   therapeutic argument, with a stated priority and without ticking the DNA sequence.
 
 ## Where student answers land
 The worksheet on `index.html` never reveals any answer key; submitting just posts the form to
@@ -302,9 +318,9 @@ Formspree dashboard.
 - Step 3: `step3_pasted_window`, `step3_tss_in_window`, `step3_selected_guides` (auto-filled from
   the picks list), `step3_justify`
 - Step 4: `step4_measured` (auto-filled: every row of the table they were shown, so you can see
-  exactly what data they were reasoning about), `step4_read`, `step4_next`
-  (`Target gene DNA sequence`/`Target protein in blood`/`LDL receptor on hepatocytes`/
-  `Nothing else needed`), `step4_next_why`
+  exactly what data they were reasoning about), `step4_read`, `step4_next` (**multi-select**, any of
+  `Target gene DNA sequence`/`Target protein in blood`/`LDL receptor on hepatocytes`/
+  `Durability after machinery is gone`), `step4_next_why`
 
 Note that `step3_pasted_window` will be ~350 characters per submission. That's deliberate: it's
 the only way to check the window they actually built, and it makes the TSS position they reported

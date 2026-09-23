@@ -216,7 +216,7 @@
     cursor: pointer;
     transition: border-color .12s ease, background .12s ease, color .12s ease;
   }
-  .choice input { accent-color: var(--accent); margin: 0; }
+  .choice input { accent-color: var(--accent); margin: 0; flex: none; }
   .choice.selected {
     border-color: var(--accent);
     background: var(--accent-soft);
@@ -531,26 +531,26 @@
     <input type="hidden" name="step4_measured" id="step4-measured">
     <label for="step4_read">What does this tell you, and does it match what the score predicted?</label>
     <textarea id="step4_read" name="step4_read" required></textarea>
-    <label>What would you measure next?</label>
-    <div class="choice-group choice-col" data-choice-group>
+    <label>What would you measure next? Tick everything you would do.</label>
+    <div class="choice-group choice-col" data-choice-group data-choice-multi>
       <label class="choice">
-        <input type="radio" name="step4_next" value="Target gene DNA sequence" required>
+        <input type="checkbox" name="step4_next" value="Target gene DNA sequence">
         The target gene's DNA sequence
       </label>
       <label class="choice">
-        <input type="radio" name="step4_next" value="Target protein in blood">
+        <input type="checkbox" name="step4_next" value="Target protein in blood">
         The target protein in blood
       </label>
       <label class="choice">
-        <input type="radio" name="step4_next" value="LDL receptor on hepatocytes">
+        <input type="checkbox" name="step4_next" value="LDL receptor on hepatocytes">
         LDL receptor levels on hepatocytes
       </label>
       <label class="choice">
-        <input type="radio" name="step4_next" value="Nothing else needed">
-        Nothing else, the mRNA result is enough
+        <input type="checkbox" name="step4_next" value="Durability after machinery is gone">
+        Whether the repression fades once the machinery is gone
       </label>
     </div>
-    <label for="step4_next_why">Why that one?</label>
+    <label for="step4_next_why">Why those, and which would you do first?</label>
     <textarea id="step4_next_why" name="step4_next_why" required></textarea>
   </section>
 
@@ -948,6 +948,11 @@
       document.getElementById('step3_justify').focus();
       return;
     }
+    if (!form.querySelector('input[name="step4_next"]:checked')) {
+      status.className = 'err';
+      status.textContent = '⚠️ Step 4 needs at least one thing you would measure next.';
+      return;
+    }
 
     btn.disabled = true;
     btn.textContent = 'Submitting…';
@@ -973,9 +978,15 @@
   });
 
   document.querySelectorAll('[data-choice-group]').forEach(function (group) {
+    var multi = group.hasAttribute('data-choice-multi');
     group.addEventListener('change', function (e) {
-      group.querySelectorAll('.choice').forEach(el => el.classList.remove('selected'));
-      e.target.closest('.choice').classList.add('selected');
+      var choice = e.target.closest('.choice');
+      if (multi) {
+        choice.classList.toggle('selected', e.target.checked);
+      } else {
+        group.querySelectorAll('.choice').forEach(function (el) { el.classList.remove('selected'); });
+        choice.classList.add('selected');
+      }
     });
   });
 </script>
