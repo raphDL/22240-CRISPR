@@ -19,7 +19,7 @@ each one.
 ├── prime-editing/
 │   └── reyes-family/             same pattern
 └── crispri/
-    └── turn-down-the-volume/     same pattern, no assets/
+    └── high-ldl/                 same pattern, no assets/
 ```
 
 Each exercise folder is a full copy of the same pattern: a static page with a worksheet form
@@ -49,7 +49,7 @@ path underneath (e.g. `https://raphdl.github.io/22240-CRISPR/base-editing/astant
 The full per-exercise paths are long to read out in class, so each exercise can have a short
 alias folder at the repo root that just redirects. `be/` redirects to
 `base-editing/astante-family/`, `pe/` to `prime-editing/reyes-family/`, and `cri/` to
-`crispri/turn-down-the-volume/`, so `.../be/`, `.../pe/` and `.../cri/` all work. Add one of these (an
+`crispri/high-ldl/`, so `.../be/`, `.../pe/` and `.../cri/` all work. Add one of these (an
 `index.html` with a meta-refresh, see `be/index.html` for the pattern) for any new
 exercise you want a short link for.
 
@@ -62,9 +62,12 @@ exercise you want a short link for.
 - **Prime editing: Cure the Reyes Family** (`prime-editing/reyes-family/`). A small in-frame
   deletion, deliberately not a substitution, so it's unfixable by any base editor and needs prime
   editing.
-- **CRISPRi/a: Turn Down the Volume** (`crispri/turn-down-the-volume/`). No variant at all: the
-  gene is wild-type and the goal is to lower its expression, which moves the design problem from
-  "what sequence do I write" to "where do I aim relative to the TSS". Ends with a CRISPRa flip.
+- **CRISPRi: Patient with high LDL** (`crispri/high-ldl/`). No variant at all: the gene is
+  wild-type and the goal is to lower its expression, which moves the design problem from "what
+  sequence do I write" to "where do I aim relative to the TSS". Students are given an assembled
+  RNA-seq transcript, so there is no promoter in the file and they have to fetch the genomic
+  region themselves; the page then runs their pasted window through an on-page guide finder that
+  ranks every protospacer with a simplified CRISPRi score.
   **Needs a Formspree endpoint before it's usable** (see that exercise's `INSTRUCTOR_NOTES.md`,
   "Required setup").
 
