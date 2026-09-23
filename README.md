@@ -69,8 +69,6 @@ exercise you want a short link for.
   region themselves; the page then plots every protospacer in their pasted window on an
   interactive track, scored by a simplified CRISPRi model, and they click the ones they'd take
   into the lab.
-  **Needs a Formspree endpoint before it's usable** (see that exercise's `INSTRUCTOR_NOTES.md`,
-  "Required setup").
 
 ## Course feedback
 

@@ -5,13 +5,6 @@ only collects a worksheet submission. This file is the only place the reasoning 
 live. If your GitHub repo is public, this file (and its git history) is publicly readable; see
 "Hosting privacy" below if that's a problem.
 
-## Required setup before using this exercise
-
-The worksheet still posts to the placeholder `https://formspree.io/f/YOUR_FORM_ID`. **Create a new
-Formspree form for this exercise** and replace that string in `index.html` (it appears once, in the
-`<form action=...>` attribute). Each exercise needs its own form, or submissions from the three
-exercises land in one inbox together.
-
 ## The case, in one line
 Real gene (PCSK9), real biology, **invented** patient: statin-refractory hypercholesterolemia, and
 the brief explicitly asks for something reversible and non-genomic, which is what points at CRISPRi
@@ -406,6 +399,11 @@ pasted" so it stays answerable either way.
 says "aim for 2 or 3" and the submit gate requires at least two, but nothing enforces an upper
 bound. A long picks list usually means they were browsing rather than choosing, which the pick log
 will also show.
+
+## Formspree
+The worksheet posts to `https://formspree.io/f/mljdnwby`, a separate form from the base editing
+(`moeqpbpl`) and prime editing (`mnpqldje`) exercises, so submissions from the three don't land in
+one inbox.
 
 ## Hosting privacy
 Same as the other exercises in this repo: if this repo is public, this file (and its git history)
