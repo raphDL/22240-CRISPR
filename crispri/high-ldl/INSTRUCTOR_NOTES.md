@@ -199,39 +199,87 @@ PAM, strand, offset, GC and score of each.
 
 ### Step 4: did it work?
 
-The qRT-PCR table is invented, but it is invented to be **honest about where the score is right and
-where it is wrong**:
+**The results are computed from the student's own picks.** There is no fixed table any more. Each
+guide they ticked in step 3 appears in step 4 with a measured "% of control", alongside a
+non-targeting control and three fixed lab reference guides. Whatever they chose is what they have
+to interpret, which is the point: the step 3 decision now has a consequence.
 
-| Offset | mRNA | What it shows |
+**The measurement model** (`measure()` in `index.html`). This is a **second, hidden model**, and it
+is deliberately not the one that produced the displayed score:
+
+| | Displayed score | Hidden measurement |
 |---|---|---|
-| −620 | 94% | Far upstream: outside the window, essentially no effect. |
-| −150 | 31% | Just upstream: real repression, and the score under-rates this. |
-| +40 | 11% | Best hit, right where the model's peak is. |
-| +180 | 58% | Still inside the window, but clearly weaker than +40. |
-| +850 | 97% | Deep in the gene body: outside the window, no effect. |
+| Position peak | +75 | **+35** |
+| Spread (σ) | 150 up / 200 down | 95 up / 160 down |
+| GC term | yes | **no** |
+| Poly-T term | yes | **no** |
+| Accessibility | **no** | **yes**: a poorly accessible stretch centred at **+150**, depth 0.55, σ 40 |
+| Per-guide variation | no | ±18%, from an FNV-1a hash of the protospacer |
 
-- ✅ **The window call is right; the fine ranking is not.** The strong/weak split tracks the window
-  exactly (the two guides outside it do nothing, the three inside it all work). But the −150 guide
-  outperforms the +180 guide, and the score ranked them the other way round. That is the honest
-  read, and it is what `step4_read` is asking for.
-- ✅ Any explanation of *why* a score would mis-rank two guides inside the window: chromatin
-  accessibility and nucleosome occupancy dominate at this resolution and the model knows nothing
-  about them; the real peak position varies gene by gene.
-- ❌ "The score was wrong" with nothing more, or "the score was right" with no acknowledgement of
-  the −150 / +180 inversion.
-- Students whose own picks (step 3) clustered around +50 to +90 should notice they'd have landed
-  near the best-performing guide. Say so; it's the payoff for the step.
-- The −620 and +850 rows sit outside the window students were asked to build, which is the point:
-  the window boundary was a real design decision, not an arbitrary crop.
+Final value is `% of control = 100 − 87 × activity`, floored at 0 and capped at 1 for activity.
+
+It is **deterministic**: the same protospacer always returns the same number, so two students who
+pick the same guide get the same result, and you can reproduce any student's table exactly from the
+`step4_measured` field. Nothing is randomised per session.
+
+**What the model produces, by zone:**
+
+| Offset zone | Score says | Measures | Agreement |
+|---|---|---|---|
+| −632, +848 (outside the window) | 0 | 100% | ✅ agree: no effect |
+| −26 to +92 | 80 to 100 | 13 to 41% | ✅ agree: strong repression |
+| **+112 to +186** | **86 to 98** | **44 to 72%** | ❌ **disagree: scored excellent, barely worked** |
+| +200 to +291 | 48 to 82 | 56 to 75% | ✅ roughly agree: mediocre |
+
+The +112 to +186 band is the whole lesson. The score has no accessibility term, so it rates that
+stretch highly on position alone; the measurement puts a nucleosome-occluded region there and those
+guides fail.
+
+**The three lab references** are real protospacers from this locus, fixed, and present in every
+student's table (unless they happened to pick the identical guide, in which case it is de-duplicated
+and shown once as their pick):
+
+| | Protospacer | PAM | Strand | Offset | GC | Score | Measures |
+|---|---|---|---|---|---|---|---|
+| A | `TCTTTGCAAATTGAATCTTC` | `TGG` | + | −632 | 30% | 0 | 100% |
+| **B** | `TCAGGAGCAGGGCGCGTGAA` | `GGG` | − | **+168** | 65% | **90** | **66%** |
+| C | `TGCCTCGCCGCGGCACAGGT` | `GGG` | + | +848 | 75% | 0 | 100% |
+
+A and C guarantee the window lesson lands even if every one of their picks worked: guides well
+outside −50/+300 do nothing. Their score of 0 is not a bug, it is the position Gaussian having
+collapsed that far from the TSS, and it is the one case where score and measurement agree perfectly.
+
+**B is the guaranteed discordance.** It scores 90, which would put it among the better guides in
+anyone's plot, and it only gets mRNA to 66%. Every student sees it regardless of what they picked.
+If their own picks all landed in the +50 to +90 cluster and all worked, B is still there to make the
+point.
+
+**Grading `step4_read`.** The answer depends on what they picked, so grade the reasoning, not a
+fixed conclusion:
+
+- ✅ **Separates the two things the data says.** The window call is confirmed (references A and C,
+  far outside it, do nothing), but the fine ranking inside the window is not reliable (reference B,
+  scored 90, achieved 66%). A student who reports only one of these has read half the table.
+- ✅ Proposes a mechanism for why a score would mis-rank guides inside the window: chromatin
+  accessibility, nucleosome occupancy, local DNA shape. None of these are in the model, and the page
+  says so under the plot.
+- ✅ If their own picks spanned the +112 to +186 band, they will have seen their own guide fail
+  despite a high score. That is the strongest version of the answer and worth calling out.
+- ✅ If all their picks worked, saying so plainly and still noticing reference B is a full answer.
+  Do not penalise a student for having chosen well.
+- ❌ "The score was wrong" with nothing more, or "the score was right" with no account of B.
+- ❌ Treating a 13% vs 21% difference between two of their own picks as meaningful. That gap is
+  inside the model's per-guide variation, and by extension inside qRT-PCR noise. Worth raising: how
+  many replicates would you need before ranking two guides that close?
 
 `step4_next`: **LDL receptor levels on hepatocytes**. The mRNA result only proves the guide
 represses transcription. The therapeutic chain is PCSK9 down → LDL receptor spared from degradation
-→ more receptors at the surface → more LDL cleared, and the receptor is the first link in that
-chain that is not already assumed. "The target protein in blood" is a defensible second choice
-(secreted PCSK9 is the actual circulating drug target and confirms the knockdown reached protein
-level) and deserves credit if `step4_next_why` argues it well. "The target gene's DNA sequence" is
-the instructive wrong answer: CRISPRi does not change the sequence, so there is nothing to find, and
-a student picking it has not internalised what dCas9 does. "Nothing else needed" is wrong for the
+→ more receptors at the surface → more LDL cleared, and the receptor is the first link in that chain
+that is not already assumed. "The target protein in blood" is a defensible second choice (secreted
+PCSK9 is the actual circulating drug target, and it confirms the knockdown reached protein level)
+and deserves credit if `step4_next_why` argues it well. "The target gene's DNA sequence" is the
+instructive wrong answer: CRISPRi does not change the sequence, so there is nothing to find, and a
+student picking it has not internalised what dCas9 does. "Nothing else needed" is wrong for the
 reason above.
 
 ## Suggested rubric (rough, adapt as needed)
@@ -241,8 +289,9 @@ reason above.
 3. **Guide design (step 3)**: correct window built around the TSS (not the ATG, and not the `gene`
    annotation), picks inside the high-scoring cluster, and a justification that engages with
    overlap, GC content, or the model's blind spots rather than just reading off the darkest bar.
-4. **Interpretation (step 4)**: reads the window/no-window split correctly, notices the −150 vs
-   +180 inversion, and picks a next measurement that advances the therapeutic argument.
+4. **Interpretation (step 4)**: reads the window/no-window split correctly (references A and C),
+   notices that reference B scored 90 and still failed, and picks a next measurement that advances
+   the therapeutic argument.
 
 ## Where student answers land
 The worksheet on `index.html` never reveals any answer key; submitting just posts the form to
@@ -252,8 +301,10 @@ Formspree dashboard.
 - Step 2: `step2_system` (`Cas9 nuclease`/`Base editor`/`dCas9-KRAB`/`dCas9-VPR`), `step2_system_why`
 - Step 3: `step3_pasted_window`, `step3_tss_in_window`, `step3_selected_guides` (auto-filled from
   the picks list), `step3_justify`
-- Step 4: `step4_read`, `step4_next` (`Target gene DNA sequence`/`Target protein in blood`/
-  `LDL receptor on hepatocytes`/`Nothing else needed`), `step4_next_why`
+- Step 4: `step4_measured` (auto-filled: every row of the table they were shown, so you can see
+  exactly what data they were reasoning about), `step4_read`, `step4_next`
+  (`Target gene DNA sequence`/`Target protein in blood`/`LDL receptor on hepatocytes`/
+  `Nothing else needed`), `step4_next_why`
 
 Note that `step3_pasted_window` will be ~350 characters per submission. That's deliberate: it's
 the only way to check the window they actually built, and it makes the TSS position they reported

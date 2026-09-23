@@ -299,6 +299,20 @@
   }
   .scroll-hint { display: none; font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem; }
   @media (max-width: 620px) { .scroll-hint { display: block; } }
+  #results-4 table { margin-top: 0.4rem; }
+  #results-4 tr.mine { background: var(--accent-soft); }
+  #results-4 tr.mine td:first-child { font-weight: 700; }
+  #results-4 .ref { color: var(--muted); font-style: italic; }
+  .mbar-wrap {
+    display: inline-block;
+    width: 78px; height: 8px;
+    background: var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    vertical-align: middle;
+    margin-right: 0.45rem;
+  }
+  .mbar { display: block; height: 100%; border-radius: 4px; }
   #picked-list { margin-top: 1rem; }
   #picked-list .empty { font-size: 0.85rem; color: var(--muted); }
   .picked-row {
@@ -507,20 +521,14 @@
   <section class="card step">
     <h2><span class="num">4</span>Did it work?</h2>
     <p>
-      Five guides go into hepatocytes, and the target's mRNA is measured by qRT-PCR against a
-      non-targeting control guide.
+      Your picks went into hepatocytes, alongside three reference guides the lab runs with every
+      panel and a non-targeting control. Target mRNA measured by qRT-PCR, as a percentage of the
+      non-targeting control. Lower means more repression.
     </p>
-    <div class="table-scroll">
-      <table>
-        <tr><th>Guide offset from TSS</th><th class="num-col">Target mRNA (% of control)</th></tr>
-        <tr><td>Non-targeting control</td><td class="num-col">100%</td></tr>
-        <tr><td>−620</td><td class="num-col">94%</td></tr>
-        <tr><td>−150</td><td class="num-col">31%</td></tr>
-        <tr><td>+40</td><td class="num-col">11%</td></tr>
-        <tr><td>+180</td><td class="num-col">58%</td></tr>
-        <tr><td>+850</td><td class="num-col">97%</td></tr>
-      </table>
+    <div id="results-4">
+      <p class="muted-note">Pick your guides in step 3 and your results will appear here.</p>
     </div>
+    <input type="hidden" name="step4_measured" id="step4-measured">
     <label for="step4_read">What does this tell you, and does it match what the score predicted?</label>
     <textarea id="step4_read" name="step4_read" required></textarea>
     <label>What would you measure next?</label>
@@ -747,6 +755,78 @@
   }
   function hideTip() { document.getElementById('tip').style.opacity = '0'; }
 
+  // The measured knockdown. This is a different, hidden model from the one that
+  // produces the displayed score: its peak sits nearer the TSS, and it carries a
+  // stretch of poor accessibility around +150 that the score knows nothing about.
+  function hash01(str) {
+    var h = 2166136261;
+    for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return ((h >>> 0) % 10000) / 10000;
+  }
+
+  function measure(g) {
+    var sigma = g.off < 35 ? 95 : 160;
+    var pos = Math.exp(-Math.pow(g.off - 35, 2) / (2 * sigma * sigma));
+    var occl = 1 - 0.55 * Math.exp(-Math.pow(g.off - 150, 2) / (2 * 40 * 40));
+    var act = Math.max(0, Math.min(1, pos * occl * (0.82 + 0.36 * hash01(g.proto))));
+    return Math.round(100 - 87 * act);
+  }
+
+  // Real protospacers from this locus, run every time as internal references.
+  var REFS = [
+    { proto: 'TCTTTGCAAATTGAATCTTC', pam: 'TGG', strand: '+', off: -632, gc: 30, score: 0 },
+    { proto: 'TCAGGAGCAGGGCGCGTGAA', pam: 'GGG', strand: '-', off: 168, gc: 65, score: 90 },
+    { proto: 'TGCCTCGCCGCGGCACAGGT', pam: 'GGG', strand: '+', off: 848, gc: 75, score: 0 }
+  ];
+
+  function mColor(pct) {
+    // strong knockdown = accent, no effect = grey
+    var t = Math.max(0, Math.min(1, (100 - pct) / 90));
+    var a = [152, 162, 179], b = [91, 33, 182];
+    return 'rgb(' + a.map(function (v, i) { return Math.round(v + (b[i] - v) * t); }).join(',') + ')';
+  }
+
+  function renderResults() {
+    var host = document.getElementById('results-4');
+    var chosen = GUIDES.filter(function (g) { return PICKED[g.id]; })
+                       .sort(function (a, b) { return a.off - b.off; });
+    if (!chosen.length) {
+      host.innerHTML = '<p class="muted-note">Pick your guides in step 3 and your results will appear here.</p>';
+      document.getElementById('step4-measured').value = '';
+      return;
+    }
+
+    var rows = [{ label: 'Non-targeting control', off: null, score: null, pct: 100, mine: false }];
+    chosen.forEach(function (g, i) {
+      rows.push({ label: 'Your pick ' + (i + 1), off: g.off, score: g.score, pct: measure(g), mine: true });
+    });
+    // a student can pick the same guide the lab uses as a reference; don't list it twice
+    var mine = chosen.map(function (g) { return g.proto; });
+    REFS.forEach(function (g, i) {
+      if (mine.indexOf(g.proto) !== -1) return;
+      rows.push({ label: 'Lab reference ' + 'ABC'[i], off: g.off, score: g.score, pct: measure(g), mine: false });
+    });
+
+    var h = '<div class="table-scroll"><table><tr><th>Guide</th><th class="num-col">Offset</th>' +
+            '<th class="num-col">Score</th><th>Target mRNA (% of control)</th></tr>';
+    rows.forEach(function (r) {
+      h += '<tr class="' + (r.mine ? 'mine' : '') + '">' +
+           '<td' + (r.mine ? '' : ' class="ref"') + '>' + r.label + '</td>' +
+           '<td class="num-col">' + (r.off === null ? '&mdash;' : fmtOff(r.off)) + '</td>' +
+           '<td class="num-col">' + (r.score === null ? '&mdash;' : r.score) + '</td>' +
+           '<td><span class="mbar-wrap"><span class="mbar" style="width:' + r.pct +
+           '%;background:' + mColor(r.pct) + '"></span></span>' + r.pct + '%</td></tr>';
+    });
+    h += '</table></div><p class="muted-note" style="margin-top:0.7rem;">The lab references are ' +
+         'fixed guides included in every panel: two of them sit outside the window you built, one ' +
+         'inside it. They were scored with the same model as yours.</p>';
+    host.innerHTML = h;
+
+    document.getElementById('step4-measured').value = rows.slice(1).map(function (r) {
+      return r.label + ' @ ' + (r.off > 0 ? '+' : '') + r.off + ' score ' + r.score + ': ' + r.pct + '%';
+    }).join(' | ');
+  }
+
   function toggle(id) {
     if (PICKED[id]) delete PICKED[id];
     else PICKED[id] = true;
@@ -778,6 +858,7 @@
       return g.proto + ' ' + g.pam + ' (' + g.strand + ', offset ' + (g.off > 0 ? '+' : '') + g.off +
              ', GC ' + g.gc + '%, score ' + g.score + ')';
     }).join(' | ');
+    renderResults();
   }
 
   document.getElementById('find-btn').addEventListener('click', function () {
@@ -854,6 +935,11 @@
     if (document.getElementById('results').hidden) {
       status.className = 'err';
       status.textContent = '⚠️ Step 3 is not done yet: paste your window and click "Find guides".';
+      return;
+    }
+    if (Object.keys(PICKED).length < 2) {
+      status.className = 'err';
+      status.textContent = '⚠️ Step 3 needs at least two guides picked.';
       return;
     }
     if (!document.getElementById('step3_justify').value.trim()) {
