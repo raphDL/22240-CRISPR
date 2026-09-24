@@ -2,6 +2,9 @@
 
 The family name is a pun: *astante* is Italian for "bystander", a nod to bystander edits.
 
+> For a one-page version of just the answers, see **[`ANSWERS.md`](ANSWERS.md)**. This file is the
+> long form: reasoning, rejected candidates, rubric and hosting notes.
+
 ⚠️ **This file is the answer key.** The student page (`index.html`) never reveals any answers; it
 only collects a worksheet submission. This file is the only place the reasoning and coordinates
 live, so you're the one who hands out the key, whenever and however you'd like. If your GitHub repo
