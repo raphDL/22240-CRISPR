@@ -10,6 +10,43 @@ All ten finalists below were re-verified against a fresh Ensembl fetch
 (`scripts/11_finalists.py`). Sequences, PAMs, strands and coordinates are as
 printed.
 
+## Overall ranking
+
+All ten finalists ranked against each other for teaching value. The scores in
+the sections below measure biological evidence; this ordering is a judgement on
+top of them, weighting how much a student has to *investigate* rather than
+confirm, how coherent the therapeutic premise is, and how much scaffolding the
+case needs before an introductory student can start.
+
+| # | Case | Type | The hook | Why here |
+|---|---|---|---|---|
+| 1 | **CFTR** M1T, Q2* | BE | edit confirmed, protein absent | the only case where the intended edit demonstrably *works* and the outcome is total failure. 1480 aa to 1 aa, 100% loss. One conversion, so the shortest path from contradiction to answer |
+| 2 | **FGFR3 → FGFR1** | Cas9 | treated at 1, no puberty at 13 | best Cas9 mystery: a decade's delay and a jump to an organ system nobody is monitoring. FGFR3 at 2% truncating is the cleanest therapeutic premise in the set |
+| 3 | **SMARCA2 → SMARCA4** | Cas9 | a cancer therapy causing cancer | highest computed score (84.6), widest loss-of-function contrast (2% vs 65%), gravest adverse event. Costs one sentence of setup about why anyone would knock out SMARCA2 |
+| 4 | **NF1** S82P → Q83* | BE | 2839 aa to 82 aa | the most dramatic reconstruction, 98% of the protein gone, and three bases converted so checking only ClinVar's bystander still leaves gaps |
+| 5 | **VHL** Y112H → R113* | BE | stop at the very next residue | same lesson as NF1 and less dramatic (48% loss). The adjacency is vivid, but **do not run both**, they teach the same thing |
+| 6 | **GLA** H46R → W47* | BE | X-linked, no second allele | the only case where zygosity is part of the risk. A male patient has nothing to compensate, which none of the autosomal cases force |
+| 7 | **SCN8A → SCN5A** | Cas9 | epilepsy therapy, cardiac event | the only case rewarding "where did the vector go". But SCN5A at 0.2 TPM in brain partly undercuts its own scenario, so it argues better as a discussion than an exercise |
+| 8 | **HNF1A** S249P → Q250* | BE | HbA1c does not move | the highest-confidence data in the set, both variants 3-star expert panel, but the weakest payoff: the missense at 249 is made irrelevant by the stop at 250 |
+| 9 | **GRIN2B → GRIN2A** | Cas9 | regression that looks like progression | excellent adverse event, weakest premise of the Cas9 five. GRIN2B at 27% truncating sits closest to the gate, and adult cortex expression is low |
+| 10 | **COL1A2 → COL1A1** | Cas9 | the therapy recreates the disease | lowest mystery by some distance: same family, same disease, guessable from the names. Keep it for the expression argument, which is the strongest here (4674 vs 3664 TPM in fibroblasts) |
+
+**If you run one:** CFTR. It is the cleanest demonstration that a confirmed
+on-target edit is not the same as a successful one.
+
+**If you run two:** CFTR and FGFR3/FGFR1, one per scenario. Together they cover
+both failure modes and neither is guessable.
+
+**If you run three:** add SMARCA2/SMARCA4 for the most serious adverse event, or
+NF1 if you would rather keep both exercises in the same scenario.
+
+**Pairs to avoid running together:** VHL with NF1 (same lesson), and
+COL1A2/COL1A1 with any other Cas9 case (it gives the game away, because once a
+student has seen one paralog off-target they expect the next).
+
+**Ranks 9 and 10 are the two I would drop** if the set needs to be shorter. Both
+are sound, but one has a thin therapeutic premise and the other has no mystery.
+
 ## What the biological filter changed
 
 **A nuclease only makes sense where destruction is the goal.** Cas9 makes
