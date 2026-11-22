@@ -1,0 +1,19 @@
+{
+  "vcf_records": 4620758,
+  "snvs": 4289231,
+  "pathogenic_or_likely_pathogenic_snvs": 198372,
+  "genes_with_plp_snv": 5312,
+  "by_review_stars": {
+    "0": 17807,
+    "2": 60520,
+    "1": 113168,
+    "3": 6858,
+    "4": 19
+  },
+  "transition_breakdown": {
+    "G>A": 40546,
+    "C>T": 40618,
+    "A>G": 12910,
+    "T>C": 12777
+  }
+}

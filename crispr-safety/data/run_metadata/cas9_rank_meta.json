@@ -1,0 +1,13 @@
+{
+  "input_pairs": 1319899,
+  "dropped": {
+    "not_both_disease_genes": 865504,
+    "segmental_duplication": 418697,
+    "gc_out_of_range": 3225,
+    "repeat_derived_multi_gene": 21365,
+    "polyT": 1189
+  },
+  "surviving_guide_pairs": 9919,
+  "distinct_gene_pairs": 2134,
+  "exact_matches": 5274
+}

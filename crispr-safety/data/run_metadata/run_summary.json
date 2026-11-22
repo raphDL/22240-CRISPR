@@ -1,0 +1,119 @@
+{
+  "base_editing_export": {
+    "verified_pairs_in": 4026,
+    "rows_written": 40,
+    "bystander_consequences_in_shortlist": {
+      "nonsense": 14,
+      "intron_variant;splice_acceptor_variant": 5,
+      "splice_acceptor_variant": 13,
+      "splice_donor_variant": 1,
+      "intron_variant;non-coding_transcript_variant;nonsense": 2,
+      "non-coding_transcript_variant;nonsense": 2,
+      "3_prime_UTR_variant;nonsense": 1,
+      "intron_variant;splice_donor_variant": 1,
+      "missense_variant;splice_acceptor_variant": 1
+    },
+    "conventional_editor_affected": 40
+  },
+  "bystander_join": {
+    "correctable_pathogenic_snvs": 106851,
+    "raw_pairs": 15366,
+    "unique_target_bystander_pairs": 15366,
+    "by_editor_chemistry": {
+      "CBE on -": 3916,
+      "ABE on +": 3916,
+      "CBE on +": 3767,
+      "ABE on -": 3767
+    },
+    "by_separation_bp": {
+      "1": 5062,
+      "2": 2122,
+      "3": 2272,
+      "4": 1638,
+      "5": 1174,
+      "6": 1800,
+      "7": 1298
+    },
+    "same_gene": 15360
+  },
+  "cas9_export": {
+    "scanned": 140,
+    "kept": 40,
+    "dropped_exon_junction": [
+      "COL1A1/COL3A1",
+      "COL4A4/COL4A5",
+      "COL11A1/COL5A1",
+      "COL5A1/COL11A2",
+      "MYH7/MYH2",
+      "STXBP2/STXBP1"
+    ]
+  },
+  "cas9_rank": {
+    "input_pairs": 1319899,
+    "dropped": {
+      "not_both_disease_genes": 865504,
+      "segmental_duplication": 418697,
+      "gc_out_of_range": 3225,
+      "repeat_derived_multi_gene": 21365,
+      "polyT": 1189
+    },
+    "surviving_guide_pairs": 9919,
+    "distinct_gene_pairs": 2134,
+    "exact_matches": 5274
+  },
+  "cds_index": {
+    "records": 382428,
+    "non_coding": 621,
+    "non_primary": 11342,
+    "kept_genes": 20008,
+    "total_cds_bp": 35321735
+  },
+  "clinvar": {
+    "vcf_records": 4620758,
+    "snvs": 4289231,
+    "pathogenic_or_likely_pathogenic_snvs": 198372,
+    "genes_with_plp_snv": 5312,
+    "by_review_stars": {
+      "0": 17807,
+      "2": 60520,
+      "1": 113168,
+      "3": 6858,
+      "4": 19
+    },
+    "transition_breakdown": {
+      "G>A": 40546,
+      "C>T": 40618,
+      "A>G": 12910,
+      "T>C": 12777
+    }
+  },
+  "dual_gene": {
+    "protospacers": 5244312,
+    "genes": 20008,
+    "skipped_buckets": 16489,
+    "skipped_entries": 12604982,
+    "exact_multigene_groups": 159982,
+    "candidate_pairs": 1319899
+  },
+  "verify": {
+    "pairs_in": 15366,
+    "with_usable_guide": 4026,
+    "no_pam_in_window": 11340,
+    "reference_base_mismatch": 0,
+    "sequence_unavailable": 0,
+    "guides_total": 7935,
+    "by_editor": {
+      "BE4max": 1332,
+      "BE4-NG": 3009,
+      "ABE7.10": 1057,
+      "ABE8e": 2537
+    }
+  },
+  "_sources": {
+    "clinvar": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz",
+    "ensembl_cds": "https://ftp.ensembl.org/pub/current_fasta/homo_sapiens/cds/Homo_sapiens.GRCh38.cds.all.fa.gz",
+    "ensembl_rest": "https://rest.ensembl.org",
+    "assembly": "GRCh38",
+    "note": "ClinVar and Ensembl are living databases; pin a release to reproduce these exact tables."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "pairs_in": 15366,
+  "with_usable_guide": 4026,
+  "no_pam_in_window": 11340,
+  "reference_base_mismatch": 0,
+  "sequence_unavailable": 0,
+  "guides_total": 7935,
+  "by_editor": {
+    "BE4max": 1332,
+    "BE4-NG": 3009,
+    "ABE7.10": 1057,
+    "ABE8e": 2537
+  }
+}

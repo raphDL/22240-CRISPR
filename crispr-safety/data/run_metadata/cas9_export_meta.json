@@ -1,0 +1,12 @@
+{
+  "scanned": 140,
+  "kept": 40,
+  "dropped_exon_junction": [
+    "COL1A1/COL3A1",
+    "COL4A4/COL4A5",
+    "COL11A1/COL5A1",
+    "COL5A1/COL11A2",
+    "MYH7/MYH2",
+    "STXBP2/STXBP1"
+  ]
+}

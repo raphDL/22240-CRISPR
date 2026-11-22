@@ -1,0 +1,21 @@
+{
+  "correctable_pathogenic_snvs": 106851,
+  "raw_pairs": 15366,
+  "unique_target_bystander_pairs": 15366,
+  "by_editor_chemistry": {
+    "CBE on -": 3916,
+    "ABE on +": 3916,
+    "CBE on +": 3767,
+    "ABE on -": 3767
+  },
+  "by_separation_bp": {
+    "1": 5062,
+    "2": 2122,
+    "3": 2272,
+    "4": 1638,
+    "5": 1174,
+    "6": 1800,
+    "7": 1298
+  },
+  "same_gene": 15360
+}

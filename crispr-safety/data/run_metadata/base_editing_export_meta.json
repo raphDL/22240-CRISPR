@@ -1,0 +1,16 @@
+{
+  "verified_pairs_in": 4026,
+  "rows_written": 40,
+  "bystander_consequences_in_shortlist": {
+    "nonsense": 14,
+    "intron_variant;splice_acceptor_variant": 5,
+    "splice_acceptor_variant": 13,
+    "splice_donor_variant": 1,
+    "intron_variant;non-coding_transcript_variant;nonsense": 2,
+    "non-coding_transcript_variant;nonsense": 2,
+    "3_prime_UTR_variant;nonsense": 1,
+    "intron_variant;splice_donor_variant": 1,
+    "missense_variant;splice_acceptor_variant": 1
+  },
+  "conventional_editor_affected": 40
+}
