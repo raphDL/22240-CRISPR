@@ -76,8 +76,9 @@ exercise you want a short link for.
   the molecular level from the sponsor's own data plus public databases. Case 001 is a Cas9 guide
   with an exact off-target in a paralog; Case 002 is a base editor whose window contained a second
   pathogenic cytosine. Both were discovered by the screen in `crispr-safety/`, and both ship an
-  `ANSWERS.md`. **Each needs its own Formspree endpoint before use** (placeholders
-  `YOUR_FORM_ID_CASE1` and `YOUR_FORM_ID_CASE2` in the two `index.html` files).
+  `ANSWERS.md`. Case 001 posts to `mnpdoqyy`. **Case 002 still needs its own Formspree endpoint**
+  (placeholder `YOUR_FORM_ID_CASE2` in `safety/case-002/index.html`); until it has one, submitting
+  that worksheet will fail.
 
 ## Discovery pipeline
 

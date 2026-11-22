@@ -102,7 +102,8 @@ What the sponsor must provide:
 
 ## Where student answers land
 
-Formspree. Field names: `step1_n_perfect_sites`, `step1_coordinates`,
+The worksheet posts to `https://formspree.io/f/mnpdoqyy`, a form of its own, so
+Case 001 submissions stay separate from the other exercises. Field names: `step1_n_perfect_sites`, `step1_coordinates`,
 `step2_offtarget_gene`, `step2_offtarget_position`, `step3_lof_phenotype`,
 `step3_match`, `step3_matching_findings`, `step3_expression`,
 `step4_root_cause`, `step4_design_rule`, `step4_redesign`,
