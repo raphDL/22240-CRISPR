@@ -11,9 +11,14 @@ Two questions:
   with the same guide, also convert a second base that ClinVar independently
   classifies as pathogenic?
 
-Results are in `results/`, interpretation and the ranked case studies are in
-[`REPORT.md`](REPORT.md), and the limitations of the screen are documented at the
-end of that file. Read those before using any candidate with students.
+Results are in `results/`. [`REPORT.md`](REPORT.md) covers the screen itself and
+the 10 best of each category by sequence and clinical evidence.
+[`REASSESSMENT.md`](REASSESSMENT.md) is the one to read first: it re-ranks on
+biology rather than sequence identity (is a nuclease even a coherent therapy for
+the intended gene, does losing the off-target gene matter, are both expressed in
+the delivery tissue) and picks the five best per scenario, with the edited
+allele reconstructed and translated for every base-editing case. Limitations are
+documented at the end of both files.
 
 ## Install and run
 
@@ -37,6 +42,9 @@ python3 scripts/05_verify_guides.py          # ~12 min, hits the Ensembl REST AP
 python3 scripts/06_rank_cas9.py              # ~1 min
 python3 scripts/07_export_cas9.py            # ~3 min, Ensembl REST
 python3 scripts/08_export_base_editing.py    # ~5 s
+python3 scripts/09_reconstruct_alleles.py    # ~4 min, Ensembl VEP + lookup
+python3 scripts/10_reassess_cas9.py          # ~2 min, GTEx
+python3 scripts/11_finalists.py              # ~30 s
 
 python3 -m pytest tests/ -q                  # ~4 min, re-fetches from Ensembl
 ```
@@ -53,6 +61,8 @@ force that step to refetch.
 | ClinVar GRCh38 VCF | `data/raw/clinvar_GRCh38.vcf.gz` | variant classifications, never inferred |
 | Ensembl REST `/sequence/region` | cached | genomic sequence for PAM and window checks |
 | Ensembl REST `/map/cds` | cached | CDS offsets to GRCh38 coordinates |
+| Ensembl REST `/vep`, `/lookup`, `/sequence/id` | cached | MANE transcript, exon structure, allele reconstruction |
+| GTEx v8 median expression | cached | whether both genes are expressed in the delivery tissue |
 
 ClinVar and Ensembl both update; pin the release if you need the exact tables in
 `REPORT.md` to reproduce byte for byte.
@@ -70,7 +80,10 @@ crispr-safety/
 │   ├── 05_verify_guides.py          sequence fetch, PAM and window verification
 │   ├── 06_rank_cas9.py              Scenario A filtering and scoring
 │   ├── 07_export_cas9.py            CDS to genomic mapping, Scenario A CSV
-│   └── 08_export_base_editing.py    Scenario B ranking and CSV
+│   ├── 08_export_base_editing.py    Scenario B ranking and CSV
+│   ├── 09_reconstruct_alleles.py    build and translate the real edited allele
+│   ├── 10_reassess_cas9.py          biological re-ranking: LoF, expression, therapy
+│   └── 11_finalists.py              select and re-verify the 5 best per scenario
 ├── tests/
 │   ├── test_common.py               strand, PAM, window, chemistry
 │   └── test_end_to_end.py           re-derives published rows from Ensembl
@@ -78,7 +91,10 @@ crispr-safety/
 ├── data/cache/                      intermediates and run metadata (gitignored)
 ├── results/cas9_candidates.csv      40 ranked dual-gene guides
 ├── results/base_editing_candidates.csv  40 ranked pathogenic-bystander cases
-└── REPORT.md                        the 10 best of each, with 3 worked exercises
+├── results/finalists_cas9.csv       the 5 selected on biology, verified
+├── results/finalists_base_editing.csv   the 5 selected, with reconstructed proteins
+├── REPORT.md                        the 10 best of each, with 3 worked exercises
+└── REASSESSMENT.md                  biological re-ranking, the 5 best of each
 ```
 
 ## How the screens work
