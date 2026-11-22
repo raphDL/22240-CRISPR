@@ -70,6 +70,23 @@ exercise you want a short link for.
   interactive track, scored by a simplified CRISPRi model, and they click the ones they'd take
   into the lab.
 
+- **Safety review: Case 001 (`safety/case-001/`) and Case 002 (`safety/case-002/`)**, short links
+  `c1/` and `c2/`. A different format from the other four: students are not designing anything,
+  they are reviewing a submitted trial package as a regulator and working out what went wrong at
+  the molecular level from the sponsor's own data plus public databases. Case 001 is a Cas9 guide
+  with an exact off-target in a paralog; Case 002 is a base editor whose window contained a second
+  pathogenic cytosine. Both were discovered by the screen in `crispr-safety/`, and both ship an
+  `ANSWERS.md`. **Each needs its own Formspree endpoint before use** (placeholders
+  `YOUR_FORM_ID_CASE1` and `YOUR_FORM_ID_CASE2` in the two `index.html` files).
+
+## Discovery pipeline
+
+`crispr-safety/` is not an exercise. It is the reproducible screen that found the two safety cases:
+a systematic search over GRCh38, Ensembl and ClinVar for guides that target two genes, and for
+base-editor corrections whose window contains an independently pathogenic base. See
+`crispr-safety/README.md` to run it and `crispr-safety/REASSESSMENT.md` for the ranked candidates,
+including the five of each kind that were judged best for teaching and why.
+
 ## Course feedback
 
 Two anonymous feedback forms, one per pair of lectures. Each is a 1-10 rating plus three open
