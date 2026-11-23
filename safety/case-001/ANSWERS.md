@@ -102,8 +102,12 @@ What the sponsor must provide:
 
 ## Where student answers land
 
-The worksheet posts to `https://formspree.io/f/mnpdoqyy`, a form of its own, so
-Case 001 submissions stay separate from the other exercises. Field names: `step1_n_perfect_sites`, `step1_coordinates`,
+The worksheet posts to `https://formspree.io/f/mnpdoqyy`, which Case 002 shares.
+Both cases post to it, so every submission carries a hidden **`case`** field,
+`001` or `002`, to sort the inbox by. The step 5 fields (`step5_determination`
+and friends) are deliberately identical across the two cases so the
+determinations are comparable; the step 1 to 4 fields are unique to each. Field
+names: `step1_n_perfect_sites`, `step1_coordinates`,
 `step2_offtarget_gene`, `step2_offtarget_position`, `step3_lof_phenotype`,
 `step3_match`, `step3_matching_findings`, `step3_expression`,
 `step4_root_cause`, `step4_design_rule`, `step4_redesign`,

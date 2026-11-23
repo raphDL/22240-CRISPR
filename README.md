@@ -76,9 +76,11 @@ exercise you want a short link for.
   the molecular level from the sponsor's own data plus public databases. Case 001 is a Cas9 guide
   with an exact off-target in a paralog; Case 002 is a base editor whose window contained a second
   pathogenic cytosine. Both were discovered by the screen in `crispr-safety/`, and both ship an
-  `ANSWERS.md`. Case 001 posts to `mnpdoqyy`. **Case 002 still needs its own Formspree endpoint**
-  (placeholder `YOUR_FORM_ID_CASE2` in `safety/case-002/index.html`); until it has one, submitting
-  that worksheet will fail.
+  `ANSWERS.md`. Both post to the same Formspree form, `mnpdoqyy`, the one deliberate exception to
+  the one-form-per-exercise rule. Every submission carries a hidden `case` field (`001` or `002`)
+  to sort the shared inbox by, and an email subject naming the case. The two forms share their
+  step 5 determination fields on purpose, so answers to the same regulatory question are directly
+  comparable; all other fields are unique to each case.
 
 ## Discovery pipeline
 

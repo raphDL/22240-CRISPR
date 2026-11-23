@@ -120,7 +120,12 @@ out that the edit and the damage are inseparable. Push on that.
 
 ## Where student answers land
 
-Formspree. Field names: `step1_variant_consequence`, `step1_what_is_restored`,
+The worksheet posts to `https://formspree.io/f/mnpdoqyy`, which Case 001 shares.
+Both cases post to it, so every submission carries a hidden **`case`** field,
+`001` or `002`, to sort the inbox by. The step 5 fields (`step5_determination`
+and friends) are deliberately identical across the two cases so the
+determinations are comparable; the step 1 to 4 fields are unique to each. Field
+names: `step1_variant_consequence`, `step1_what_is_restored`,
 `step1_target_window_position`, `step2_n_cytosines`, `step2_cytosine_list`,
 `step3_bystander_clinvar`, `step3_bystander_effect`, `step3_third_cytosine`,
 `step4_edited_sequence`, `step4_protein_length`, `step4_why_dose_fails`,
