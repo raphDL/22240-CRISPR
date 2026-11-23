@@ -70,21 +70,30 @@ exercise you want a short link for.
   interactive track, scored by a simplified CRISPRi model, and they click the ones they'd take
   into the lab.
 
-- **Safety review: Cases 001, 002 and 003** (`safety/case-00N/`), short links `c1/`, `c2/`, `c3/`. A different format from the other four: students are not designing anything,
-  they are reviewing a submitted trial package as a regulator and working out what went wrong at
-  the molecular level from the sponsor's own data plus public databases. Case 001 is a Cas9 guide
-  with an exact off-target in a paralog, Case 002 a base editor whose window contained a second
-  pathogenic cytosine, and Case 003 an HDR donor with no blocking mutation, so Cas9 re-cuts every
-  allele it repairs. Cases 001 and 002 came out of the screen in `crispr-safety/`. Each ships an
-  `ANSWERS.md`.
+- **Safety review: Three stories** (`safety/`). One page carrying all three cases, with an
+  overview panel per case, a difficulty rating in stars, and anchor links into each. A different
+  format from the other exercises: students are not designing anything, they are reviewing a
+  submitted trial package as a regulator and working out what went wrong at the molecular level
+  from the sponsor's own data plus public databases. Each case has its own form and submit button,
+  so they can be done one at a time.
 
-  They form a difficulty ladder and are best run **003, then 002, then 001**. Case 003 is a
-  sequence comparison with everything needed on the page; Case 002 adds ClinVar and a codon
-  reconstruction; Case 001 needs a genome-wide search and an expression argument. Both post to the same Formspree form, `mnpdoqyy`, the one deliberate exception to
-  the one-form-per-exercise rule. Every submission carries a hidden `case` field (`001`, `002` or `003`)
-  to sort the shared inbox by, and an email subject naming the case. All three share their
-  determination fields on purpose, so answers to the same regulatory question are directly
-  comparable; all other fields are unique to each case.
+  | | Case | Modality | Difficulty |
+  |---|---|---|---|
+  | start here | 003 Haemolyne-1 | HDR donor with no re-cutting protection | ★☆☆ |
+  | | 002 Alveon-CF | base editor bystander in the window | ★★☆ |
+  | | 001 FGF-Restore | Cas9 exact off-target in a paralog | ★★★ |
+
+  Suggested order is easiest first, which is the reverse of the numbering; the numbers are just
+  identifiers. Case 003 is a sequence comparison with everything needed on the page, 002 adds
+  ClinVar and a codon reconstruction, 001 needs a genome-wide search and an expression argument.
+  Cases 001 and 002 came out of the screen in `crispr-safety/`.
+
+  Answer keys live in `safety/answers/`, one per case. Short links `c1/`, `c2/` and `c3/` jump
+  straight to a case; `safety/case-00N/` still redirects for any link handed out earlier. All
+  three post to the same Formspree form, `mnpdoqyy`, the one deliberate exception to the
+  one-form-per-exercise rule: every submission carries a hidden `case` field (`001`, `002` or
+  `003`) and an email subject naming the case. The determination fields are shared across all
+  three on purpose, so answers to the same regulatory question are comparable.
 
 ## Discovery pipeline
 
