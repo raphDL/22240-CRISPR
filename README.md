@@ -70,16 +70,20 @@ exercise you want a short link for.
   interactive track, scored by a simplified CRISPRi model, and they click the ones they'd take
   into the lab.
 
-- **Safety review: Case 001 (`safety/case-001/`) and Case 002 (`safety/case-002/`)**, short links
-  `c1/` and `c2/`. A different format from the other four: students are not designing anything,
+- **Safety review: Cases 001, 002 and 003** (`safety/case-00N/`), short links `c1/`, `c2/`, `c3/`. A different format from the other four: students are not designing anything,
   they are reviewing a submitted trial package as a regulator and working out what went wrong at
   the molecular level from the sponsor's own data plus public databases. Case 001 is a Cas9 guide
-  with an exact off-target in a paralog; Case 002 is a base editor whose window contained a second
-  pathogenic cytosine. Both were discovered by the screen in `crispr-safety/`, and both ship an
-  `ANSWERS.md`. Both post to the same Formspree form, `mnpdoqyy`, the one deliberate exception to
-  the one-form-per-exercise rule. Every submission carries a hidden `case` field (`001` or `002`)
-  to sort the shared inbox by, and an email subject naming the case. The two forms share their
-  step 5 determination fields on purpose, so answers to the same regulatory question are directly
+  with an exact off-target in a paralog, Case 002 a base editor whose window contained a second
+  pathogenic cytosine, and Case 003 an HDR donor with no blocking mutation, so Cas9 re-cuts every
+  allele it repairs. Cases 001 and 002 came out of the screen in `crispr-safety/`. Each ships an
+  `ANSWERS.md`.
+
+  They form a difficulty ladder and are best run **003, then 002, then 001**. Case 003 is a
+  sequence comparison with everything needed on the page; Case 002 adds ClinVar and a codon
+  reconstruction; Case 001 needs a genome-wide search and an expression argument. Both post to the same Formspree form, `mnpdoqyy`, the one deliberate exception to
+  the one-form-per-exercise rule. Every submission carries a hidden `case` field (`001`, `002` or `003`)
+  to sort the shared inbox by, and an email subject naming the case. All three share their
+  determination fields on purpose, so answers to the same regulatory question are directly
   comparable; all other fields are unique to each case.
 
 ## Discovery pipeline
