@@ -278,6 +278,20 @@
     font-size: 0.93rem;
   }
   .role strong { color: var(--accent-ink); }
+  .primer {
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    margin: 1.2rem 0 0;
+    font-size: 0.87rem;
+  }
+  .primer h4 {
+    margin: 0 0 0.45rem; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: .07em; color: var(--muted);
+  }
+  .primer p { margin: 0 0 0.5rem; }
+  .primer p:last-child { margin-bottom: 0; }
   .chart { margin: 1rem 0 0.5rem; }
   .chart svg { width: 100%; height: auto; display: block; overflow: visible; }
   .chart .grid line { stroke: var(--line); stroke-width: 1; }
@@ -501,6 +515,25 @@
       The product met the company's release specification of at least 70% total editing.
     </p>
 
+    <div class="primer">
+      <h4>Haemoglobin, for reference</h4>
+      <p>
+        A haemoglobin molecule is four globin chains. <strong>HbA</strong>, the normal adult form,
+        is two alpha and two beta. <strong>HbS</strong> is the same molecule carrying the sickle
+        beta chain instead of the normal one. Beta-globin is the product of <em>HBB</em>.
+      </p>
+      <p>
+        <strong>HbF</strong>, the fetal form, is two alpha and two <em>gamma</em> chains.
+        <strong>HbA2</strong> is two alpha and two <em>delta</em> chains. Neither of them contains
+        beta-globin.
+      </p>
+      <p>
+        The fractions below are percentages of total haemoglobin, so they add to 100%. In adults
+        HbF is normally under 1%, though it is often raised in sickle cell disease. Normal total
+        haemoglobin is roughly 13 to 17 g/dL.
+      </p>
+    </div>
+
     <div class="ae">
       <h3>Serious adverse event report</h3>
       <p>
@@ -624,7 +657,7 @@
     </div>
     <label for="c001-step3_why">What happened to the rest of the participant's beta-globin, and why?</label>
     <textarea id="c001-step3_why" name="step3_globin_fate" required></textarea>
-    <label for="c001-step3_dx">What condition does the participant now have? Name it, and say whether it is better or worse than where they started.</label>
+    <label for="c001-step3_dx">What condition does the participant now have? Name it or describe it, and say whether it is better or worse than where they started.</label>
     <textarea id="c001-step3_dx" name="step3_new_condition" required></textarea>
   </section>
 

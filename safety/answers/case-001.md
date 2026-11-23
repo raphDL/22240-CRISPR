@@ -109,7 +109,10 @@ The single most telling line in the table is that **HbS fell and HbA did not
 rise to replace it.** In a successful correction the two move together.
 
 **The new condition.** Predominantly **beta-zero thalassemia**, transfusion
-dependent. The participant has exchanged sickle cell disease for transfusion
+dependent. Accept a description without the name: most of this class has not
+done haematology, and "they make almost no beta-globin and need transfusions
+for life" is the same answer. The page gives them the chain composition of each
+haemoglobin and nothing else, so the reading of the panel is theirs to do. The participant has exchanged sickle cell disease for transfusion
 dependent thalassemia. The absence of vaso-occlusive crises is real and is not
 evidence of benefit: a patient who makes almost no beta-globin cannot sickle.
 
