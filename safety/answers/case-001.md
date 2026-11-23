@@ -36,8 +36,9 @@ target in the participant's allele : CTTGCCCCACAGGGCAGTAA CGG
 target in a repaired allele        : CTTGCCCCACAGGGCAGTAA CGG   identical
 ```
 
-So the answer to "are they the same" is **yes, 20 out of 20, PAM included**. A
-student who gets this far has the case.
+The target reads identically before and after repair, 20 out of 20 with the PAM
+included. The page does not ask for this any more, and that is the point: a
+student has to go looking for it. One who does has the case.
 
 ## Step 2. Account for the manufacturing data
 
@@ -101,12 +102,12 @@ replace it.** In a successful correction the two move together, because every
 allele that stops making HbS starts making HbA. Here the beta-globin went
 nowhere. It stopped being made.
 
-**Why HbF rises, if it comes up.** HbF is the only one of the three that does
-not need beta-globin, so it is most of what is left to count. It also rises for
-real, 0.92 to 5.25 g/dL, as the marrow responds to the anemia. Students do not
-need the second half. If someone reads the HbF rise as the therapy working,
-that is the misreading to correct: HbF went up because everything else went
-away.
+**If someone asks what the other 86% is.** Fetal haemoglobin, HbF, which is
+built from a different globin gene and needs no beta-globin, which is exactly
+why it is still there. It is off the chart on purpose: this is a CRISPR course
+and the case does not need it. Answer it if it comes up, and note that a rising
+HbF is not the therapy working, it is what is left once everything else has
+gone.
 
 **The new condition.** The participant makes almost no beta-globin and needs
 transfusions for life. Named, that is beta-zero thalassemia, but do not require
@@ -165,8 +166,7 @@ every submission carries a hidden **`case`** field (`001` here). The step 4
 determination fields are deliberately identical across all three cases so the
 determinations are comparable.
 
-- Step 1: `step1_n_changes` (expect **1**), `step1_donor_changes`,
-  `step1_target_before_after`
+- Step 1: `step1_n_changes` (expect **1**)
 - Step 2: `step2_mechanism`, `step2_alternative_ruled_out`, `step2_fix`
 - Step 3: `step3_claim` (expect **Technically true but misleading**),
   `step3_globin_fate`, `step3_new_condition`
