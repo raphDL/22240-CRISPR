@@ -87,34 +87,33 @@ matters.
 ## Step 3. Account for the clinical outcome
 
 **The company's claim is technically true and misleading.** HbS really did fall
-from 84% to 9%. It fell because *HBB was knocked out*, not because it was
+from 89% to 9%. It fell because *HBB was knocked out*, not because it was
 repaired.
 
 **Where the beta-globin went.** 78% of alleles carry frameshift indels in HBB
 and produce no beta-globin at all. Only 11% were corrected, which is why HbA
-reached just 5%. Beta-globin haemoglobin, HbA plus HbS, goes from 7.06 to 0.85
-g/dL, which is 12% of baseline, and total haemoglobin **falls** from 8.4 to 6.1
-g/dL.
+reached just 5%. Both HbA and HbS need beta-globin, so both are nearly gone:
+together they fall from 7.48 to 0.85 g/dL, which is 11% of baseline, and total
+haemoglobin **falls** from 8.4 to 6.1 g/dL.
 
-**Why HbF rises, if it comes up.** Partly it is arithmetic: these are shares of
-a shrinking total, and with beta-globin gone the gamma-containing HbF is most of
-what is left to count. But not only. In absolute terms HbF goes from 0.92 to
-5.06 g/dL, a real five-fold rise, from stress erythropoiesis and from selection,
-since a cell making little or no beta-globin carries excess free alpha chains
-that precipitate and kill it, so the cells that survive best are the ones making
-the most gamma. It is the same reason HbF dominates in untreated beta-zero
-thalassemia, which is the point: this participant now has that disease.
+The whole of step 3 turns on one observation: **HbS fell and HbA did not rise to
+replace it.** In a successful correction the two move together, because every
+allele that stops making HbS starts making HbA. Here the beta-globin went
+nowhere. It stopped being made.
 
-The single most telling line in the table is that **HbS fell and HbA did not
-rise to replace it.** In a successful correction the two move together.
+**Why HbF rises, if it comes up.** HbF is the only one of the three that does
+not need beta-globin, so it is most of what is left to count. It also rises for
+real, 0.92 to 5.25 g/dL, as the marrow responds to the anemia. Students do not
+need the second half. If someone reads the HbF rise as the therapy working,
+that is the misreading to correct: HbF went up because everything else went
+away.
 
-**The new condition.** Predominantly **beta-zero thalassemia**, transfusion
-dependent. Accept a description without the name: most of this class has not
-done haematology, and "they make almost no beta-globin and need transfusions
-for life" is the same answer. The page gives them the chain composition of each
-haemoglobin and nothing else, so the reading of the panel is theirs to do. The participant has exchanged sickle cell disease for transfusion
-dependent thalassemia. The absence of vaso-occlusive crises is real and is not
-evidence of benefit: a patient who makes almost no beta-globin cannot sickle.
+**The new condition.** The participant makes almost no beta-globin and needs
+transfusions for life. Named, that is beta-zero thalassemia, but do not require
+the name: this is a CRISPR course and most of the class has not done
+haematology. "They have swapped one blood disease for another" is the answer.
+The absence of vaso-occlusive crises is real and is not evidence of benefit: a
+patient who makes almost no beta-globin cannot sickle.
 
 This is worse than where they started. Expect some students to argue it is a
 trade rather than a worsening, since crises have stopped. That is a good
@@ -155,7 +154,7 @@ comparison with no database lookup, and the page hands over all three sequences
 needed to make it. Case 002 requires ClinVar and a codon reconstruction; Case
 003 requires a genome-wide search and an expression argument.
 
-The intended failure mode is a student who accepts the 89% HbS reduction as
+The intended failure mode is a student who accepts the 90% HbS reduction as
 success and attributes the transfusion requirement to conditioning, exactly as
 the company does.
 
