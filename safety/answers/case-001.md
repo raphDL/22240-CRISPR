@@ -86,7 +86,7 @@ matters.
 
 ## Step 3. Account for the clinical outcome
 
-**The sponsor's claim is technically true and misleading.** HbS really did fall
+**The company's claim is technically true and misleading.** HbS really did fall
 from 84% to 9%. It fell because *HBB was knocked out*, not because it was
 repaired.
 
@@ -115,7 +115,7 @@ not a favourable exchange.
 **Clinical hold** is expected. The defect is in the reagent design and no dose,
 schedule or conditioning change addresses it.
 
-What the sponsor must do:
+What the company must do:
 
 - Redesign the donor with a blocking mutation, or move to a seed-overlapping
   guide, and show by time course that the corrected fraction is now **stable**
@@ -145,7 +145,7 @@ needed to make it. Case 002 requires ClinVar and a codon reconstruction; Case
 
 The intended failure mode is a student who accepts the 89% HbS reduction as
 success and attributes the transfusion requirement to conditioning, exactly as
-the sponsor does.
+the company does.
 
 ## Where student answers land
 
@@ -159,11 +159,11 @@ determinations are comparable.
 - Step 2: `step2_mechanism`, `step2_alternative_ruled_out`, `step2_fix`
 - Step 3: `step3_claim` (expect **Technically true but misleading**),
   `step3_globin_fate`, `step3_new_condition`
-- Step 4: `step4_determination`, `step4_determination_why`, `step4_sponsor_actions`
+- Step 4: `step4_determination`, `step4_determination_why`, `step4_company_actions`
 
 ## What is invented and what is real
 
-Invented: the trial, the sponsor, the product, the participant, the
+Invented: the trial, the company, the product, the participant, the
 manufacturing percentages and the haemoglobin values. Real: the gene, the sickle
 variant and its coordinate, the guide and PAM, the 100 nt donor (verified
 identical to GRCh38 chr11:5,226,935-5,227,034), the fact that the protospacer

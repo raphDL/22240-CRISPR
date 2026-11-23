@@ -22,7 +22,7 @@ which is precisely the adverse event reported.
 Protospacer `TGGAGATGATGAAGATGATC`. Zero mismatches at either site, so CRISPOR
 lists the second as a 0-mismatch off-target and BLAT returns two hits. A student
 who finds only one site has searched the *FGFR3* locus rather than the genome,
-which is the same mistake the sponsor made.
+which is the same mistake the company made.
 
 ## Step 1 continued. What is at the second site
 
@@ -87,7 +87,7 @@ match in *FGFR1* go away. "Continue with added monitoring" is defensible only if
 the student argues the benefit already realised outweighs the risk, and it
 should still require everything below.
 
-What the sponsor must provide:
+What the company must provide:
 
 - A **genome-wide** specificity assessment. The submitted one was, in their own
   words, "restricted to the *FGFR3* locus", which is the regulatory failure at
@@ -104,10 +104,10 @@ What the sponsor must provide:
 
 This case is built to be hard. The page states the trial, the reagent and the
 clinical findings, and nothing else. In particular it does **not** say that the
-guide has more than one site, that the sponsor missed anything, that Cas9
+guide has more than one site, that the company missed anything, that Cas9
 produces loss of function, that the two sites are an exact match, or which tools
 to use. Every step heading is neutral: "Characterise the reagent", not "What did
-the sponsor miss".
+the company miss".
 
 The earlier draft leaked all of that in its step lead-ins. If students stall,
 the collapsed **"If you are not sure where to start"** block names the tool
@@ -116,7 +116,7 @@ what they will find.
 
 Expect this to run longer than 20 minutes now. The intended failure mode is a
 student who searches only the *FGFR3* locus, finds one site, and reports "no
-explanation", which is exactly the sponsor's error and a good thing to discuss.
+explanation", which is exactly the company's error and a good thing to discuss.
 
 ## Where student answers land
 
@@ -128,7 +128,7 @@ determinations are comparable.
 - Step 1: `step1_n_sites` (expect **2**), `step1_sites`, `step1_method`
 - Step 2: `step2_explains` (`Yes`/`Partly`/`No`), `step2_mechanism`, `step2_evidence`
 - Step 3: `step3_why`, `step3_preventable`, `step3_design_rule`
-- Step 4: `step4_determination`, `step4_determination_why`, `step4_sponsor_actions`
+- Step 4: `step4_determination`, `step4_determination_why`, `step4_company_actions`
 
 Grade `step1_method` seriously. A student who used CRISPOR or a genome-wide BLAT
 and says so has done the work; one who reports two sites without being able to
@@ -136,7 +136,7 @@ say how they searched has probably guessed from the gene names.
 
 ## What is invented and what is real
 
-Invented: the trial, the sponsor, the product, the participant, the adverse
+Invented: the trial, the company, the product, the participant, the adverse
 event. Real: the gene pair, the protospacer, both sets of GRCh38 coordinates,
 both PAMs, the exon and residue numbers, the ClinVar counts, and the GTEx
 expression values. All verified against a fresh Ensembl fetch in

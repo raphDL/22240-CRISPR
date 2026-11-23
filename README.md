@@ -70,11 +70,11 @@ exercise you want a short link for.
   interactive track, scored by a simplified CRISPRi model, and they click the ones they'd take
   into the lab.
 
-- **Safety review: Three stories** (`safety/`). One page carrying all three cases, with an
+- **Safety review: Three CRISPR stories** (`safety/`). One page carrying all three cases, with an
   overview panel per case, a difficulty rating in stars, and anchor links into each. A different
   format from the other exercises: students are not designing anything, they are reviewing a
   submitted trial package as a regulator and working out what went wrong at the molecular level
-  from the sponsor's own data plus public databases. Each case has its own form and submit button,
+  from the company's own data plus public databases. Each case has its own form and submit button,
   so they can be done one at a time.
 
   | Case | Mechanism | Difficulty |
