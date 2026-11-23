@@ -11,7 +11,7 @@ cytosine, and converting it put a stop codon at residue 2, so the sponsor
 restored the start codon and then terminated translation immediately after it.
 **1,480 amino acids become 1.**
 
-## 1. Verify the intended edit
+## Step 1. Verify the sponsor's claim
 
 **The variant.** `NC_000007.14:g.117480096T>C`, ClinVar
 [53622](https://www.ncbi.nlm.nih.gov/clinvar/variation/53622), Pathogenic.
@@ -27,7 +27,7 @@ logic is sound and their QC result is truthful.
 **Protospacer position.** The guide starts at chr7:117,480,091, so
 117,480,096 is position **6**, inside the stated 4 to 8 window.
 
-## 2. Audit the editing window
+## Step 2a. The editing window
 
 Window positions 4 to 8 are chr7:**117,480,094-117,480,098**. On the patient's
 plus strand they read `C A C G C`.
@@ -43,7 +43,7 @@ plus strand they read `C A C G C`.
 The central point of the case: a cytosine base editor deaminates every
 susceptible C in its window. It cannot be aimed at one of them.
 
-## 3. Identify the consequential one
+## Step 2b. The consequential base
 
 **chr7:117,480,098, C>T.** ClinVar
 [53980](https://www.ncbi.nlm.nih.gov/clinvar/variation/53980), **Pathogenic**,
@@ -58,7 +58,7 @@ changes the Kozak context and could affect initiation efficiency but does not
 alter the protein sequence. Credit students who identify it as non-coding; extra
 credit for naming the Kozak consequence rather than dismissing it as irrelevant.
 
-## 4. Reconstruct what the patient received
+## Step 2c. Reconstruct the edited allele
 
 ```
 reference    ... A G A C C A T G C A G A G G T C ...
@@ -91,7 +91,7 @@ protein: a one-residue product is not resolvable on any gel, and a transcript
 with a stop codon this close to the start is a nonsense-mediated decay
 substrate. Accept either reasoning.
 
-## 5. Determination
+## Steps 3 and 4. Dose proposal and determination
 
 **Clinical hold** is the expected answer, and the required change is to the
 **assay**, not only to the guide.
@@ -118,19 +118,45 @@ What the sponsor must change:
 Students who recommend "continue with added monitoring" have usually not worked
 out that the edit and the damage are inseparable. Push on that.
 
+## Difficulty: what the page deliberately does not say
+
+This case is built to be hard. The submission packet gives the variant, the
+guide, the PAM, the start coordinate and the QC result, and stops there. It does
+**not** state the editor's activity window, so a student has to look up BE4max
+themselves; it does not say the editor acts on more than one base, does not use
+the word bystander, and does not give the length of normal CFTR. The sponsor's
+QC line reports a single position, and nothing draws attention to that.
+
+The earlier draft annotated the packet with "ASSAY SCOPE: base call reported at
+g.117480096", which handed over the whole finding. That is gone. The narrowness
+of the assay is still discoverable, because the QC line plainly reports one
+coordinate, but the student has to notice it.
+
+If they stall, the collapsed **"If you are not sure where to start"** block
+explains how to pull the locus and warns that the reference carries the healthy
+base. It says nothing about windows or second cytosines.
+
+Expect longer than 20 minutes. The intended failure mode is a student who
+confirms the correction, cannot explain the missing protein, and accepts the
+sponsor's delivery hypothesis. That is the error the case exists to catch.
+
 ## Where student answers land
 
-The worksheet posts to `https://formspree.io/f/mnpdoqyy`, which Case 001 shares.
-Both cases post to it, so every submission carries a hidden **`case`** field,
-`001` or `002`, to sort the inbox by. The step 5 fields (`step5_determination`
-and friends) are deliberately identical across the two cases so the
-determinations are comparable; the step 1 to 4 fields are unique to each. Field
-names: `step1_variant_consequence`, `step1_what_is_restored`,
-`step1_target_window_position`, `step2_n_cytosines`, `step2_cytosine_list`,
-`step3_bystander_clinvar`, `step3_bystander_effect`, `step3_third_cytosine`,
-`step4_edited_sequence`, `step4_protein_length`, `step4_why_dose_fails`,
-`step4_no_truncated_species`, `step5_determination`,
-`step5_determination_why`, `step5_sponsor_actions`.
+Both cases post to `https://formspree.io/f/mnpdoqyy`, so every submission
+carries a hidden **`case`** field (`002` here) to sort the inbox by. The step 4
+determination fields are deliberately identical across the two cases.
+
+- Step 1: `step1_variant_consequence`, `step1_as_intended` (expect **Yes**, the
+  sponsor's report is accurate), `step1_what_is_restored`
+- Step 2: `step2_all_changes`, `step2_evidence`, `step2_edited_allele`,
+  `step2_protein_length` (expect **1**), `step2_wt_length` (expect **1480**)
+- Step 3: `step3_dose` (expect **No, actively worse**), `step3_dose_reasoning`,
+  `step3_qc_flaw`
+- Step 4: `step4_determination`, `step4_determination_why`, `step4_sponsor_actions`
+
+`step1_as_intended` is the one place students often go wrong in the opposite
+direction: the sponsor's claim **is** true. Marking it "No" usually means they
+have conflated "the reported edit happened" with "the treatment worked".
 
 ## What is invented and what is real
 

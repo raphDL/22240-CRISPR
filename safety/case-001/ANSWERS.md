@@ -10,7 +10,7 @@ both sites lie in the tyrosine kinase domain, the most conserved region of the
 FGFR family. Loss of FGFR1 causes hypogonadotropic hypogonadism with anosmia,
 which is precisely the adverse event reported.
 
-## 1. Where does the guide cut?
+## Step 1. Characterise the reagent
 
 **Two** perfect-match sites, both with a valid NGG PAM.
 
@@ -24,14 +24,14 @@ lists the second as a 0-mismatch off-target and BLAT returns two hits. A student
 who finds only one site has searched the *FGFR3* locus rather than the genome,
 which is the same mistake the sponsor made.
 
-## 2. What did the sponsor miss?
+## Step 1 continued. What is at the second site
 
 ***FGFR1***, chromosome 8, **exon 12 of 18**, around residue **535**.
 
 For reference the intended site is *FGFR3* exon **12 of 18**, residue **529**.
 The same exon number in both genes is not a coincidence; see step 4.
 
-## 3. Does that explain the adverse event?
+## Step 2. Account for the adverse event
 
 **Yes.** *FGFR1* loss of function causes **hypogonadotropic hypogonadism with or
 without anosmia** (Kallmann syndrome). ClinVar holds 164 pathogenic *FGFR1* SNVs,
@@ -57,7 +57,7 @@ Accept "partly" with good reasoning, since nobody has shown FGFR1 editing in
 this participant; the case is a strong inference, not a measurement. That gap is
 itself part of the answer to step 5.
 
-## 4. Root cause
+## Step 3. Was this foreseeable?
 
 **Why the sequences are identical.** Both sites sit in the **tyrosine kinase
 domain**. FGFR1, FGFR2, FGFR3 and FGFR4 arose by duplication and their kinase
@@ -79,7 +79,7 @@ has spotted something real and should get credit: the common variant is
 c.1138G>A (p.Gly380Arg) at chr4:1,804,392, about **1.2 kb** from this guide, so
 this reagent was never allele-specific to begin with.
 
-## 5. Determination
+## Step 4. Determination
 
 **Clinical hold pending redesign** is the expected answer. The defect is
 intrinsic to the reagent: no dose, schedule or delivery change makes a 20/20
@@ -100,18 +100,39 @@ What the sponsor must provide:
   who were dosed as infants and are only now reaching the age at which this
   phenotype becomes detectable.
 
+## Difficulty: what the page deliberately does not say
+
+This case is built to be hard. The page states the trial, the reagent and the
+clinical findings, and nothing else. In particular it does **not** say that the
+guide has more than one site, that the sponsor missed anything, that Cas9
+produces loss of function, that the two sites are an exact match, or which tools
+to use. Every step heading is neutral: "Characterise the reagent", not "What did
+the sponsor miss".
+
+The earlier draft leaked all of that in its step lead-ins. If students stall,
+the collapsed **"If you are not sure where to start"** block names the tool
+categories (CRISPOR, BLAT, Ensembl, NCBI Gene, ClinVar, GTEx) without saying
+what they will find.
+
+Expect this to run longer than 20 minutes now. The intended failure mode is a
+student who searches only the *FGFR3* locus, finds one site, and reports "no
+explanation", which is exactly the sponsor's error and a good thing to discuss.
+
 ## Where student answers land
 
-The worksheet posts to `https://formspree.io/f/mnpdoqyy`, which Case 002 shares.
-Both cases post to it, so every submission carries a hidden **`case`** field,
-`001` or `002`, to sort the inbox by. The step 5 fields (`step5_determination`
-and friends) are deliberately identical across the two cases so the
-determinations are comparable; the step 1 to 4 fields are unique to each. Field
-names: `step1_n_perfect_sites`, `step1_coordinates`,
-`step2_offtarget_gene`, `step2_offtarget_position`, `step3_lof_phenotype`,
-`step3_match`, `step3_matching_findings`, `step3_expression`,
-`step4_root_cause`, `step4_design_rule`, `step4_redesign`,
-`step5_determination`, `step5_determination_why`, `step5_sponsor_actions`.
+Both cases post to `https://formspree.io/f/mnpdoqyy`, so every submission
+carries a hidden **`case`** field (`001` here) to sort the inbox by. The step 4
+determination fields are deliberately identical across the two cases so the
+determinations are comparable.
+
+- Step 1: `step1_n_sites` (expect **2**), `step1_sites`, `step1_method`
+- Step 2: `step2_explains` (`Yes`/`Partly`/`No`), `step2_mechanism`, `step2_evidence`
+- Step 3: `step3_why`, `step3_preventable`, `step3_design_rule`
+- Step 4: `step4_determination`, `step4_determination_why`, `step4_sponsor_actions`
+
+Grade `step1_method` seriously. A student who used CRISPOR or a genome-wide BLAT
+and says so has done the work; one who reports two sites without being able to
+say how they searched has probably guessed from the gene names.
 
 ## What is invented and what is real
 

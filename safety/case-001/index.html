@@ -320,12 +320,8 @@
 <hr>
 <span class="k">PROTOSPACER</span>  <span class="hi">5'-TGGAGATGATGAAGATGATC-3'</span><br>
 <span class="k">PAM</span>          GGG<br>
-<span class="k">NUCLEASE</span>     SpCas9, wild type<br>
-<hr>
-<span class="k">SPECIFICITY</span>  "No off-targets of concern were identified."<br>
-<span class="k">METHOD</span>       in silico prediction, restricted to the FGFR3 locus
+<span class="k">NUCLEASE</span>     SpCas9, wild type
     </div>
-    <div class="filehint">The sponsor's specificity assessment is quoted verbatim.</div>
 
     <div class="ae">
       <h3>Serious adverse event report</h3>
@@ -346,11 +342,19 @@
   </section>
 
   <section class="card">
-    <h2>Tools</h2>
-    <p>
-      <strong>CRISPOR</strong> or <strong>UCSC BLAT</strong> against hg38, plus
-      <strong>Ensembl</strong>, <strong>NCBI Gene</strong> and <strong>GTEx</strong>.
-    </p>
+    <details class="hint">
+      <summary>If you are not sure where to start</summary>
+      <p>
+        A guide RNA is just a sequence, so anything that searches the human genome for a short
+        sequence will tell you where it can bind. <strong>CRISPOR</strong> takes a protospacer and
+        reports predicted target sites; <strong>UCSC BLAT</strong> and <strong>Ensembl</strong>
+        will align a 20-mer to hg38 directly.
+      </p>
+      <p style="margin-bottom:0;">
+        Once you have a locus, Ensembl and NCBI Gene tell you what is there, ClinVar tells you what
+        goes wrong with it, and GTEx tells you where it is expressed.
+      </p>
+    </details>
   </section>
 
   <form id="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
@@ -368,66 +372,49 @@
   </section>
 
   <section class="card step">
-    <h2><span class="num">1</span>Where does this guide actually cut?</h2>
+    <h2><span class="num">1</span>Characterise the reagent</h2>
     <p>
-      Run the protospacer against the human genome (hg38). Report every site that is a perfect
-      match with a valid SpCas9 PAM.
+      Work out, from the protospacer and PAM alone, everywhere in the human genome this reagent
+      could direct a cut.
     </p>
     <div class="field-row">
       <div>
-        <label for="step1_n">How many perfect-match sites?</label>
-        <input type="number" id="step1_n" name="step1_n_perfect_sites" min="0" step="1" required>
+        <label for="step1_n">How many sites did you find?</label>
+        <input type="number" id="step1_n" name="step1_n_sites" min="0" step="1" required>
       </div>
     </div>
-    <label for="step1_coords">Give the GRCh38 coordinates and strand of each.</label>
-    <textarea id="step1_coords" name="step1_coordinates" required></textarea>
+    <label for="step1_sites">For each: GRCh38 coordinates, strand, and what is at that position.</label>
+    <textarea id="step1_sites" name="step1_sites" required></textarea>
+    <label for="step1_method">How did you search, and how confident are you the list is complete?</label>
+    <textarea id="step1_method" name="step1_method" required></textarea>
   </section>
 
   <section class="card step">
-    <h2><span class="num">2</span>What did the sponsor miss?</h2>
-    <label for="step2_gene">Which gene is the unintended site in?</label>
-    <input type="text" id="step2_gene" name="step2_offtarget_gene" required>
-    <label for="step2_where">Where in that gene does it fall: which exon, and roughly which residue?</label>
-    <input type="text" id="step2_where" name="step2_offtarget_position" required>
-  </section>
-
-  <section class="card step">
-    <h2><span class="num">3</span>Does that explain the adverse event?</h2>
-    <p>
-      Cas9 produces indels, so the consequence at the unintended site is loss of function. Look up
-      what losing that gene does.
-    </p>
-    <label for="step3_pheno">What phenotype does loss of function in that gene cause?</label>
-    <textarea id="step3_pheno" name="step3_lof_phenotype" required></textarea>
-    <label>Does it match the reported adverse event?</label>
+    <h2><span class="num">2</span>Account for the adverse event</h2>
+    <p>Does anything in your answer to step 1 explain what happened to participant 007?</p>
     <div class="choice-group" data-choice-group>
-      <label class="choice"><input type="radio" name="step3_match" value="Yes" required> Yes</label>
-      <label class="choice"><input type="radio" name="step3_match" value="Partly"> Partly</label>
-      <label class="choice"><input type="radio" name="step3_match" value="No"> No</label>
+      <label class="choice"><input type="radio" name="step2_explains" value="Yes" required> Yes</label>
+      <label class="choice"><input type="radio" name="step2_explains" value="Partly"> Partly</label>
+      <label class="choice"><input type="radio" name="step2_explains" value="No"> No</label>
     </div>
-    <label for="step3_evidence">Which specific findings in the report support your answer?</label>
-    <textarea id="step3_evidence" name="step3_matching_findings" required></textarea>
-    <label for="step3_expr">Is that gene expressed in a tissue that would produce this phenotype? Give a number and your source.</label>
-    <textarea id="step3_expr" name="step3_expression" required></textarea>
+    <label for="step2_mech">Set out the mechanism, from the reagent to the clinical findings.</label>
+    <textarea id="step2_mech" name="step2_mechanism" required></textarea>
+    <label for="step2_evidence">What evidence supports it, and what would falsify it? Cite your sources.</label>
+    <textarea id="step2_evidence" name="step2_evidence" required></textarea>
   </section>
 
   <section class="card step">
-    <h2><span class="num">4</span>Root cause</h2>
-    <p>
-      The two sites are an exact 20 out of 20 match. That is not bad luck. Work out why these two
-      genes share this sequence, and why a guide designed against one was always going to cut the
-      other.
-    </p>
-    <label for="step4_cause">Why are the two sequences identical?</label>
-    <textarea id="step4_cause" name="step4_root_cause" required></textarea>
-    <label for="step4_rule">State the design rule a reviewer should take from this case.</label>
-    <textarea id="step4_rule" name="step4_design_rule" required></textarea>
-    <label for="step4_redesign">Propose where in the intended gene you would place a replacement guide, and how you would check it.</label>
-    <textarea id="step4_redesign" name="step4_redesign" required></textarea>
+    <h2><span class="num">3</span>Was this foreseeable?</h2>
+    <label for="step3_why">Why does this particular reagent behave the way it does? Account for it at the sequence level.</label>
+    <textarea id="step3_why" name="step3_why" required></textarea>
+    <label for="step3_catch">Could it have been caught before the first participant was dosed, and how?</label>
+    <textarea id="step3_catch" name="step3_preventable" required></textarea>
+    <label for="step3_rule">State the general design rule a reviewer should carry away from this case.</label>
+    <textarea id="step3_rule" name="step3_design_rule" required></textarea>
   </section>
 
   <section class="card step">
-    <h2><span class="num">5</span>Your determination</h2>
+    <h2><span class="num">4</span>Your determination</h2>
     <p>What should happen to this trial?</p>
     <div class="choice-group choice-col" data-choice-group>
       <label class="choice"><input type="radio" name="step5_determination" value="Continue unchanged" required>

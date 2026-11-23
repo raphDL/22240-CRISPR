@@ -302,7 +302,7 @@
   <section class="card">
     <h2>The submission</h2>
     <p>
-      <strong>Alveon-CF</strong> is a phase 1 trial of a cytosine base editor delivered to airway
+      <strong>Alveon-CF</strong> is a phase 1 trial of a base editor delivered to airway
       epithelium by lipid nanoparticle. The participant carries a known pathogenic
       <em>CFTR</em> variant. A base editor was chosen rather than a nuclease because the
       correction needed is a single base and no double-strand break is required.
@@ -310,7 +310,6 @@
     <div class="packet">
 <span class="k">SPONSOR</span>       Alveon Bio<br>
 <span class="k">PRODUCT</span>       ALV-02, LNP, BE4max cytosine base editor + sgRNA<br>
-<span class="k">EDITOR</span>        C&gt;T, stated activity window = protospacer positions 4 to 8<br>
 <hr>
 <span class="k">VARIANT</span>       <span class="hi">NC_000007.14:g.117480096T&gt;C</span><br>
 <span class="k">CLINVAR</span>       Pathogenic (VCV000053622)<br>
@@ -322,10 +321,8 @@
 <span class="k">START</span>         chr7:117,480,091<br>
 <hr>
 <span class="k">QC RESULT</span>     amplicon sequencing, bronchial brushing, day 28<br>
-<span class="k">&nbsp;</span>             <span class="hi">g.117480096 C&gt;T in 71% of alleles. Intended edit confirmed.</span><br>
-<span class="k">ASSAY SCOPE</span>   base call reported at g.117480096
+<span class="k">&nbsp;</span>             <span class="hi">g.117480096 C&gt;T in 71% of alleles. Intended edit confirmed.</span>
     </div>
-    <div class="filehint">The sponsor's QC method and its scope are quoted verbatim.</div>
 
     <div class="ae">
       <h3>Serious adverse event report</h3>
@@ -346,21 +343,17 @@
   </section>
 
   <section class="card">
-    <h2>Tools</h2>
-    <p>
-      <strong>Ensembl</strong> or the <strong>UCSC Genome Browser</strong> to pull the locus,
-      <strong>Benchling</strong> to lay out the protospacer, and <strong>ClinVar</strong>.
-    </p>
     <details class="hint">
-      <summary>How do I get the sequence?</summary>
+      <summary>If you are not sure where to start</summary>
       <p>
-        In the UCSC Genome Browser on hg38, enter <code>chr7:117,480,060-117,480,130</code> and use
-        View &rarr; DNA. Or in Ensembl, use the same region and Export sequence. Paste the result
-        into Benchling as a plain DNA sequence, then find the protospacer in it.
+        To see the locus: in the <strong>UCSC Genome Browser</strong> on hg38 enter
+        <code>chr7:117,480,060-117,480,130</code> and use View &rarr; DNA, or export the same
+        region from <strong>Ensembl</strong>. Paste it into <strong>Benchling</strong> as a plain
+        DNA sequence and find the protospacer in it.
       </p>
       <p style="margin-bottom:0;">
-        Careful: the reference genome carries the healthy base. The patient does not. Make sure the
-        sequence you reason about is the patient's.
+        One thing to be careful about: the reference genome carries the healthy base. The patient
+        does not. Make sure the sequence you reason about is the patient's.
       </p>
     </details>
   </section>
@@ -381,74 +374,64 @@
 
 
   <section class="card step">
-    <h2><span class="num">1</span>Verify the intended edit</h2>
+    <h2><span class="num">1</span>Verify the sponsor's claim</h2>
     <p>
-      Pull the locus, write out the patient's sequence, and locate the protospacer. Then work out
-      what the sponsor's intended correction actually restores.
+      Before anything else, establish whether the edit the sponsor reports is the edit they
+      intended, and what it was supposed to achieve.
     </p>
-    <label for="step1_consequence">What does the patient's variant do to the protein? Be specific about which codon.</label>
-    <textarea id="step1_consequence" name="step1_variant_consequence" required></textarea>
-    <label for="step1_fix">If the intended C&gt;T edit happens, what is restored?</label>
-    <textarea id="step1_fix" name="step1_what_is_restored" required></textarea>
+    <label for="step1_variant">What does the patient's variant do? Be specific about the codon.</label>
+    <textarea id="step1_variant" name="step1_variant_consequence" required></textarea>
+    <label>Is the reported result the intended correction?</label>
+    <div class="choice-group" data-choice-group>
+      <label class="choice"><input type="radio" name="step1_as_intended" value="Yes" required> Yes</label>
+      <label class="choice"><input type="radio" name="step1_as_intended" value="No"> No</label>
+    </div>
+    <label for="step1_restores">If it worked as reported, what should the patient now have?</label>
+    <textarea id="step1_restores" name="step1_what_is_restored" required></textarea>
+  </section>
+
+  <section class="card step">
+    <h2><span class="num">2</span>Account for the result</h2>
+    <p>
+      The sponsor's reported edit is real, and there is no protein. Reconcile those two facts.
+      Work out the <em>full</em> set of changes this reagent makes at this site, not only the one
+      the sponsor measured, and what each does.
+    </p>
+    <label for="step2_changes">List every change, with its GRCh38 coordinate and its effect.</label>
+    <textarea id="step2_changes" name="step2_all_changes" required></textarea>
+    <label for="step2_evidence">What is your evidence for each? Cite accessions where they exist.</label>
+    <textarea id="step2_evidence" name="step2_evidence" required></textarea>
+    <label for="step2_protein">Write out the edited allele from the start codon and translate it.</label>
+    <textarea id="step2_protein" name="step2_edited_allele" required></textarea>
     <div class="field-row">
       <div>
-        <label for="step1_pos">Which protospacer position is the disease base at?</label>
-        <input type="number" id="step1_pos" name="step1_target_window_position" min="1" max="20" required>
+        <label for="step2_len">Length of the protein the patient makes, in amino acids</label>
+        <input type="number" id="step2_len" name="step2_protein_length" min="0" step="1" required>
+      </div>
+      <div>
+        <label for="step2_wt">Length of the normal protein, for comparison</label>
+        <input type="number" id="step2_wt" name="step2_wt_length" min="0" step="1" required>
       </div>
     </div>
   </section>
 
   <section class="card step">
-    <h2><span class="num">2</span>Audit the editing window</h2>
-    <p>
-      The editor converts cytosines, and it cannot be aimed at one of them. Mark protospacer
-      positions 4 to 8 on the patient's sequence and list every C in that window.
-    </p>
-    <div class="field-row">
-      <div>
-        <label for="step2_n">How many cytosines are in the window?</label>
-        <input type="number" id="step2_n" name="step2_n_cytosines" min="0" step="1" required>
-      </div>
+    <h2><span class="num">3</span>Evaluate the sponsor's proposal</h2>
+    <p>The sponsor attributes the failure to insufficient delivery and asks to escalate the dose.</p>
+    <label>Would a higher dose help this participant?</label>
+    <div class="choice-group" data-choice-group>
+      <label class="choice"><input type="radio" name="step3_dose" value="Yes" required> Yes</label>
+      <label class="choice"><input type="radio" name="step3_dose" value="No, no effect"> No, no effect</label>
+      <label class="choice"><input type="radio" name="step3_dose" value="No, actively worse"> No, actively worse</label>
     </div>
-    <label for="step2_list">Give each one: protospacer position and GRCh38 coordinate.</label>
-    <textarea id="step2_list" name="step2_cytosine_list" required></textarea>
+    <label for="step3_why">Justify your answer from your reconstruction.</label>
+    <textarea id="step3_why" name="step3_dose_reasoning" required></textarea>
+    <label for="step3_qc">The sponsor's QC was accurate and their conclusion was wrong. What was wrong with the assay?</label>
+    <textarea id="step3_qc" name="step3_qc_flaw" required></textarea>
   </section>
 
   <section class="card step">
-    <h2><span class="num">3</span>Identify the consequential one</h2>
-    <p>
-      Look up each coordinate from step 2. One of them is in ClinVar in its own right.
-    </p>
-    <label for="step3_coord">Which coordinate, and what is its ClinVar classification and accession?</label>
-    <textarea id="step3_coord" name="step3_bystander_clinvar" required></textarea>
-    <label for="step3_effect">What does converting that base do at the protein level?</label>
-    <textarea id="step3_effect" name="step3_bystander_effect" required></textarea>
-    <label for="step3_other">One other cytosine in the window is converted too. Why does it matter less?</label>
-    <textarea id="step3_other" name="step3_third_cytosine" required></textarea>
-  </section>
-
-  <section class="card step">
-    <h2><span class="num">4</span>Reconstruct what the patient actually received</h2>
-    <p>
-      Write out the edited allele with <em>every</em> window cytosine converted, then translate from
-      the start codon. The reference protein is 1,480 amino acids.
-    </p>
-    <label for="step4_seq">Give the edited sequence across codons 1 to 3, and the amino acids they encode.</label>
-    <textarea id="step4_seq" name="step4_edited_sequence" required></textarea>
-    <div class="field-row">
-      <div>
-        <label for="step4_len">How many amino acids does the edited allele produce?</label>
-        <input type="number" id="step4_len" name="step4_protein_length" min="0" step="1" required>
-      </div>
-    </div>
-    <label for="step4_explain">The sponsor blames insufficient delivery. Using your reconstruction, explain in one or two sentences why a dose increase would not help.</label>
-    <textarea id="step4_explain" name="step4_why_dose_fails" required></textarea>
-    <label for="step4_blot">Why did the western blot show no truncated protein either?</label>
-    <textarea id="step4_blot" name="step4_no_truncated_species" required></textarea>
-  </section>
-
-  <section class="card step">
-    <h2><span class="num">5</span>Your determination</h2>
+    <h2><span class="num">4</span>Your determination</h2>
     <p>What should happen to this trial?</p>
     <div class="choice-group choice-col" data-choice-group>
       <label class="choice"><input type="radio" name="step5_determination" value="Continue unchanged" required>
