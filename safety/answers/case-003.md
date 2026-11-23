@@ -1,171 +1,143 @@
-# Answers: Case 003, Haemolyne-1
+# Answers: Case 003, FGF-Restore
 
-Short key. This is the **easiest of the three safety cases** by design, and the
-intended entry point: Case 003, then 002, then 001.
+Short key. The discovery pipeline that found this case, and the biological
+reasoning behind selecting it, are in `../../crispr-safety/REASSESSMENT.md`.
 
 ## The case in one line
 
-The donor restores wild-type sequence and nothing else, so the repaired allele
-is still a perfect match for the guide. Cas9 cuts it again, NHEJ turns it into a
-frameshift, and because an indel destroys the target site while a correction
-does not, every cycle drains alleles into the null pool. The participant's
-sickle alleles are converted into beta-zero null alleles, which is a worse
-disease.
+A guide designed against *FGFR3* is an exact 20/20 match inside *FGFR1*, because
+both sites lie in the tyrosine kinase domain, the most conserved region of the
+FGFR family. Loss of FGFR1 causes hypogonadotropic hypogonadism with anosmia,
+which is precisely the adverse event reported.
 
-## Step 1. Characterise the repair strategy
+## Step 1. Characterise the reagent
 
-**One change.** The donor differs from the participant at exactly one position,
-chr11:5,227,002, where the participant's A is replaced by the reference T. That
-is the correction, reverting HbS to HbA.
+**Two** perfect-match sites, both with a valid NGG PAM.
 
-**Nothing else.** The donor is 100 nt of unmodified reference sequence,
-chr11:5,226,935-5,227,034. Verified: it matches GRCh38 across all 100 bases.
-There is no silent change, no PAM disruption, nothing to stop re-cutting.
+| Gene | GRCh38 | Strand | PAM |
+|---|---|---|---|
+| *FGFR3* (intended) | chr4:1,805,601-1,805,620 | + | `GGG` |
+| *FGFR1* (unintended) | chr8:38,417,355-38,417,374 | − | `GGG` |
 
-**The target site is untouched.** The protospacer occupies
-chr11:5,226,968-5,226,987 and the PAM chr11:5,226,988-5,226,990. The corrective
-base at 5,227,002 is **12 bp beyond the end of the PAM**, entirely outside the
-23 bp footprint.
+Protospacer `TGGAGATGATGAAGATGATC`. Zero mismatches at either site, so CRISPOR
+lists the second as a 0-mismatch off-target and BLAT returns two hits. A student
+who finds only one site has searched the *FGFR3* locus rather than the genome,
+which is the same mistake the sponsor made.
 
-```
-ACGTTCACCTTGCCCCACAGGGCAGTAACGGCAGACTTCTCCACAGGAGTCAGATG
-        ================|===PPP           ^
-        protospacer     cut  PAM          corrective base, 18 bp from the cut
+## Step 1 continued. What is at the second site
 
-target in the participant's allele : CTTGCCCCACAGGGCAGTAA CGG
-target in a repaired allele        : CTTGCCCCACAGGGCAGTAA CGG   identical
-```
+***FGFR1***, chromosome 8, **exon 12 of 18**, around residue **535**.
 
-So the answer to "are they the same" is **yes, 20 out of 20, PAM included**. A
-student who gets this far has the case.
+For reference the intended site is *FGFR3* exon **12 of 18**, residue **529**.
+The same exon number in both genes is not a coincidence; see step 4.
 
-## Step 2. Account for the manufacturing data
+## Step 2. Account for the adverse event
 
-**Mechanism.** Cas9 persists in the cells for days after electroporation. It
-cannot tell a repaired allele from an unrepaired one, because they present the
-same protospacer and PAM. So a corrected allele is re-cut, and most re-cuts are
-repaired by NHEJ rather than by the donor, producing an indel.
+**Yes.** *FGFR1* loss of function causes **hypogonadotropic hypogonadism with or
+without anosmia** (Kallmann syndrome). ClinVar holds 164 pathogenic *FGFR1* SNVs,
+**40% of them truncating**, so loss of function is an established disease
+mechanism rather than a theoretical one.
 
-The key observation, and the one to push students toward:
+Every finding in the report fits:
 
-| Allele state | Still a Cas9 substrate? |
+| Report | Consistent with FGFR1 loss |
 |---|---|
-| Sickle | yes |
-| Corrected | **yes**, the donor changed nothing in the target site |
-| Indel | **no**, the indel destroys the protospacer |
+| No puberty at 13 | hypogonadotropic hypogonadism |
+| Cannot identify any test odour | anosmia, the Kallmann component |
+| Low gonadotropins, prepubertal testosterone | the defect is central, not gonadal |
+| Blunted GnRH stimulation | hypothalamic-pituitary, not testicular |
+| Structurally normal pituitary MRI | functional defect, no mass or malformation |
+| 46,XY | rules out a chromosomal cause |
 
-The indel is the only **stable** outcome. Correction is a waypoint, not a
-destination. For as long as Cas9 is active, alleles drain out of both the sickle
-pool and the corrected pool and accumulate irreversibly in the null pool. That
-is why corrected alleles fall 34% to 11% while indels rise 41% to 78%, and why
-the unmodified fraction falls too.
+**Expression.** GTEx v8 median TPM for *FGFR1*: **pituitary 69.7**, hypothalamus
+21.3. The gene is well expressed in exactly the tissues that produce the
+phenotype, and AAV9 distributes well beyond the growth plate.
 
-**Ruling out the distance explanation.** The competing hypothesis is sound and
-should be credited: the cut is 18 bp from the variant, repair efficiency does
-fall with distance, so low correction could be a conversion tract problem.
+Accept "partly" with good reasoning, since nobody has shown FGFR1 editing in
+this participant; the case is a strong inference, not a measurement. That gap is
+itself part of the answer to step 5.
 
-The time course decides it. A conversion tract limitation gives a **low but
-flat** corrected fraction: whatever is made at 24 hours stays. Here the
-corrected fraction **declines**, which means corrected alleles are being
-destroyed after they are made. Only re-cutting does that. Distance may well also
-contribute to the modest starting figure of 34%, and a good answer says both are
-probably operating.
+## Step 3. Was this foreseeable?
 
-**The fix.** A silent, synonymous change in the protospacer or PAM carried on
-the donor. Once incorporated alongside the correction, the repaired allele no
-longer matches the guide and becomes a stable end state, so corrections
-accumulate instead of draining.
+**Why the sequences are identical.** Both sites sit in the **tyrosine kinase
+domain**. FGFR1, FGFR2, FGFR3 and FGFR4 arose by duplication and their kinase
+domains are under strong purifying selection, so that region is near-identical
+across the family. A 20-mer picked there is not unique to one paralog.
 
-Accept also: use a guide whose protospacer overlaps the variant in its
-**PAM-proximal seed**, so the correction itself blocks re-cutting. Two such
-guides exist within a few bases of this one, `CATGGTGCATCTGACTCCTG` `TGG`
-(variant at protospacer position 18) and `GTAACGGCAGACTTCTCCAC` `AGG` (position
-19). Worth raising in discussion even if nobody finds it: a mismatch only blocks
-Cas9 if it lands in the seed, which is also why Case 001's exact off-target
-matters.
+**The design rule.** *Conserved functional domains are off-target magnets.* A
+guide placed in a kinase domain, a DNA-binding domain, an ATP pocket or any
+other catalytically constrained region should be assumed to hit paralogs until
+a genome-wide search says otherwise. The best answers generalise past FGFR.
 
-## Step 3. Account for the clinical outcome
+**Redesign.** Move the guide to a region unique to *FGFR3*: the 5' UTR or exon 1,
+or the juxtamembrane and linker sequences, which diverge between family members.
+Then re-run CRISPOR **genome-wide**, not locus-restricted, and specifically
+inspect hits in *FGFR1*, *FGFR2* and *FGFR4* out to 3 mismatches.
 
-**The sponsor's claim is technically true and misleading.** HbS really did fall
-from 84% to 9%. It fell because *HBB was knocked out*, not because it was
-repaired.
-
-**Where the beta-globin went.** 78% of alleles carry frameshift indels in HBB
-and produce no beta-globin at all. Only 11% were corrected, which is why HbA
-reached just 5%. The participant has lost most of their beta-globin output
-entirely, which is why HbF rises to 83% as compensation and why total
-haemoglobin **falls** from 8.4 to 6.1 g/dL despite three-weekly transfusions.
-
-The single most telling line in the table is that **HbS fell and HbA did not
-rise to replace it.** In a successful correction the two move together.
-
-**The new condition.** Predominantly **beta-zero thalassemia**, transfusion
-dependent. The participant has exchanged sickle cell disease for transfusion
-dependent thalassemia. The absence of vaso-occlusive crises is real and is not
-evidence of benefit: a patient who makes almost no beta-globin cannot sickle.
-
-This is worse than where they started. Expect some students to argue it is a
-trade rather than a worsening, since crises have stopped. That is a good
-discussion rather than a wrong answer, but transfusion dependence with iron
-chelation for life, on top of myeloablative conditioning already undergone, is
-not a favourable exchange.
+A student who proposes allele-specific editing of the achondroplasia variant
+has spotted something real and should get credit: the common variant is
+c.1138G>A (p.Gly380Arg) at chr4:1,804,392, about **1.2 kb** from this guide, so
+this reagent was never allele-specific to begin with.
 
 ## Step 4. Determination
 
-**Clinical hold** is expected. The defect is in the reagent design and no dose,
-schedule or conditioning change addresses it.
+**Clinical hold pending redesign** is the expected answer. The defect is
+intrinsic to the reagent: no dose, schedule or delivery change makes a 20/20
+match in *FGFR1* go away. "Continue with added monitoring" is defensible only if
+the student argues the benefit already realised outweighs the risk, and it
+should still require everything below.
 
-What the sponsor must do:
+What the sponsor must provide:
 
-- Redesign the donor with a blocking mutation, or move to a seed-overlapping
-  guide, and show by time course that the corrected fraction is now **stable**
-  rather than declining.
-- Change the release specification. "At least 70% total editing" passed a
-  product that was 78% null alleles. Total editing is the wrong quantity; the
-  specification must be written on the **corrected** fraction, with a maximum
-  permitted indel fraction.
-- Report allele outcomes over time, not at a single harvest point.
-- Follow up the dosed participants for transfusion dependence and iron overload,
-  and establish whether the graft is reversible.
-
-The release-specification point is the regulatory heart of the case and worth
-marking separately: the product met its specification and was still unfit.
+- A **genome-wide** specificity assessment. The submitted one was, in their own
+  words, "restricted to the *FGFR3* locus", which is the regulatory failure at
+  the heart of this case.
+- **Empirical** off-target data in a relevant cell type (GUIDE-seq, CIRCLE-seq
+  or similar), not in silico prediction alone.
+- A redesigned guide with no FGFR-family hits, validated the same way.
+- Sequencing of *FGFR1* in already-dosed participants to establish whether
+  editing occurred, and endocrine plus olfactory follow-up for the whole cohort,
+  who were dosed as infants and are only now reaching the age at which this
+  phenotype becomes detectable.
 
 ## Difficulty: what the page deliberately does not say
 
-The page states the trial, the reagent, the full donor sequence and the data,
-and nothing else. It does not say the target site survives repair, does not use
-the words re-cutting or blocking mutation, does not mention seed regions, and
-does not name thalassemia. Headings are neutral.
+This case is built to be hard. The page states the trial, the reagent and the
+clinical findings, and nothing else. In particular it does **not** say that the
+guide has more than one site, that the sponsor missed anything, that Cas9
+produces loss of function, that the two sites are an exact match, or which tools
+to use. Every step heading is neutral: "Characterise the reagent", not "What did
+the sponsor miss".
 
-What makes this the **easiest** of the three: the discovery is a sequence
-comparison with no database lookup, and the page hands over all three sequences
-needed to make it. Case 002 requires ClinVar and a codon reconstruction; Case
-001 requires a genome-wide search and an expression argument.
+The earlier draft leaked all of that in its step lead-ins. If students stall,
+the collapsed **"If you are not sure where to start"** block names the tool
+categories (CRISPOR, BLAT, Ensembl, NCBI Gene, ClinVar, GTEx) without saying
+what they will find.
 
-The intended failure mode is a student who accepts the 89% HbS reduction as
-success and attributes the transfusion requirement to conditioning, exactly as
-the sponsor does.
+Expect this to run longer than 20 minutes now. The intended failure mode is a
+student who searches only the *FGFR3* locus, finds one site, and reports "no
+explanation", which is exactly the sponsor's error and a good thing to discuss.
 
 ## Where student answers land
 
-Posts to `https://formspree.io/f/mnpdoqyy`, shared with Cases 001 and 002, so
-every submission carries a hidden **`case`** field (`003` here). The step 4
-determination fields are deliberately identical across all three cases so the
+Both cases post to `https://formspree.io/f/mnpdoqyy`, so every submission
+carries a hidden **`case`** field (`003` here) to sort the inbox by. The step 4
+determination fields are deliberately identical across the two cases so the
 determinations are comparable.
 
-- Step 1: `step1_n_changes` (expect **1**), `step1_donor_changes`,
-  `step1_target_before_after`
-- Step 2: `step2_mechanism`, `step2_alternative_ruled_out`, `step2_fix`
-- Step 3: `step3_claim` (expect **Technically true but misleading**),
-  `step3_globin_fate`, `step3_new_condition`
+- Step 1: `step1_n_sites` (expect **2**), `step1_sites`, `step1_method`
+- Step 2: `step2_explains` (`Yes`/`Partly`/`No`), `step2_mechanism`, `step2_evidence`
+- Step 3: `step3_why`, `step3_preventable`, `step3_design_rule`
 - Step 4: `step4_determination`, `step4_determination_why`, `step4_sponsor_actions`
+
+Grade `step1_method` seriously. A student who used CRISPOR or a genome-wide BLAT
+and says so has done the work; one who reports two sites without being able to
+say how they searched has probably guessed from the gene names.
 
 ## What is invented and what is real
 
-Invented: the trial, the sponsor, the product, the participant, the
-manufacturing percentages and the haemoglobin values. Real: the gene, the sickle
-variant and its coordinate, the guide and PAM, the 100 nt donor (verified
-identical to GRCh38 chr11:5,226,935-5,227,034), the fact that the protospacer
-lies entirely outside the donor's single change, and the two alternative
-seed-overlapping guides.
+Invented: the trial, the sponsor, the product, the participant, the adverse
+event. Real: the gene pair, the protospacer, both sets of GRCh38 coordinates,
+both PAMs, the exon and residue numbers, the ClinVar counts, and the GTEx
+expression values. All verified against a fresh Ensembl fetch in
+`../../crispr-safety/scripts/11_finalists.py`.

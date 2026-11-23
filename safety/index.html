@@ -281,30 +281,6 @@
   table.sub { font-size: 0.86rem; }
   table.sub td:first-child { color: var(--muted); width: 38%; }
 
-  .panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
-  @media (max-width: 760px) { .panels { grid-template-columns: 1fr; } }
-  a.panel {
-    display: flex; flex-direction: column;
-    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
-    box-shadow: var(--shadow); padding: 1.1rem 1.2rem; text-decoration: none; color: inherit;
-    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-  }
-  a.panel:hover { transform: translateY(-2px); border-color: var(--accent);
-                  box-shadow: 0 4px 16px rgba(79,70,229,.15); }
-  .panel-top { display: flex; align-items: center; gap: .5rem; margin-bottom: .45rem; }
-  .panel-num { font-size: .68rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
-               color: var(--muted); }
-  .panel-badge { font-size: .62rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-                 color: var(--accent-ink); background: var(--accent-soft);
-                 padding: .16rem .5rem; border-radius: 999px; }
-  a.panel h3 { margin: 0 0 .4rem; font-size: 1.02rem; font-weight: 700; color: var(--accent-ink);
-               letter-spacing: -.01em; }
-  a.panel p { font-size: .86rem; color: var(--muted); margin: 0 0 .9rem; flex: 1; }
-  .panel-foot { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
-  .stars { letter-spacing: .12em; font-size: .9rem; }
-  .stars .on { color: var(--accent-2); }
-  .stars .off { color: var(--line); }
-  .modality { font-size: .72rem; color: var(--muted); }
   .case-head {
     display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap;
     border-top: 2px solid var(--line); padding-top: 1.6rem; margin: 3rem 0 1.25rem;
@@ -315,74 +291,120 @@
            margin: 1.5rem 0 0; text-decoration: none; }
   .totop:hover { color: var(--accent-ink); }
   section[id] { scroll-margin-top: 1.5rem; }
+
+  .files { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 0 0 1.5rem; }
+  @media (max-width: 780px) { .files { grid-template-columns: 1fr; } }
+  a.file {
+    position: relative; display: flex; flex-direction: column;
+    background: var(--panel); border: 1px solid var(--line);
+    border-left: 4px solid var(--accent-2); border-radius: 4px 12px 12px 4px;
+    box-shadow: var(--shadow); padding: 0 0 .95rem; text-decoration: none; color: inherit;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  a.file:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(16,24,40,.13); }
+  .file-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    background: #12141a; color: #d6dae3; padding: .42rem .8rem;
+    border-radius: 0 10px 0 0;
+    font-family: "JetBrains Mono", monospace; font-size: .68rem; letter-spacing: .08em;
+  }
+  .file-bar .stars { letter-spacing: .1em; font-size: .78rem; }
+  .file-bar .on { color: #f0b429; }
+  .file-bar .off { color: #4a505c; }
+  .file-body { padding: .9rem 1rem 0; flex: 1; }
+  a.file h3 { margin: 0 0 .15rem; font-size: 1.06rem; font-weight: 700; letter-spacing: -.01em; }
+  .file-meta {
+    font-family: "JetBrains Mono", monospace; font-size: .68rem; color: var(--muted);
+    margin-bottom: .75rem;
+  }
+  .file-status {
+    display: inline-block; font-size: .64rem; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--bad); background: #fff1f0;
+    border: 1px solid #f6d5d2; padding: .18rem .5rem; border-radius: 3px; margin-bottom: .6rem;
+  }
+  .file-event { font-size: .87rem; color: var(--ink); margin: 0; }
+  .file-open {
+    font-family: "JetBrains Mono", monospace; font-size: .7rem; letter-spacing: .06em;
+    color: var(--accent-ink); padding: .8rem 1rem 0; font-weight: 600;
+  }
+  a.file:hover .file-open { text-decoration: underline; }
+  .case-head .stars { font-size: .95rem; letter-spacing: .1em; }
+  .case-head .stars .on { color: var(--accent-2); }
+  .case-head .stars .off { color: var(--line); }
 </style>
 </head>
 <body id="top">
 
 <header class="hero">
   <span class="kicker">Safety review</span>
-  <h1>🧬 Three stories</h1>
-  <p class="tagline">Three gene editing trials. Three serious adverse events. Three reagents that did
-  exactly what their sequence said they would.</p>
+  <h1>Three stories</h1>
 </header>
 
 <div class="wrap">
 
   <div class="role">
     <strong>Your role.</strong> You are a reviewer on a regulatory safety panel. Three sponsors
-    have each reported a serious adverse event in an ongoing gene editing trial and submitted the
-    packets below. Your job is not to design anything. It is to work out, for each one, from the
-    sponsor's own data and public databases, what happened at the molecular level, and to make a
-    recommendation.
+    have reported serious adverse events. For each file, work out what happened at the molecular
+    level from the sponsor's own data and public databases, then make a recommendation. You are
+    not designing anything.
   </div>
-  <div class="panels">
-    <a class="panel" href="#case-003">
-      <div class="panel-top">
-        <span class="panel-num">Case 003</span>
-        <span class="panel-badge">Start here</span>
+
+  <div class="files">
+    <a class="file" href="#case-001">
+      <div class="file-bar">
+        <span>FILE 001</span>
+        <span class="stars" aria-label="complexity 1 of 3"><span class="on">★</span><span class="off">☆</span><span class="off">☆</span></span>
       </div>
-      <h3>Haemolyne-1</h3>
-      <p>Sickle haemoglobin fell by 89% and the participant became transfusion dependent.</p>
-      <div class="panel-foot">
-        <span class="stars" title="difficulty 1 of 3" aria-label="difficulty 1 of 3"><span class="on">★</span><span class="off">☆</span><span class="off">☆</span></span>
-        <span class="modality">HDR donor</span>
+      <div class="file-body">
+        <h3>Haemolyne-1</h3>
+        <div class="file-meta">SICKLE CELL DISEASE &nbsp;/&nbsp; HDR DONOR</div>
+        <span class="file-status">Sponsor claims success</span>
+        <p class="file-event">Sickle haemoglobin fell by 89% and the participant became transfusion dependent.</p>
       </div>
+      <div class="file-open">OPEN FILE →</div>
     </a>
-    <a class="panel" href="#case-002">
-      <div class="panel-top">
-        <span class="panel-num">Case 002</span>
-        
+    <a class="file" href="#case-002">
+      <div class="file-bar">
+        <span>FILE 002</span>
+        <span class="stars" aria-label="complexity 2 of 3"><span class="on">★</span><span class="on">★</span><span class="off">☆</span></span>
       </div>
-      <h3>Alveon-CF</h3>
-      <p>The edit was confirmed in 71% of alleles. The protein never appeared.</p>
-      <div class="panel-foot">
-        <span class="stars" title="difficulty 2 of 3" aria-label="difficulty 2 of 3"><span class="on">★</span><span class="on">★</span><span class="off">☆</span></span>
-        <span class="modality">Base editor</span>
+      <div class="file-body">
+        <h3>Alveon-CF</h3>
+        <div class="file-meta">CYSTIC FIBROSIS &nbsp;/&nbsp; BASE EDITOR</div>
+        <span class="file-status">Escalation requested</span>
+        <p class="file-event">The edit was confirmed in 71% of alleles. The protein never appeared.</p>
       </div>
+      <div class="file-open">OPEN FILE →</div>
     </a>
-    <a class="panel" href="#case-001">
-      <div class="panel-top">
-        <span class="panel-num">Case 001</span>
-        
+    <a class="file" href="#case-003">
+      <div class="file-bar">
+        <span>FILE 003</span>
+        <span class="stars" aria-label="complexity 3 of 3"><span class="on">★</span><span class="on">★</span><span class="on">★</span></span>
       </div>
-      <h3>FGF-Restore</h3>
-      <p>A trial met its primary endpoint. Eleven years later a participant did not reach puberty.</p>
-      <div class="panel-foot">
-        <span class="stars" title="difficulty 3 of 3" aria-label="difficulty 3 of 3"><span class="on">★</span><span class="on">★</span><span class="on">★</span></span>
-        <span class="modality">Cas9 nuclease</span>
+      <div class="file-body">
+        <h3>FGF-Restore</h3>
+        <div class="file-meta">ACHONDROPLASIA &nbsp;/&nbsp; CAS9 NUCLEASE</div>
+        <span class="file-status">Enrolment paused</span>
+        <p class="file-event">A trial met its primary endpoint. Eleven years later a participant did not reach puberty.</p>
       </div>
+      <div class="file-open">OPEN FILE →</div>
     </a>
   </div>
 
-  <p class="muted-note" style="margin:-1.6rem 0 0; text-align:center;">
-    Cases are numbered in the order they were written. Work through them in the order shown above,
-    easiest first. Each has its own submit button, so you can do one and come back.
-  </p>
+  <section class="card">
+    <h2>Before you start</h2>
+    <label for="student_name">Your name</label>
+    <input type="text" id="student_name" name="_reviewer" required>
+    <p class="muted-note" style="margin-top:0.7rem;">
+      Not graded, just for stats. It is carried onto all three files, so you only enter it once.
+      Each file has its own submit button, so you can do one and come back.
+    </p>
+  </section>
 
-  <section id="case-003">
+  <section id="case-001">
     <div class="case-head">
-      <h2>Case 003: Haemolyne-1</h2>
-      <span class="stars" aria-label="difficulty 1 of 3"><span class="on">★</span><span class="off">☆</span><span class="off">☆</span></span>
+      <h2>Case 001: Haemolyne-1</h2>
+      <span class="stars" aria-label="complexity 1 of 3"><span class="on">★</span><span class="off">☆</span><span class="off">☆</span></span>
     </div>
   <section class="card">
     <h2>The submission</h2>
@@ -469,19 +491,10 @@
 
   <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
 
-  <section class="card">
-    <h2>Before you start</h2>
-    <label for="c003-student_name">Your name</label>
-    <input type="text" id="c003-student_name" name="student_name" required>
+    <input type="hidden" name="student_name" class="namesync">
     <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
-    <input type="hidden" name="case" value="003">
-    <input type="hidden" name="_subject" value="Case 003: Haemolyne-1 review">
-    <p class="muted-note" style="margin-top:0.7rem;">
-      Not graded, just for stats. Fill in each box as you go, then submit once at the end.
-    </p>
-  </section>
-
-
+    <input type="hidden" name="case" value="001">
+    <input type="hidden" name="_subject" value="Case 001: Haemolyne-1 review">
   <section class="card step">
     <h2><span class="num">1</span>Characterise the repair strategy</h2>
     <p>
@@ -490,14 +503,14 @@
     </p>
     <div class="field-row">
       <div>
-        <label for="c003-step1_nd">How many positions does the donor change, relative to the participant?</label>
-        <input type="number" id="c003-step1_nd" name="step1_n_changes" min="0" step="1" required>
+        <label for="c001-step1_nd">How many positions does the donor change, relative to the participant?</label>
+        <input type="number" id="c001-step1_nd" name="step1_n_changes" min="0" step="1" required>
       </div>
     </div>
-    <label for="c003-step1_changes">Give each change: GRCh38 coordinate, base, and its purpose.</label>
-    <textarea id="c003-step1_changes" name="step1_donor_changes" required></textarea>
-    <label for="c003-step1_guide">Write out the guide's target site as it appears in the participant's allele, and as it appears in an allele that has been successfully repaired. Are they the same?</label>
-    <textarea id="c003-step1_guide" name="step1_target_before_after" required></textarea>
+    <label for="c001-step1_changes">Give each change: GRCh38 coordinate, base, and its purpose.</label>
+    <textarea id="c001-step1_changes" name="step1_donor_changes" required></textarea>
+    <label for="c001-step1_guide">Write out the guide's target site as it appears in the participant's allele, and as it appears in an allele that has been successfully repaired. Are they the same?</label>
+    <textarea id="c001-step1_guide" name="step1_target_before_after" required></textarea>
   </section>
 
   <section class="card step">
@@ -506,12 +519,12 @@
       Between 24 hours and day 7 the corrected fraction falls from 34% to 11% while the indel
       fraction rises from 41% to 78%. Explain what is happening to the cells during that week.
     </p>
-    <label for="c003-step2_mech">What is the mechanism? Be explicit about the fate of an allele that has already been corrected.</label>
-    <textarea id="c003-step2_mech" name="step2_mechanism" required></textarea>
-    <label for="c003-step2_alt">The cut site is 18 bp from the variant, and repair efficiency falls with distance from the cut. Could that alone explain the low corrected fraction? Say how the data decides between the two explanations.</label>
-    <textarea id="c003-step2_alt" name="step2_alternative_ruled_out" required></textarea>
-    <label for="c003-step2_fix">What single change to the donor would have prevented this?</label>
-    <textarea id="c003-step2_fix" name="step2_fix" required></textarea>
+    <label for="c001-step2_mech">What is the mechanism? Be explicit about the fate of an allele that has already been corrected.</label>
+    <textarea id="c001-step2_mech" name="step2_mechanism" required></textarea>
+    <label for="c001-step2_alt">The cut site is 18 bp from the variant, and repair efficiency falls with distance from the cut. Could that alone explain the low corrected fraction? Say how the data decides between the two explanations.</label>
+    <textarea id="c001-step2_alt" name="step2_alternative_ruled_out" required></textarea>
+    <label for="c001-step2_fix">What single change to the donor would have prevented this?</label>
+    <textarea id="c001-step2_fix" name="step2_fix" required></textarea>
   </section>
 
   <section class="card step">
@@ -526,29 +539,29 @@
       <label class="choice"><input type="radio" name="step3_claim" value="Technically true but misleading"> Technically true but misleading</label>
       <label class="choice"><input type="radio" name="step3_claim" value="No"> No</label>
     </div>
-    <label for="c003-step3_why">HbS fell and HbA barely rose. What happened to the rest of the participant's beta-globin, and why?</label>
-    <textarea id="c003-step3_why" name="step3_globin_fate" required></textarea>
-    <label for="c003-step3_dx">What condition does the participant now have? Name it, and say whether it is better or worse than where they started.</label>
-    <textarea id="c003-step3_dx" name="step3_new_condition" required></textarea>
+    <label for="c001-step3_why">HbS fell and HbA barely rose. What happened to the rest of the participant's beta-globin, and why?</label>
+    <textarea id="c001-step3_why" name="step3_globin_fate" required></textarea>
+    <label for="c001-step3_dx">What condition does the participant now have? Name it, and say whether it is better or worse than where they started.</label>
+    <textarea id="c001-step3_dx" name="step3_new_condition" required></textarea>
   </section>
 
   <section class="card step">
     <h2><span class="num">4</span>Your determination</h2>
     <p>What should happen to this trial?</p>
     <div class="choice-group choice-col" data-choice-group>
-      <label class="choice"><input type="radio" name="step5_determination" value="Continue unchanged" required>
+      <label class="choice"><input type="radio" name="step4_determination" value="Continue unchanged" required>
         Continue unchanged. The event is unrelated to the intervention.</label>
-      <label class="choice"><input type="radio" name="step5_determination" value="Continue with added monitoring">
+      <label class="choice"><input type="radio" name="step4_determination" value="Continue with added monitoring">
         Continue, with added monitoring for this specific risk.</label>
-      <label class="choice"><input type="radio" name="step5_determination" value="Clinical hold pending redesign">
+      <label class="choice"><input type="radio" name="step4_determination" value="Clinical hold pending redesign">
         Clinical hold. The problem is intrinsic to the reagent and needs a redesign.</label>
-      <label class="choice"><input type="radio" name="step5_determination" value="Withdraw">
+      <label class="choice"><input type="radio" name="step4_determination" value="Withdraw">
         Withdraw the application entirely.</label>
     </div>
-    <label for="c003-step5_why">Justify your determination.</label>
-    <textarea id="c003-step5_why" name="step5_determination_why" required></textarea>
-    <label for="c003-step5_sponsor">What must the sponsor provide or change before dosing anyone else?</label>
-    <textarea id="c003-step5_sponsor" name="step5_sponsor_actions" required></textarea>
+    <label for="c001-step4_why">Justify your determination.</label>
+    <textarea id="c001-step4_why" name="step4_determination_why" required></textarea>
+    <label for="c001-step4_sponsor">What must the sponsor provide or change before dosing anyone else?</label>
+    <textarea id="c001-step4_sponsor" name="step4_sponsor_actions" required></textarea>
   </section>
 
   <section class="card">
@@ -560,13 +573,13 @@
 
   </form>
 
-    <a class="totop" href="#top">↑ back to the three cases</a>
+        <a class="totop" href="#top">↑ back to the three files</a>
   </section>
 
   <section id="case-002">
     <div class="case-head">
       <h2>Case 002: Alveon-CF</h2>
-      <span class="stars" aria-label="difficulty 2 of 3"><span class="on">★</span><span class="on">★</span><span class="off">☆</span></span>
+      <span class="stars" aria-label="complexity 2 of 3"><span class="on">★</span><span class="on">★</span><span class="off">☆</span></span>
     </div>
   <section class="card">
     <h2>The submission</h2>
@@ -629,19 +642,10 @@
 
   <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
 
-  <section class="card">
-    <h2>Before you start</h2>
-    <label for="c002-student_name">Your name</label>
-    <input type="text" id="c002-student_name" name="student_name" required>
+    <input type="hidden" name="student_name" class="namesync">
     <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
     <input type="hidden" name="case" value="002">
     <input type="hidden" name="_subject" value="Case 002: Alveon-CF review">
-    <p class="muted-note" style="margin-top:0.7rem;">
-      Not graded, just for stats. Fill in each box as you go, then submit once at the end.
-    </p>
-  </section>
-
-
   <section class="card step">
     <h2><span class="num">1</span>Verify the sponsor's claim</h2>
     <p>
@@ -703,19 +707,19 @@
     <h2><span class="num">4</span>Your determination</h2>
     <p>What should happen to this trial?</p>
     <div class="choice-group choice-col" data-choice-group>
-      <label class="choice"><input type="radio" name="step5_determination" value="Continue unchanged" required>
+      <label class="choice"><input type="radio" name="step4_determination" value="Continue unchanged" required>
         Continue unchanged. The event is unrelated to the intervention.</label>
-      <label class="choice"><input type="radio" name="step5_determination" value="Continue with added monitoring">
+      <label class="choice"><input type="radio" name="step4_determination" value="Continue with added monitoring">
         Continue, with added monitoring for this specific risk.</label>
-      <label class="choice"><input type="radio" name="step5_determination" value="Clinical hold pending redesign">
+      <label class="choice"><input type="radio" name="step4_determination" value="Clinical hold pending redesign">
         Clinical hold. The problem is intrinsic to the reagent and needs a redesign.</label>
-      <label class="choice"><input type="radio" name="step5_determination" value="Withdraw">
+      <label class="choice"><input type="radio" name="step4_determination" value="Withdraw">
         Withdraw the application entirely.</label>
     </div>
-    <label for="c002-step5_why">Justify your determination.</label>
-    <textarea id="c002-step5_why" name="step5_determination_why" required></textarea>
-    <label for="c002-step5_sponsor">What must the sponsor change about its QC assay before dosing anyone else?</label>
-    <textarea id="c002-step5_sponsor" name="step5_sponsor_actions" required></textarea>
+    <label for="c002-step4_why">Justify your determination.</label>
+    <textarea id="c002-step4_why" name="step4_determination_why" required></textarea>
+    <label for="c002-step4_sponsor">What must the sponsor change about its QC assay before dosing anyone else?</label>
+    <textarea id="c002-step4_sponsor" name="step4_sponsor_actions" required></textarea>
   </section>
 
   <section class="card">
@@ -727,13 +731,13 @@
 
   </form>
 
-    <a class="totop" href="#top">↑ back to the three cases</a>
+        <a class="totop" href="#top">↑ back to the three files</a>
   </section>
 
-  <section id="case-001">
+  <section id="case-003">
     <div class="case-head">
-      <h2>Case 001: FGF-Restore</h2>
-      <span class="stars" aria-label="difficulty 3 of 3"><span class="on">★</span><span class="on">★</span><span class="on">★</span></span>
+      <h2>Case 003: FGF-Restore</h2>
+      <span class="stars" aria-label="complexity 3 of 3"><span class="on">★</span><span class="on">★</span><span class="on">★</span></span>
     </div>
   <section class="card">
     <h2>The submission</h2>
@@ -795,18 +799,10 @@
 
   <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
 
-  <section class="card">
-    <h2>Before you start</h2>
-    <label for="c001-student_name">Your name</label>
-    <input type="text" id="c001-student_name" name="student_name" required>
+    <input type="hidden" name="student_name" class="namesync">
     <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
-    <input type="hidden" name="case" value="001">
-    <input type="hidden" name="_subject" value="Case 001: FGF-Restore review">
-    <p class="muted-note" style="margin-top:0.7rem;">
-      Not graded, just for stats. Fill in each box as you go, then submit once at the end.
-    </p>
-  </section>
-
+    <input type="hidden" name="case" value="003">
+    <input type="hidden" name="_subject" value="Case 003: FGF-Restore review">
   <section class="card step">
     <h2><span class="num">1</span>Characterise the reagent</h2>
     <p>
@@ -815,14 +811,14 @@
     </p>
     <div class="field-row">
       <div>
-        <label for="c001-step1_n">How many sites did you find?</label>
-        <input type="number" id="c001-step1_n" name="step1_n_sites" min="0" step="1" required>
+        <label for="c003-step1_n">How many sites did you find?</label>
+        <input type="number" id="c003-step1_n" name="step1_n_sites" min="0" step="1" required>
       </div>
     </div>
-    <label for="c001-step1_sites">For each: GRCh38 coordinates, strand, and what is at that position.</label>
-    <textarea id="c001-step1_sites" name="step1_sites" required></textarea>
-    <label for="c001-step1_method">How did you search, and how confident are you the list is complete?</label>
-    <textarea id="c001-step1_method" name="step1_method" required></textarea>
+    <label for="c003-step1_sites">For each: GRCh38 coordinates, strand, and what is at that position.</label>
+    <textarea id="c003-step1_sites" name="step1_sites" required></textarea>
+    <label for="c003-step1_method">How did you search, and how confident are you the list is complete?</label>
+    <textarea id="c003-step1_method" name="step1_method" required></textarea>
   </section>
 
   <section class="card step">
@@ -833,39 +829,39 @@
       <label class="choice"><input type="radio" name="step2_explains" value="Partly"> Partly</label>
       <label class="choice"><input type="radio" name="step2_explains" value="No"> No</label>
     </div>
-    <label for="c001-step2_mech">Set out the mechanism, from the reagent to the clinical findings.</label>
-    <textarea id="c001-step2_mech" name="step2_mechanism" required></textarea>
-    <label for="c001-step2_evidence">What evidence supports it, and what would falsify it? Cite your sources.</label>
-    <textarea id="c001-step2_evidence" name="step2_evidence" required></textarea>
+    <label for="c003-step2_mech">Set out the mechanism, from the reagent to the clinical findings.</label>
+    <textarea id="c003-step2_mech" name="step2_mechanism" required></textarea>
+    <label for="c003-step2_evidence">What evidence supports it, and what would falsify it? Cite your sources.</label>
+    <textarea id="c003-step2_evidence" name="step2_evidence" required></textarea>
   </section>
 
   <section class="card step">
     <h2><span class="num">3</span>Was this foreseeable?</h2>
-    <label for="c001-step3_why">Why does this particular reagent behave the way it does? Account for it at the sequence level.</label>
-    <textarea id="c001-step3_why" name="step3_why" required></textarea>
-    <label for="c001-step3_catch">Could it have been caught before the first participant was dosed, and how?</label>
-    <textarea id="c001-step3_catch" name="step3_preventable" required></textarea>
-    <label for="c001-step3_rule">State the general design rule a reviewer should carry away from this case.</label>
-    <textarea id="c001-step3_rule" name="step3_design_rule" required></textarea>
+    <label for="c003-step3_why">Why does this particular reagent behave the way it does? Account for it at the sequence level.</label>
+    <textarea id="c003-step3_why" name="step3_why" required></textarea>
+    <label for="c003-step3_catch">Could it have been caught before the first participant was dosed, and how?</label>
+    <textarea id="c003-step3_catch" name="step3_preventable" required></textarea>
+    <label for="c003-step3_rule">State the general design rule a reviewer should carry away from this case.</label>
+    <textarea id="c003-step3_rule" name="step3_design_rule" required></textarea>
   </section>
 
   <section class="card step">
     <h2><span class="num">4</span>Your determination</h2>
     <p>What should happen to this trial?</p>
     <div class="choice-group choice-col" data-choice-group>
-      <label class="choice"><input type="radio" name="step5_determination" value="Continue unchanged" required>
+      <label class="choice"><input type="radio" name="step4_determination" value="Continue unchanged" required>
         Continue unchanged. The event is unrelated to the intervention.</label>
-      <label class="choice"><input type="radio" name="step5_determination" value="Continue with added monitoring">
+      <label class="choice"><input type="radio" name="step4_determination" value="Continue with added monitoring">
         Continue, with added monitoring for this specific risk.</label>
-      <label class="choice"><input type="radio" name="step5_determination" value="Clinical hold pending redesign">
+      <label class="choice"><input type="radio" name="step4_determination" value="Clinical hold pending redesign">
         Clinical hold. The problem is intrinsic to the reagent and needs a redesign.</label>
-      <label class="choice"><input type="radio" name="step5_determination" value="Withdraw">
+      <label class="choice"><input type="radio" name="step4_determination" value="Withdraw">
         Withdraw the application entirely.</label>
     </div>
-    <label for="c001-step5_why">Justify your determination.</label>
-    <textarea id="c001-step5_why" name="step5_determination_why" required></textarea>
-    <label for="c001-step5_sponsor">What must the sponsor provide or change before dosing anyone else?</label>
-    <textarea id="c001-step5_sponsor" name="step5_sponsor_actions" required></textarea>
+    <label for="c003-step4_why">Justify your determination.</label>
+    <textarea id="c003-step4_why" name="step4_determination_why" required></textarea>
+    <label for="c003-step4_sponsor">What must the sponsor provide or change before dosing anyone else?</label>
+    <textarea id="c003-step4_sponsor" name="step4_sponsor_actions" required></textarea>
   </section>
 
   <section class="card">
@@ -877,7 +873,7 @@
 
   </form>
 
-    <a class="totop" href="#top">↑ back to the three cases</a>
+        <a class="totop" href="#top">↑ back to the three files</a>
   </section>
 
 </div>
@@ -889,6 +885,15 @@
     var status = form.querySelector('.submit-status');
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
+      // one name field at the top serves all three worksheets
+      var who = document.getElementById('student_name');
+      if (!who.value.trim()) {
+        status.className = 'submit-status err';
+        status.textContent = '\u26a0\ufe0f Put your name in the box at the top of the page first.';
+        who.focus(); who.scrollIntoView({ block: 'center' });
+        return;
+      }
+      form.querySelector('.namesync').value = who.value.trim();
       if (!form.checkValidity()) { form.reportValidity(); return; }
       btn.disabled = true; btn.textContent = 'Submitting\u2026';
       status.className = 'submit-status'; status.textContent = '';
