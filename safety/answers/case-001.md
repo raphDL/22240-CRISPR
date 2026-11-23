@@ -92,9 +92,18 @@ repaired.
 
 **Where the beta-globin went.** 78% of alleles carry frameshift indels in HBB
 and produce no beta-globin at all. Only 11% were corrected, which is why HbA
-reached just 5%. The participant has lost most of their beta-globin output
-entirely, which is why HbF rises to 83% as compensation and why total
-haemoglobin **falls** from 8.4 to 6.1 g/dL despite three-weekly transfusions.
+reached just 5%. Beta-globin haemoglobin, HbA plus HbS, goes from 7.06 to 0.85
+g/dL, which is 12% of baseline, and total haemoglobin **falls** from 8.4 to 6.1
+g/dL.
+
+**Why HbF rises, if it comes up.** Partly it is arithmetic: these are shares of
+a shrinking total, and with beta-globin gone the gamma-containing HbF is most of
+what is left to count. But not only. In absolute terms HbF goes from 0.92 to
+5.06 g/dL, a real five-fold rise, from stress erythropoiesis and from selection,
+since a cell making little or no beta-globin carries excess free alpha chains
+that precipitate and kill it, so the cells that survive best are the ones making
+the most gamma. It is the same reason HbF dominates in untreated beta-zero
+thalassemia, which is the point: this participant now has that disease.
 
 The single most telling line in the table is that **HbS fell and HbA did not
 rise to replace it.** In a successful correction the two move together.
