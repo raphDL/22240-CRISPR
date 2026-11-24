@@ -137,6 +137,7 @@
     box-shadow: 0 0 0 3px var(--accent-soft);
   }
   textarea { min-height: 4.5rem; }
+  textarea.tall { min-height: 9rem; }
   textarea.seq {
     font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
     font-size: 0.78rem;
@@ -948,22 +949,11 @@
   <section class="card step">
     <h2><span class="num">2</span>Account for the result</h2>
     <p>
-      The company's reported edit is real, and there is no protein. Reconcile those two facts.
+      The company's reported edit is real, and there is no protein. Reconcile those two facts,
+      with coordinates, sequence and any accessions that support you.
     </p>
-    <label for="c002-step2_changes">What does the editor change at this site? Give each one with its GRCh38 coordinate, its effect, and your evidence. Cite accessions where they exist.</label>
-    <textarea id="c002-step2_changes" name="step2_all_changes" required></textarea>
-    <label for="c002-step2_protein">Write out the edited allele from the start codon and translate it.</label>
-    <textarea id="c002-step2_protein" name="step2_edited_allele" required></textarea>
-    <div class="field-row">
-      <div>
-        <label for="c002-step2_len">Length of the protein the patient makes, in amino acids</label>
-        <input type="number" id="c002-step2_len" name="step2_protein_length" min="0" step="1" required>
-      </div>
-      <div>
-        <label for="c002-step2_wt">Length of the normal protein, for comparison</label>
-        <input type="number" id="c002-step2_wt" name="step2_wt_length" min="0" step="1" required>
-      </div>
-    </div>
+    <label for="c002-step2">What happened?</label>
+    <textarea id="c002-step2" name="step2_what_happened" class="tall" required></textarea>
   </section>
 
   <section class="card step">

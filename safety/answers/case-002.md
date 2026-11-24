@@ -167,9 +167,13 @@ three, so determinations stay comparable.
 - Step 1: `step1_codon_from` (expect **ATG**), `step1_codon_to` (expect
   **ACG**), `step1_exon` (expect **exon 1**), `step1_variant_consequence`,
   `step1_as_intended` (expect **Yes**, the company's report is accurate)
-- Step 2: `step2_all_changes` (changes, effects and evidence in one box),
-  `step2_edited_allele`, `step2_protein_length` (expect **1**),
-  `step2_wt_length` (expect **1480**)
+- Step 2: `step2_what_happened`, one open box carrying the whole
+  reconstruction. There is no separate protein-length field any more, so the
+  numbers have to be read out of the prose. A complete answer names the second
+  cytosine at **chr7:117,480,098**, cites **ClinVar 53980**, reconstructs
+  codon 2 as `CAG` to `TAG`, and lands on **1 amino acid against 1,480**. An
+  answer that says "a bystander broke it" without reconstructing the codon has
+  not done the work: that is the line to hold.
 - Step 3: `step3_dose` (expect **No, actively worse**), `step3_dose_reasoning`,
   `step3_qc_flaw`
 - Step 4: `step4_determination`, `step4_determination_why` (carries the
