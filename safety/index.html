@@ -278,6 +278,13 @@
     font-size: 0.93rem;
   }
   .role strong { color: var(--accent-ink); }
+  .codon-pair { display: flex; align-items: center; gap: 0.7rem; }
+  .codon-pair input[type="text"] {
+    width: 7rem; flex: 0 0 auto; text-align: center;
+    font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    text-transform: uppercase; letter-spacing: .14em; font-size: 1rem;
+  }
+  .codon-pair .arrow { color: var(--muted); font-size: 1.15rem; line-height: 1; }
   .flow { margin: 1.1rem 0 0.2rem; }
   .flow svg { width: 100%; height: auto; display: block; color: var(--ink); }
   .flow .node { fill: #fff; stroke: var(--line); stroke-width: 1.5; }
@@ -647,25 +654,21 @@
   <section class="card step">
     <h2><span class="num">1</span>Characterise the repair strategy</h2>
     <p>
-      Lay the donor, the reference and the participant's allele side by side, and work out exactly
-      what this reagent changes and what it leaves alone.
+      Align the donor, the reference and the participant's allele. Work out exactly what the
+      donor changes and what it leaves alone.
     </p>
-    <div class="field-row">
-      <div>
-        <label for="c001-step1_codon">The participant has Glu7Val. Which codon changed, and what did it change to?</label>
-        <input type="text" id="c001-step1_codon" name="step1_codon_change" required>
-      </div>
-      <div>
-        <label for="c001-step1_exon">Which exon of <em>HBB</em> is the variant in?</label>
-        <input type="text" id="c001-step1_exon" name="step1_exon" required>
+    <div role="group" aria-labelledby="c001-codon-q">
+      <label id="c001-codon-q">The participant has Glu7Val. Which codon changed, and what did it change to?</label>
+      <div class="codon-pair">
+        <input type="text" name="step1_codon_from" maxlength="3" aria-label="codon before the variant" required>
+        <span class="arrow" aria-hidden="true">&rarr;</span>
+        <input type="text" name="step1_codon_to" maxlength="3" aria-label="codon after the variant" required>
       </div>
     </div>
-    <div class="field-row">
-      <div>
-        <label for="c001-step1_nd">How many positions does the donor change, relative to the participant?</label>
-        <input type="number" id="c001-step1_nd" name="step1_n_changes" min="0" step="1" required>
-      </div>
-    </div>
+    <label for="c001-step1_exon">Which exon of <em>HBB</em> is the variant in?</label>
+    <input type="text" id="c001-step1_exon" name="step1_exon" required>
+    <label for="c001-step1_nd">How many positions does the donor change, relative to the participant?</label>
+    <input type="number" id="c001-step1_nd" name="step1_n_changes" min="0" step="1" required>
   </section>
 
   <section class="card step">
@@ -674,7 +677,7 @@
       Read the release data above. Explain what is happening to the cells over the week in
       culture.
     </p>
-    <label for="c001-step2_mech">What is the mechanism? Be explicit about the fate of an allele that has already been corrected.</label>
+    <label for="c001-step2_mech">What is the mechanism? Follow one allele that has already been repaired, and say what happens to it next.</label>
     <textarea id="c001-step2_mech" name="step2_mechanism" required></textarea>
     <label for="c001-step2_alt">A colleague says the corrected fraction is simply low because HDR is inefficient. What in the data argues against that?</label>
     <textarea id="c001-step2_alt" name="step2_alternative_ruled_out" required></textarea>

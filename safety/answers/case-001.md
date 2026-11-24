@@ -182,8 +182,8 @@ every submission carries a hidden **`case`** field (`001` here). The step 4
 determination fields are deliberately identical across all three cases so the
 determinations are comparable.
 
-- Step 1: `step1_codon_change` (expect **GAG to GTG**), `step1_exon` (expect
-  **exon 1**), `step1_n_changes` (expect **1**)
+- Step 1: `step1_codon_from` (expect **GAG**), `step1_codon_to` (expect
+  **GTG**), `step1_exon` (expect **exon 1**), `step1_n_changes` (expect **1**)
 - Step 2: `step2_mechanism`, `step2_alternative_ruled_out`, `step2_fix`
 - Step 3: `step3_claim` (expect **Technically true but misleading**),
   `step3_globin_fate`, `step3_new_condition`
