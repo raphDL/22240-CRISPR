@@ -97,8 +97,10 @@ exercise you want a short link for.
   are prefixed `c001_`, `c002_` and `c003_`, which keeps the three determinations in their own
   columns and comparable both across a student and across the class.
 
-  One consequence worth knowing: because it is a single form, a student must finish all three
-  cases in one sitting. Nothing is saved if they close the tab.
+  Because it is a single form, a student sends all three cases at once. Answers are autosaved to
+  `localStorage` as they type and restored on the next visit, so closing the tab costs nothing;
+  a successful submit clears the draft, so a shared machine does not hand the next student the
+  previous one's answers. The draft never leaves the browser.
 
 ## Discovery pipeline
 

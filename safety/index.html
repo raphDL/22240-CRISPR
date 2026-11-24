@@ -177,6 +177,13 @@
     border-radius: 5px;
   }
   .muted-note { font-size: 0.82rem; color: var(--muted); }
+  .draft-note {
+    margin: 0.6rem 0 0; font-size: 0.82rem; font-weight: 600; color: var(--good);
+    background: #ecfdf3; border: 1px solid #abefc6; border-radius: 8px;
+    padding: 0.45rem 0.7rem;
+  }
+  .draft-note[hidden] { display: none; }
+
   details.hint {
     margin: 0 0 0.85rem;
     background: var(--accent-soft);
@@ -504,8 +511,10 @@
     <input type="text" id="student_name" name="student_name" required>
     <p class="muted-note" style="margin-top:0.7rem;">
       Not graded, just for stats. There is one submit button, at the very bottom, and it sends
-      all three files together, so work through them before you submit.
+      all three files together, so work through them before you submit. Your answers are kept in
+      this browser as you type, so you can close the tab and pick up where you left off.
     </p>
+    <p class="draft-note" id="draft-restored" hidden>Picked up where you left off.</p>
   </section>
 
   <section id="case-001">
@@ -1115,23 +1124,62 @@
 </div>
 
 <script>
-  // one worksheet covering all three files, submitted once at the end
+  // one worksheet covering all three files, submitted once at the end,
+  // with a local draft so closing the tab does not lose an hour of work
   (function () {
     var form = document.querySelector('form.worksheet');
     if (!form) return;
     var btn = form.querySelector('button[type="submit"]');
     var status = form.querySelector('.submit-status');
+    var KEY = '22240-safety-review-v1';
+    var SKIP = { _gotcha: 1, _subject: 1 };
+
+    function fields() {
+      return Array.prototype.slice.call(form.querySelectorAll('[name]')).filter(function (el) {
+        return !SKIP[el.name] && el.type !== 'hidden';
+      });
+    }
+    function saveDraft() {
+      try {
+        var data = {};
+        fields().forEach(function (el) {
+          if (el.type === 'radio') { if (el.checked) data[el.name] = el.value; }
+          else if (el.value) { data[el.name] = el.value; }
+        });
+        localStorage.setItem(KEY, JSON.stringify(data));
+      } catch (e) { /* private mode or blocked storage: the draft is a convenience */ }
+    }
+    function restoreDraft() {
+      var data;
+      try { data = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return 0; }
+      var n = 0;
+      fields().forEach(function (el) {
+        var v = data[el.name];
+        if (v === undefined) return;
+        if (el.type === 'radio') {
+          if (el.value === v) {
+            el.checked = true; n++;
+            var choice = el.closest('.choice');
+            if (choice) { choice.classList.add('selected'); }
+          }
+        } else { el.value = v; n++; }
+      });
+      return n;
+    }
+    function clearDraft() { try { localStorage.removeItem(KEY); } catch (e) {} }
+
+    var t;
+    form.addEventListener('input', function () { clearTimeout(t); t = setTimeout(saveDraft, 400); });
+    form.addEventListener('change', saveDraft);
+    if (restoreDraft() > 0) {
+      var note = document.getElementById('draft-restored');
+      if (note) { note.hidden = false; }
+    }
+
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
-      if (!form.checkValidity()) {
-        var first = form.querySelector(':invalid');
-        status.className = 'submit-status err';
-        status.textContent = '\u26a0\ufe0f Something is still blank. Jumping you to it.';
-        if (first) { first.scrollIntoView({ block: 'center' }); }
-        form.reportValidity();
-        return;
-      }
-      btn.disabled = true; btn.textContent = 'Submitting\u2026';
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      btn.disabled = true; btn.textContent = 'Submitting…';
       status.className = 'submit-status'; status.textContent = '';
       try {
         var res = await fetch(form.action, {
@@ -1139,12 +1187,13 @@
           headers: { 'Accept': 'application/json' }
         });
         if (!res.ok) throw new Error('bad response');
+        clearDraft();
         status.className = 'submit-status ok';
-        status.textContent = '\u2705 Review submitted. Your instructor will follow up with the determination.';
+        status.textContent = '✅ Review submitted. Your instructor will follow up with the determination.';
         btn.textContent = 'Submitted';
       } catch (err) {
         status.className = 'submit-status err';
-        status.textContent = '\u26a0\ufe0f Could not reach the submission service. Check your connection and try again.';
+        status.textContent = '⚠️ Could not reach the submission service. Check your connection and try again.';
         btn.disabled = false; btn.textContent = 'Submit review';
       }
     });
