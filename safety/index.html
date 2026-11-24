@@ -57,7 +57,7 @@
     font-weight: 800;
     letter-spacing: -0.02em;
   }
-  h2 {
+  h2, section.card > h3 {
     font-size: 1.1rem;
     font-weight: 700;
     margin: 0 0 0.75rem;
@@ -389,7 +389,7 @@
   .file-bar .on { color: #f0b429; }
   .file-bar .off { color: #4a505c; }
   .file-body { padding: .9rem 1rem 0; flex: 1; }
-  a.file h3 { margin: 0 0 .15rem; font-size: 1.06rem; font-weight: 700; letter-spacing: -.01em; }
+  a.file h2 { margin: 0 0 .15rem; font-size: 1.06rem; font-weight: 700; letter-spacing: -.01em; }
   .file-meta {
     font-family: "JetBrains Mono", monospace; font-size: .68rem; color: var(--muted);
     margin-bottom: .75rem;
@@ -433,7 +433,7 @@
         <span class="stars" aria-label="complexity 1 of 3"><span class="on">★</span><span class="off">☆</span><span class="off">☆</span></span>
       </div>
       <div class="file-body">
-        <h3>Alveon-CF</h3>
+        <h2>Alveon-CF</h2>
         <div class="file-meta">CYSTIC FIBROSIS &nbsp;/&nbsp; BASE EDITOR</div>
         <span class="file-status">Escalation requested</span>
         <p class="file-event">The edit was confirmed in 71% of alleles. The protein never appeared.</p>
@@ -446,7 +446,7 @@
         <span class="stars" aria-label="complexity 2 of 3"><span class="on">★</span><span class="on">★</span><span class="off">☆</span></span>
       </div>
       <div class="file-body">
-        <h3>Haemolyne-1</h3>
+        <h2>Haemolyne-1</h2>
         <div class="file-meta">SICKLE CELL DISEASE &nbsp;/&nbsp; HDR DONOR</div>
         <span class="file-status">Endpoint claimed met</span>
         <p class="file-event">Sickle haemoglobin fell by 90% and the participant became transfusion dependent.</p>
@@ -459,7 +459,7 @@
         <span class="stars" aria-label="complexity 3 of 3"><span class="on">★</span><span class="on">★</span><span class="on">★</span></span>
       </div>
       <div class="file-body">
-        <h3>FGF-Restore</h3>
+        <h2>FGF-Restore</h2>
         <div class="file-meta">ACHONDROPLASIA &nbsp;/&nbsp; CAS9 NUCLEASE</div>
         <span class="file-status">Enrolment paused</span>
         <p class="file-event">A trial met its primary endpoint. Eleven years later a participant did not reach puberty.</p>
@@ -484,7 +484,7 @@
       <span class="stars" aria-label="complexity 1 of 3"><span class="on">★</span><span class="off">☆</span><span class="off">☆</span></span>
     </div>
   <section class="card">
-    <h2>The submission</h2>
+    <h3>The submission</h3>
     <p>
       <strong>Alveon-CF</strong> is a phase 1 trial of a base editor delivered to airway
       epithelium by lipid nanoparticle. The participant carries a known pathogenic
@@ -646,11 +646,11 @@
   <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
 
     <input type="hidden" name="student_name" class="namesync">
-    <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
+    <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
     <input type="hidden" name="case" value="001">
     <input type="hidden" name="_subject" value="Case 001: Alveon-CF review">
   <section class="card step">
-    <h2><span class="num">1</span>Verify the company's claim</h2>
+    <h3><span class="num" aria-hidden="true">1</span>Verify the company's claim</h3>
     <p>
       Before anything else, establish whether the edit the company reports is the edit they
       intended, and what it was supposed to achieve.
@@ -675,7 +675,7 @@
   </section>
 
   <section class="card step">
-    <h2><span class="num">2</span>Account for the result</h2>
+    <h3><span class="num" aria-hidden="true">2</span>Account for the result</h3>
     <p>
       The company's reported edit is real, and there is no protein. Reconcile those two facts,
       with coordinates, sequence and any accessions that support you.
@@ -685,7 +685,7 @@
   </section>
 
   <section class="card step">
-    <h2><span class="num">3</span>Evaluate the company's proposal</h2>
+    <h3><span class="num" aria-hidden="true">3</span>Evaluate the company's proposal</h3>
     <p>The company attributes the failure to insufficient delivery and asks to escalate the dose.</p>
     <label>Would a higher dose help this participant?</label>
     <div class="choice-group" data-choice-group>
@@ -709,9 +709,9 @@
   </section>
 
   <section class="card step">
-    <h2><span class="num">4</span>Your determination</h2>
-    <p>What should happen to this trial?</p>
-    <div class="choice-group choice-col" data-choice-group>
+    <h3><span class="num" aria-hidden="true">4</span>Your determination</h3>
+    <p id="c001-det-q">What should happen to this trial?</p>
+    <div class="choice-group choice-col" role="group" aria-labelledby="c001-det-q" data-choice-group>
       <label class="choice"><input type="radio" name="step4_determination" value="Continue unchanged" required>
         Continue unchanged. The event is unrelated to the intervention.</label>
       <label class="choice"><input type="radio" name="step4_determination" value="Continue with added monitoring">
@@ -743,7 +743,7 @@
       <span class="stars" aria-label="complexity 2 of 3"><span class="on">★</span><span class="on">★</span><span class="off">☆</span></span>
     </div>
   <section class="card">
-    <h2>The submission</h2>
+    <h3>The submission</h3>
     <p>
       <strong>Haemolyne-1</strong> is a phase 1/2 trial in severe sickle cell disease. The
       participant's own CD34+ haematopoietic stem cells are collected, edited outside the body,
@@ -826,7 +826,7 @@
         The participant's own blood stem cells are edited outside the body, then given back.
       </figcaption>
     </figure>
-    <h2 style="margin-top:1.6rem;">Manufacturing release data</h2>
+    <h3 style="margin-top:1.6rem;">Manufacturing release data</h3>
     <p>Allele outcomes in the drug product, by amplicon sequencing, at three points during culture.</p>
     <figure class="chart"><div class="chart-legend"><span class="li"><span class="sw" style="background:#2a78d6"></span>Corrected</span><span class="li"><span class="sw" style="background:#eb6834"></span>Indel</span><span class="li"><span class="sw" style="background:#1baf7a"></span>Unmodified</span></div><svg viewBox="0 0 600 250" role="img" aria-label="Allele outcomes in the drug product at three points during culture">
 <g class="grid">
@@ -909,11 +909,11 @@
   <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
 
     <input type="hidden" name="student_name" class="namesync">
-    <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
+    <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
     <input type="hidden" name="case" value="002">
     <input type="hidden" name="_subject" value="Case 002: Haemolyne-1 review">
   <section class="card step">
-    <h2><span class="num">1</span>Characterise the repair strategy</h2>
+    <h3><span class="num" aria-hidden="true">1</span>Characterise the repair strategy</h3>
     <p>
       Align the donor, the reference and the participant's allele. Work out exactly what the
       donor changes and what it leaves alone.
@@ -933,7 +933,7 @@
   </section>
 
   <section class="card step">
-    <h2><span class="num">2</span>Account for the manufacturing data</h2>
+    <h3><span class="num" aria-hidden="true">2</span>Account for the manufacturing data</h3>
     <p>
       Read the release data above. Explain what is happening to the cells over the week in
       culture.
@@ -952,7 +952,7 @@
   </section>
 
   <section class="card step">
-    <h2><span class="num">3</span>Account for the clinical outcome</h2>
+    <h3><span class="num" aria-hidden="true">3</span>Account for the clinical outcome</h3>
     <p>
       The company reports a 90% reduction in sickle haemoglobin and calls the endpoint met.
     </p>
@@ -967,9 +967,9 @@
   </section>
 
   <section class="card step">
-    <h2><span class="num">4</span>Your determination</h2>
-    <p>What should happen to this trial?</p>
-    <div class="choice-group choice-col" data-choice-group>
+    <h3><span class="num" aria-hidden="true">4</span>Your determination</h3>
+    <p id="c002-det-q">What should happen to this trial?</p>
+    <div class="choice-group choice-col" role="group" aria-labelledby="c002-det-q" data-choice-group>
       <label class="choice"><input type="radio" name="step4_determination" value="Continue unchanged" required>
         Continue unchanged. The event is unrelated to the intervention.</label>
       <label class="choice"><input type="radio" name="step4_determination" value="Continue with added monitoring">
@@ -1001,7 +1001,7 @@
       <span class="stars" aria-label="complexity 3 of 3"><span class="on">★</span><span class="on">★</span><span class="on">★</span></span>
     </div>
   <section class="card">
-    <h2>The submission</h2>
+    <h3>The submission</h3>
     <p>
       <strong>FGF-Restore</strong> is an open-label phase 1 trial in children with achondroplasia.
       Achondroplasia is caused by an overactive FGFR3 receptor, which restrains growth plate
@@ -1045,13 +1045,13 @@
   <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
 
     <input type="hidden" name="student_name" class="namesync">
-    <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
+    <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
     <input type="hidden" name="case" value="003">
     <input type="hidden" name="_subject" value="Case 003: FGF-Restore review">
   <section class="card step">
-    <h2>Your determination</h2>
-    <p>What should happen to this trial?</p>
-    <div class="choice-group choice-col" data-choice-group>
+    <h3>Your determination</h3>
+    <p id="c003-det-q">What should happen to this trial?</p>
+    <div class="choice-group choice-col" role="group" aria-labelledby="c003-det-q" data-choice-group>
       <label class="choice"><input type="radio" name="step4_determination" value="Continue unchanged" required>
         Continue unchanged. The event is unrelated to the intervention.</label>
       <label class="choice"><input type="radio" name="step4_determination" value="Continue with added monitoring">

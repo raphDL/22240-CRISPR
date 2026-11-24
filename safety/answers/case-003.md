@@ -26,10 +26,15 @@ which is the same mistake the company made.
 
 ## What is at the second site
 
-***FGFR1***, chromosome 8, **exon 12 of 18**, around residue **535**.
+***FGFR1***, chromosome 8, **exon 12 of 18**. The protospacer covers residues
+**532 to 538** and the cut falls after residue **537**.
 
-For reference the intended site is *FGFR3* exon **12 of 18**, residue **529**.
-The same exon number in both genes is not a coincidence; see step 4.
+For reference the intended site is *FGFR3*, also **exon 12 of 18**, protospacer
+over residues **526 to 532**, cut after residue **531**. Both checked against
+the MANE transcripts, ENST00000440486 for FGFR3 and ENST00000447712 for FGFR1,
+and both protospacers sit inside a single exon, so neither is a spliced-CDS
+artifact. The same exon number in both genes is not a coincidence: see
+**Was this foreseeable?** below.
 
 ## Accounting for the adverse event
 
