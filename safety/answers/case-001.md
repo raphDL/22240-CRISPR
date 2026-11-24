@@ -14,6 +14,21 @@ disease.
 
 ## Step 1. Characterise the repair strategy
 
+**The codon.** *HBB* codon 7 is **GAG**, glutamate. The participant's variant
+is `NM_000518.5:c.20A>T`, which makes it **GTG**, valine. So **GAG to GTG**,
+Glu7Val. Checked against ENST00000335295: the CDS opens
+`ATG GTG CAT CTG ACT CCT GAG GAG ...` and c.19-21 is that first GAG.
+
+This question exists to catch the students who never built the patient's allele
+correctly. *HBB* sits on the **minus strand** of chr11, so anyone who reads the
+plus-strand genomic sequence straight off and counts codons from the left gets
+nonsense. They have to reverse complement, or import the transcript rather than
+the region.
+
+**The exon.** **Exon 1**, of three. c.20 maps to chr11:5,227,002, and exon 1
+runs chr11:5,226,930-5,227,071, so the variant and the whole 100 nt donor
+(5,226,935-5,227,034) sit inside it.
+
 **One change.** The donor differs from the participant at exactly one position,
 chr11:5,227,002, where the participant's A is replaced by the reference T. That
 is the correction, reverting HbS to HbA.
@@ -61,16 +76,17 @@ pool and the corrected pool and accumulate irreversibly in the null pool. That
 is why corrected alleles fall 34% to 11% while indels rise 41% to 78%, and why
 the unmodified fraction falls too.
 
-**Ruling out the distance explanation.** The competing hypothesis is sound and
-should be credited: the cut is 18 bp from the variant, repair efficiency does
-fall with distance, so low correction could be a conversion tract problem.
+**Ruling out "HDR is just inefficient".** This is the question that stops a
+student answering step 2 with a shrug, so it is worth the space. Inefficient
+HDR is a perfectly reasonable hypothesis, and the cut being 18 bp from the
+variant genuinely does cost conversion efficiency.
 
-The time course decides it. A conversion tract limitation gives a **low but
-flat** corrected fraction: whatever is made at 24 hours stays. Here the
-corrected fraction **declines**, which means corrected alleles are being
-destroyed after they are made. Only re-cutting does that. Distance may well also
-contribute to the modest starting figure of 34%, and a good answer says both are
-probably operating.
+**The time course decides it.** Inefficient HDR gives a **low but flat**
+corrected fraction: whatever is made by 24 hours stays made. Here the corrected
+fraction **declines**, 34% to 19% to 11%, which means corrected alleles are
+being destroyed after they are made. Only re-cutting does that. Inefficiency
+probably does contribute to the modest 34% starting point, and a good answer
+says both are operating. The one that explains the *decline* is re-cutting.
 
 **The fix.** A silent, synonymous change in the protospacer or PAM carried on
 the donor. Once incorporated alongside the correction, the repaired allele no
@@ -166,7 +182,8 @@ every submission carries a hidden **`case`** field (`001` here). The step 4
 determination fields are deliberately identical across all three cases so the
 determinations are comparable.
 
-- Step 1: `step1_n_changes` (expect **1**)
+- Step 1: `step1_codon_change` (expect **GAG to GTG**), `step1_exon` (expect
+  **exon 1**), `step1_n_changes` (expect **1**)
 - Step 2: `step2_mechanism`, `step2_alternative_ruled_out`, `step2_fix`
 - Step 3: `step3_claim` (expect **Technically true but misleading**),
   `step3_globin_fate`, `step3_new_condition`
