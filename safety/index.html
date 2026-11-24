@@ -906,20 +906,6 @@
     </div>
   </section>
 
-  <section class="card">
-    <details class="hint">
-      <summary>If you are not sure where to start</summary>
-      <p>
-        Import <em>HBB</em> into <strong>Benchling</strong> from the reference genome, then make
-        the participant's substitution yourself. That gives you their allele to work from. Line
-        the donor up against it.
-      </p>
-      <p style="margin-bottom:0;">
-        Then work out what Cas9 sees at this locus, before the repair and after it.
-      </p>
-    </details>
-  </section>
-
   <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
 
     <input type="hidden" name="student_name" class="namesync">
@@ -1056,22 +1042,6 @@
     </div>
   </section>
 
-  <section class="card">
-    <details class="hint">
-      <summary>If you are not sure where to start</summary>
-      <p>
-        A guide RNA is just a sequence, so anything that searches the human genome for a short
-        sequence will tell you where it can bind. <strong>CRISPOR</strong> takes a protospacer and
-        reports predicted target sites; <strong>UCSC BLAT</strong> and <strong>Ensembl</strong>
-        will align a 20-mer to hg38 directly.
-      </p>
-      <p style="margin-bottom:0;">
-        Once you have a locus, Ensembl and NCBI Gene tell you what is there, ClinVar tells you what
-        goes wrong with it, and GTEx tells you where it is expressed.
-      </p>
-    </details>
-  </section>
-
   <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
 
     <input type="hidden" name="student_name" class="namesync">
@@ -1079,49 +1049,7 @@
     <input type="hidden" name="case" value="003">
     <input type="hidden" name="_subject" value="Case 003: FGF-Restore review">
   <section class="card step">
-    <h2><span class="num">1</span>Characterise the reagent</h2>
-    <p>
-      Work out, from the protospacer and PAM alone, everywhere in the human genome this reagent
-      could direct a cut.
-    </p>
-    <div class="field-row">
-      <div>
-        <label for="c003-step1_n">How many sites did you find?</label>
-        <input type="number" id="c003-step1_n" name="step1_n_sites" min="0" step="1" required>
-      </div>
-    </div>
-    <label for="c003-step1_sites">For each: GRCh38 coordinates, strand, and what is at that position.</label>
-    <textarea id="c003-step1_sites" name="step1_sites" required></textarea>
-    <label for="c003-step1_method">How did you search, and how confident are you the list is complete?</label>
-    <textarea id="c003-step1_method" name="step1_method" required></textarea>
-  </section>
-
-  <section class="card step">
-    <h2><span class="num">2</span>Account for the adverse event</h2>
-    <p>Does anything in your answer to step 1 explain what happened to participant 007?</p>
-    <div class="choice-group" data-choice-group>
-      <label class="choice"><input type="radio" name="step2_explains" value="Yes" required> Yes</label>
-      <label class="choice"><input type="radio" name="step2_explains" value="Partly"> Partly</label>
-      <label class="choice"><input type="radio" name="step2_explains" value="No"> No</label>
-    </div>
-    <label for="c003-step2_mech">Set out the mechanism, from the reagent to the clinical findings.</label>
-    <textarea id="c003-step2_mech" name="step2_mechanism" required></textarea>
-    <label for="c003-step2_evidence">What evidence supports it, and what would falsify it? Cite your sources.</label>
-    <textarea id="c003-step2_evidence" name="step2_evidence" required></textarea>
-  </section>
-
-  <section class="card step">
-    <h2><span class="num">3</span>Was this foreseeable?</h2>
-    <label for="c003-step3_why">Why does this particular reagent behave the way it does? Account for it at the sequence level.</label>
-    <textarea id="c003-step3_why" name="step3_why" required></textarea>
-    <label for="c003-step3_catch">Could it have been caught before the first participant was dosed, and how?</label>
-    <textarea id="c003-step3_catch" name="step3_preventable" required></textarea>
-    <label for="c003-step3_rule">State the general design rule a reviewer should carry away from this case.</label>
-    <textarea id="c003-step3_rule" name="step3_design_rule" required></textarea>
-  </section>
-
-  <section class="card step">
-    <h2><span class="num">4</span>Your determination</h2>
+    <h2>Your determination</h2>
     <p>What should happen to this trial?</p>
     <div class="choice-group choice-col" data-choice-group>
       <label class="choice"><input type="radio" name="step4_determination" value="Continue unchanged" required>
@@ -1135,8 +1063,8 @@
     </div>
     <label for="c003-step4_why">Justify your determination.</label>
     <textarea id="c003-step4_why" name="step4_determination_why" required></textarea>
-    <label for="c003-step4_company">What must the company provide or change before dosing anyone else?</label>
-    <textarea id="c003-step4_company" name="step4_company_actions" required></textarea>
+    <label for="c003-step4_fix">Propose a fix: a new design, a new guide, whatever you would take forward. Be specific enough that someone could order what you are proposing.</label>
+    <textarea id="c003-step4_fix" name="step4_fix" class="seq" required></textarea>
   </section>
 
   <section class="card">

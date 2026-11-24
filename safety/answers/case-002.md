@@ -229,8 +229,8 @@ determinations are comparable.
 
 `step3_globin_fate` now carries both halves, where the beta-globin went and
 what that means for the participant, and `step4_determination_why` carries both
-the justification and the required changes. Cases 001 and 003 still have the
-separate `step4_company_actions` box.
+the justification and the required changes. No case has a separate
+`step4_company_actions` box any more.
 
 ## What is invented and what is real
 

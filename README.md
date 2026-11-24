@@ -87,8 +87,9 @@ exercise you want a short link for.
   Case 001 turns on one reconstruction and asks for it as a single open question. Case 002 is a
   sequence comparison with everything needed on the page, but it wants a time course read, a
   competing explanation ruled out and a replacement reagent designed. Case 003 needs a
-  genome-wide search and an expression argument. Cases 001 and 003 came out of the screen in
-  `crispr-safety/`.
+  genome-wide search and an expression argument, and is deliberately open: no guiding steps and
+  no starting hint, just the file, a determination and a fix. Cases 001 and 003 came out of the
+  screen in `crispr-safety/`.
 
   Answer keys live in `safety/answers/`, one per case. Short links `c1/`, `c2/` and `c3/` jump
   straight to a case; `safety/case-00N/` still redirects for any link handed out earlier. All

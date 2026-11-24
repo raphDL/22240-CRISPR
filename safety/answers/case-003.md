@@ -10,7 +10,7 @@ both sites lie in the tyrosine kinase domain, the most conserved region of the
 FGFR family. Loss of FGFR1 causes hypogonadotropic hypogonadism with anosmia,
 which is precisely the adverse event reported.
 
-## Step 1. Characterise the reagent
+## What the reagent actually does
 
 **Two** perfect-match sites, both with a valid NGG PAM.
 
@@ -24,14 +24,14 @@ lists the second as a 0-mismatch off-target and BLAT returns two hits. A student
 who finds only one site has searched the *FGFR3* locus rather than the genome,
 which is the same mistake the company made.
 
-## Step 1 continued. What is at the second site
+## What is at the second site
 
 ***FGFR1***, chromosome 8, **exon 12 of 18**, around residue **535**.
 
 For reference the intended site is *FGFR3* exon **12 of 18**, residue **529**.
 The same exon number in both genes is not a coincidence; see step 4.
 
-## Step 2. Account for the adverse event
+## Accounting for the adverse event
 
 **Yes.** *FGFR1* loss of function causes **hypogonadotropic hypogonadism with or
 without anosmia** (Kallmann syndrome). ClinVar holds 164 pathogenic *FGFR1* SNVs,
@@ -57,7 +57,7 @@ Accept "partly" with good reasoning, since nobody has shown FGFR1 editing in
 this participant; the case is a strong inference, not a measurement. That gap is
 itself part of the answer to step 5.
 
-## Step 3. Was this foreseeable?
+## Was this foreseeable?
 
 **Why the sequences are identical.** Both sites sit in the **tyrosine kinase
 domain**. FGFR1, FGFR2, FGFR3 and FGFR4 arose by duplication and their kinase
@@ -79,7 +79,7 @@ has spotted something real and should get credit: the common variant is
 c.1138G>A (p.Gly380Arg) at chr4:1,804,392, about **1.2 kb** from this guide, so
 this reagent was never allele-specific to begin with.
 
-## Step 4. Determination
+## Determination, and the fix
 
 **Clinical hold pending redesign** is the expected answer. The defect is
 intrinsic to the reagent: no dose, schedule or delivery change makes a 20/20
@@ -102,17 +102,21 @@ What the company must provide:
 
 ## Difficulty: what the page deliberately does not say
 
-This case is built to be hard. The page states the trial, the reagent and the
-clinical findings, and nothing else. In particular it does **not** say that the
-guide has more than one site, that the company missed anything, that Cas9
-produces loss of function, that the two sites are an exact match, or which tools
-to use. Every step heading is neutral: "Characterise the reagent", not "What did
-the company miss".
+This case is now **fully open**. The page gives the trial, the reagent and the
+clinical findings, and then asks only for a determination, a justification and
+a fix. There are no guiding steps at all: no "characterise the reagent", no
+"account for the adverse event", no question that hints the guide has a second
+site. There is no "if you are not sure where to start" block either, so no
+tool is named.
 
-The earlier draft leaked all of that in its step lead-ins. If students stall,
-the collapsed **"If you are not sure where to start"** block names the tool
-categories (CRISPOR, BLAT, Ensembl, NCBI Gene, ClinVar, GTEx) without saying
-what they will find.
+Everything in the sections above is instructor scaffolding now. It is the
+account a complete answer would contain, not a sequence of prompts the student
+is walked through. The whole investigation has to come out in
+`step4_determination_why`.
+
+Students who have done Cases 001 and 002 have met the method already: pull the
+sequence, search it properly, check what is at every site it hits. That is the
+help they get.
 
 Expect this to run longer than 20 minutes now. The intended failure mode is a
 student who searches only the *FGFR3* locus, finds one site, and reports "no
@@ -120,19 +124,30 @@ explanation", which is exactly the company's error and a good thing to discuss.
 
 ## Where student answers land
 
-Both cases post to `https://formspree.io/f/mnpdoqyy`, so every submission
-carries a hidden **`case`** field (`003` here) to sort the inbox by. The step 4
-determination fields are deliberately identical across the two cases so the
-determinations are comparable.
+All three cases post to `https://formspree.io/f/mnpdoqyy`, so every submission
+carries a hidden **`case`** field (`003` here) to sort the inbox by.
+`step4_determination` and `step4_determination_why` are identical across all
+three, so the determinations stay comparable.
 
-- Step 1: `step1_n_sites` (expect **2**), `step1_sites`, `step1_method`
-- Step 2: `step2_explains` (`Yes`/`Partly`/`No`), `step2_mechanism`, `step2_evidence`
-- Step 3: `step3_why`, `step3_preventable`, `step3_design_rule`
-- Step 4: `step4_determination`, `step4_determination_why`, `step4_company_actions`
+Three fields only:
 
-Grade `step1_method` seriously. A student who used CRISPOR or a genome-wide BLAT
-and says so has done the work; one who reports two sites without being able to
-say how they searched has probably guessed from the gene names.
+- `step4_determination` (expect **Clinical hold pending redesign**)
+- `step4_determination_why`, which now carries the entire investigation
+- `step4_fix`, the proposed replacement design
+
+**`step4_determination_why` is the whole case.** A complete answer names the
+second site, says how it was found, explains why cutting it produces the
+clinical picture, and only then justifies the hold. Grade the method as hard as
+the finding: a student who says they ran a genome-wide search and names the
+tool has done the work, while one who reports the second gene with no account
+of how they got there has probably guessed from the gene names.
+
+An answer that stops at "off-target effects" has not done the case.
+
+**`step4_fix`** wants a guide, or an explicit argument that no guide at this
+locus is safe and the strategy must change. "Design a more specific guide" is
+not a fix. See **Determination, and the fix** above for what to check it
+against.
 
 ## What is invented and what is real
 
