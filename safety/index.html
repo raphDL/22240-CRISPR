@@ -855,7 +855,17 @@
       Before anything else, establish whether the edit the company reports is the edit they
       intended, and what it was supposed to achieve.
     </p>
-    <label for="c002-step1_variant">What does the patient's variant do to the codon it sits in, and what should the correction give them back?</label>
+    <div role="group" aria-labelledby="c002-codon-q">
+      <label id="c002-codon-q">The participant has Met1Thr. Which codon changed, and what did it change to?</label>
+      <div class="codon-pair">
+        <input type="text" name="step1_codon_from" maxlength="3" aria-label="codon before the variant" required>
+        <span class="arrow" aria-hidden="true">&rarr;</span>
+        <input type="text" name="step1_codon_to" maxlength="3" aria-label="codon after the variant" required>
+      </div>
+    </div>
+    <label for="c002-step1_exon">Which exon of <em>CFTR</em> is the variant in?</label>
+    <input type="text" id="c002-step1_exon" name="step1_exon" required>
+    <label for="c002-step1_variant">What does this variant do to the protein, and what should the correction give back?</label>
     <textarea id="c002-step1_variant" name="step1_variant_consequence" required></textarea>
     <label>Is the reported result the intended correction?</label>
     <div class="choice-group" data-choice-group>

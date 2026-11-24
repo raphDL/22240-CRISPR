@@ -16,6 +16,14 @@ restored the start codon and then terminated translation immediately after it.
 **The variant.** `NC_000007.14:g.117480096T>C`, ClinVar
 [53622](https://www.ncbi.nlm.nih.gov/clinvar/variation/53622), Pathogenic.
 
+**The codon and the exon**, the two orientation checks. Codon 1, **`ATG` to
+`ACG`**, in **exon 1 of 27** (chr7:117,480,025-117,480,147). *CFTR* is on the
+**plus** strand, so unlike Case 001 there is no reverse complement to trip over
+here; what this pair checks is simply that they landed on codon 1 and know it.
+Note that p.Met1Thr alone is not enough to answer it: Met is always ATG, but
+Thr is ACA, ACC, ACG or ACT, so they have to read the actual sequence to get
+ACG. The bystander at c.4 is in exon 1 as well.
+
 Codon 1 of *CFTR* is at **chr7:117,480,095-117,480,097**, reference `ATG`. The
 patient's T>C at 117,480,096 makes it **`ACG`**, threonine. This is a
 **start-lost** variant, p.Met1Thr: there is no initiator codon, which is why the
@@ -156,9 +164,9 @@ carries a hidden **`case`** field (`002` here) to sort the inbox by.
 `step4_determination` and `step4_determination_why` are identical across all
 three, so determinations stay comparable.
 
-- Step 1: `step1_variant_consequence` (both halves now: what the variant does
-  to the codon, and what the correction should give back), `step1_as_intended`
-  (expect **Yes**, the company's report is accurate)
+- Step 1: `step1_codon_from` (expect **ATG**), `step1_codon_to` (expect
+  **ACG**), `step1_exon` (expect **exon 1**), `step1_variant_consequence`,
+  `step1_as_intended` (expect **Yes**, the company's report is accurate)
 - Step 2: `step2_all_changes` (changes, effects and evidence in one box),
   `step2_edited_allele`, `step2_protein_length` (expect **1**),
   `step2_wt_length` (expect **1480**)
