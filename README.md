@@ -74,8 +74,8 @@ exercise you want a short link for.
   overview panel per case, a difficulty rating in stars, and anchor links into each. A different
   format from the other exercises: students are not designing anything, they are reviewing a
   submitted trial package as a regulator and working out what went wrong at the molecular level
-  from the company's own data plus public databases. Each case has its own form and submit button,
-  so they can be done one at a time.
+  from the company's own data plus public databases. The whole page is one form with a single
+  submit button at the bottom, so a student works through all three files and sends them together.
 
   | Case | Mechanism | Difficulty |
   |---|---|---|
@@ -92,11 +92,13 @@ exercise you want a short link for.
   screen in `crispr-safety/`.
 
   Answer keys live in `safety/answers/`, one per case. Short links `c1/`, `c2/` and `c3/` jump
-  straight to a case; `safety/case-00N/` still redirects for any link handed out earlier. All
-  three post to the same Formspree form, `mnpdoqyy`, the one deliberate exception to the
-  one-form-per-exercise rule: every submission carries a hidden `case` field (`001`, `002` or
-  `003`) and an email subject naming the case. The determination fields are shared across all
-  three on purpose, so answers to the same regulatory question are comparable.
+  straight to a case; `safety/case-00N/` still redirects for any link handed out earlier. The
+  page posts once to Formspree form `mnpdoqyy`, so one row is one student's whole review. Fields
+  are prefixed `c001_`, `c002_` and `c003_`, which keeps the three determinations in their own
+  columns and comparable both across a student and across the class.
+
+  One consequence worth knowing: because it is a single form, a student must finish all three
+  cases in one sitting. Nothing is saved if they close the tab.
 
 ## Discovery pipeline
 

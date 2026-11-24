@@ -494,13 +494,17 @@
     </a>
   </div>
 
+  <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
+  <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <input type="hidden" name="_subject" value="Three CRISPR stories: review">
+
   <section class="card">
     <h2>Before you start</h2>
     <label for="student_name">Your name</label>
-    <input type="text" id="student_name" name="_reviewer" required>
+    <input type="text" id="student_name" name="student_name" required>
     <p class="muted-note" style="margin-top:0.7rem;">
-      Not graded, just for stats. It is carried onto all three files, so you only enter it once.
-      Each file has its own submit button, so you can do one and come back.
+      Not graded, just for stats. There is one submit button, at the very bottom, and it sends
+      all three files together, so work through them before you submit.
     </p>
   </section>
 
@@ -669,12 +673,6 @@
     </details>
   </section>
 
-  <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
-
-    <input type="hidden" name="student_name" class="namesync">
-    <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <input type="hidden" name="case" value="001">
-    <input type="hidden" name="_subject" value="Case 001: Alveon-CF review">
   <section class="card step">
     <h3><span class="num" aria-hidden="true">1</span>Verify the company's claim</h3>
     <p>
@@ -684,19 +682,19 @@
     <div role="group" aria-labelledby="c001-codon-q">
       <label id="c001-codon-q">The participant has Met1Thr. Which codon changed, and what did it change to?</label>
       <div class="codon-pair">
-        <input type="text" name="step1_codon_from" maxlength="3" aria-label="codon before the variant" required>
+        <input type="text" name="c001_step1_codon_from" maxlength="3" aria-label="codon before the variant" required>
         <span class="arrow" aria-hidden="true">&rarr;</span>
-        <input type="text" name="step1_codon_to" maxlength="3" aria-label="codon after the variant" required>
+        <input type="text" name="c001_step1_codon_to" maxlength="3" aria-label="codon after the variant" required>
       </div>
     </div>
     <label for="c001-step1_exon">Which exon of <em>CFTR</em> is the variant in?</label>
-    <input type="text" id="c001-step1_exon" name="step1_exon" required>
+    <input type="text" id="c001-step1_exon" name="c001_step1_exon" required>
     <label for="c001-step1_variant">What does this variant do to the protein, and what should the correction give back?</label>
-    <textarea id="c001-step1_variant" name="step1_variant_consequence" required></textarea>
+    <textarea id="c001-step1_variant" name="c001_step1_variant_consequence" required></textarea>
     <label>Is the reported result the intended correction?</label>
     <div class="choice-group" data-choice-group>
-      <label class="choice"><input type="radio" name="step1_as_intended" value="Yes" required> Yes</label>
-      <label class="choice"><input type="radio" name="step1_as_intended" value="No"> No</label>
+      <label class="choice"><input type="radio" name="c001_step1_as_intended" value="Yes" required> Yes</label>
+      <label class="choice"><input type="radio" name="c001_step1_as_intended" value="No"> No</label>
     </div>
   </section>
 
@@ -707,7 +705,7 @@
       with coordinates, sequence and any accessions that support you.
     </p>
     <label for="c001-step2">What happened?</label>
-    <textarea id="c001-step2" name="step2_what_happened" class="tall" required></textarea>
+    <textarea id="c001-step2" name="c001_step2_what_happened" class="tall" required></textarea>
   </section>
 
   <section class="card step">
@@ -715,50 +713,42 @@
     <p>The company attributes the failure to insufficient delivery and asks to escalate the dose.</p>
     <label>Would a higher dose help this participant?</label>
     <div class="choice-group" data-choice-group>
-      <label class="choice"><input type="radio" name="step3_dose" value="Yes" required> Yes</label>
-      <label class="choice"><input type="radio" name="step3_dose" value="No, no effect"> No, no effect</label>
-      <label class="choice"><input type="radio" name="step3_dose" value="No, actively worse"> No, actively worse</label>
+      <label class="choice"><input type="radio" name="c001_step3_dose" value="Yes" required> Yes</label>
+      <label class="choice"><input type="radio" name="c001_step3_dose" value="No, no effect"> No, no effect</label>
+      <label class="choice"><input type="radio" name="c001_step3_dose" value="No, actively worse"> No, actively worse</label>
     </div>
     <label for="c001-step3_why">Justify your answer from your reconstruction.</label>
-    <textarea id="c001-step3_why" name="step3_dose_reasoning" required></textarea>
+    <textarea id="c001-step3_why" name="c001_step3_dose_reasoning" required></textarea>
     <label>How would you fix it?</label>
     <div class="choice-group choice-col" data-choice-group>
-      <label class="choice"><input type="radio" name="step3_fix_choice" value="Keep the editor, change the guide RNA" required>
+      <label class="choice"><input type="radio" name="c001_step3_fix_choice" value="Keep the editor, change the guide RNA" required>
         Keep the editor, change the guide RNA.</label>
-      <label class="choice"><input type="radio" name="step3_fix_choice" value="Keep the guide, change the editor">
+      <label class="choice"><input type="radio" name="c001_step3_fix_choice" value="Keep the guide, change the editor">
         Keep the guide, change the editor.</label>
-      <label class="choice"><input type="radio" name="step3_fix_choice" value="Change the editing strategy">
+      <label class="choice"><input type="radio" name="c001_step3_fix_choice" value="Change the editing strategy">
         Change the editing strategy.</label>
     </div>
     <label for="c001-step3_design">Now design it. Be specific enough that someone could order what you are proposing.</label>
-    <textarea id="c001-step3_design" name="step3_fix" class="seq" required></textarea>
+    <textarea id="c001-step3_design" name="c001_step3_fix" class="seq" required></textarea>
   </section>
 
   <section class="card step">
     <h3><span class="num" aria-hidden="true">4</span>Your determination</h3>
     <p id="c001-det-q">What should happen to this trial?</p>
     <div class="choice-group choice-col" role="group" aria-labelledby="c001-det-q" data-choice-group>
-      <label class="choice"><input type="radio" name="step4_determination" value="Continue unchanged" required>
+      <label class="choice"><input type="radio" name="c001_step4_determination" value="Continue unchanged" required>
         Continue unchanged. The event is unrelated to the intervention.</label>
-      <label class="choice"><input type="radio" name="step4_determination" value="Continue with added monitoring">
+      <label class="choice"><input type="radio" name="c001_step4_determination" value="Continue with added monitoring">
         Continue, with added monitoring for this specific risk.</label>
-      <label class="choice"><input type="radio" name="step4_determination" value="Clinical hold pending redesign">
+      <label class="choice"><input type="radio" name="c001_step4_determination" value="Clinical hold pending redesign">
         Clinical hold. The problem is intrinsic to the reagent and needs a redesign.</label>
-      <label class="choice"><input type="radio" name="step4_determination" value="Withdraw">
+      <label class="choice"><input type="radio" name="c001_step4_determination" value="Withdraw">
         Withdraw the application entirely.</label>
     </div>
     <label for="c001-step4_why">Justify your determination, and say what the company must change before anyone else is dosed.</label>
-    <textarea id="c001-step4_why" name="step4_determination_why" required></textarea>
+    <textarea id="c001-step4_why" name="c001_step4_determination_why" required></textarea>
   </section>
 
-  <section class="card">
-    <div class="submit-bar">
-      <button type="submit">Submit review</button>
-      <div class="submit-status"></div>
-    </div>
-  </section>
-
-  </form>
 
         <a class="totop" href="#top">↑ back to the three files</a>
   </section>
@@ -932,12 +922,6 @@
     </div>
   </section>
 
-  <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
-
-    <input type="hidden" name="student_name" class="namesync">
-    <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <input type="hidden" name="case" value="002">
-    <input type="hidden" name="_subject" value="Case 002: Haemolyne-1 review">
   <section class="card step">
     <h3><span class="num" aria-hidden="true">1</span>Characterise the repair strategy</h3>
     <p>
@@ -947,15 +931,15 @@
     <div role="group" aria-labelledby="c002-codon-q">
       <label id="c002-codon-q">The participant has Glu7Val. Which codon changed, and what did it change to?</label>
       <div class="codon-pair">
-        <input type="text" name="step1_codon_from" maxlength="3" aria-label="codon before the variant" required>
+        <input type="text" name="c002_step1_codon_from" maxlength="3" aria-label="codon before the variant" required>
         <span class="arrow" aria-hidden="true">&rarr;</span>
-        <input type="text" name="step1_codon_to" maxlength="3" aria-label="codon after the variant" required>
+        <input type="text" name="c002_step1_codon_to" maxlength="3" aria-label="codon after the variant" required>
       </div>
     </div>
     <label for="c002-step1_exon">Which exon of <em>HBB</em> is the variant in?</label>
-    <input type="text" id="c002-step1_exon" name="step1_exon" required>
+    <input type="text" id="c002-step1_exon" name="c002_step1_exon" required>
     <label for="c002-step1_nd">How many positions does the donor change, relative to the participant?</label>
-    <input type="number" id="c002-step1_nd" name="step1_n_changes" min="0" step="1" required>
+    <input type="number" id="c002-step1_nd" name="c002_step1_n_changes" min="0" step="1" required>
   </section>
 
   <section class="card step">
@@ -965,16 +949,16 @@
       culture.
     </p>
     <label for="c002-step2_mech">What is the mechanism? Follow one allele that has already been repaired, and say what happens to it next.</label>
-    <textarea id="c002-step2_mech" name="step2_mechanism" required></textarea>
+    <textarea id="c002-step2_mech" name="c002_step2_mechanism" required></textarea>
     <label for="c002-step2_alt">A colleague says the corrected fraction is simply low because HDR is inefficient. What in the data argues against that?</label>
-    <textarea id="c002-step2_alt" name="step2_alternative_ruled_out" required></textarea>
+    <textarea id="c002-step2_alt" name="c002_step2_alternative_ruled_out" required></textarea>
     <label>How would you fix it?</label>
     <div class="choice-group" data-choice-group>
-      <label class="choice"><input type="radio" name="step2_fix_choice" value="Design a new guide RNA" required> Design a new guide RNA</label>
-      <label class="choice"><input type="radio" name="step2_fix_choice" value="Design a new donor"> Design a new donor</label>
+      <label class="choice"><input type="radio" name="c002_step2_fix_choice" value="Design a new guide RNA" required> Design a new guide RNA</label>
+      <label class="choice"><input type="radio" name="c002_step2_fix_choice" value="Design a new donor"> Design a new donor</label>
     </div>
     <label for="c002-step2_fix">Now design it. For a guide, give the 20 nt protospacer and its PAM. For a donor, give the sequence with every change you made marked.</label>
-    <textarea id="c002-step2_fix" name="step2_fix" class="seq" required></textarea>
+    <textarea id="c002-step2_fix" name="c002_step2_fix" class="seq" required></textarea>
   </section>
 
   <section class="card step">
@@ -984,39 +968,31 @@
     </p>
     <label>Is the company's interpretation of the haemoglobin data correct?</label>
     <div class="choice-group" data-choice-group>
-      <label class="choice"><input type="radio" name="step3_claim" value="Yes" required> Yes</label>
-      <label class="choice"><input type="radio" name="step3_claim" value="Technically true but misleading"> Technically true but misleading</label>
-      <label class="choice"><input type="radio" name="step3_claim" value="No"> No</label>
+      <label class="choice"><input type="radio" name="c002_step3_claim" value="Yes" required> Yes</label>
+      <label class="choice"><input type="radio" name="c002_step3_claim" value="Technically true but misleading"> Technically true but misleading</label>
+      <label class="choice"><input type="radio" name="c002_step3_claim" value="No"> No</label>
     </div>
     <label for="c002-step3_why">What happened to the participant's beta-globin, and what does that mean for them?</label>
-    <textarea id="c002-step3_why" name="step3_globin_fate" required></textarea>
+    <textarea id="c002-step3_why" name="c002_step3_globin_fate" required></textarea>
   </section>
 
   <section class="card step">
     <h3><span class="num" aria-hidden="true">4</span>Your determination</h3>
     <p id="c002-det-q">What should happen to this trial?</p>
     <div class="choice-group choice-col" role="group" aria-labelledby="c002-det-q" data-choice-group>
-      <label class="choice"><input type="radio" name="step4_determination" value="Continue unchanged" required>
+      <label class="choice"><input type="radio" name="c002_step4_determination" value="Continue unchanged" required>
         Continue unchanged. The event is unrelated to the intervention.</label>
-      <label class="choice"><input type="radio" name="step4_determination" value="Continue with added monitoring">
+      <label class="choice"><input type="radio" name="c002_step4_determination" value="Continue with added monitoring">
         Continue, with added monitoring for this specific risk.</label>
-      <label class="choice"><input type="radio" name="step4_determination" value="Clinical hold pending redesign">
+      <label class="choice"><input type="radio" name="c002_step4_determination" value="Clinical hold pending redesign">
         Clinical hold. The problem is intrinsic to the reagent and needs a redesign.</label>
-      <label class="choice"><input type="radio" name="step4_determination" value="Withdraw">
+      <label class="choice"><input type="radio" name="c002_step4_determination" value="Withdraw">
         Withdraw the application entirely.</label>
     </div>
     <label for="c002-step4_why">Justify your determination, and say what the company must change before anyone else is dosed.</label>
-    <textarea id="c002-step4_why" name="step4_determination_why" required></textarea>
+    <textarea id="c002-step4_why" name="c002_step4_determination_why" required></textarea>
   </section>
 
-  <section class="card">
-    <div class="submit-bar">
-      <button type="submit">Submit review</button>
-      <div class="submit-status"></div>
-    </div>
-  </section>
-
-  </form>
 
         <a class="totop" href="#top">↑ back to the three files</a>
   </section>
@@ -1104,29 +1080,27 @@
     </div>
   </section>
 
-  <form class="worksheet" action="https://formspree.io/f/mnpdoqyy" method="POST">
-
-    <input type="hidden" name="student_name" class="namesync">
-    <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <input type="hidden" name="case" value="003">
-    <input type="hidden" name="_subject" value="Case 003: FGF-Restore review">
   <section class="card step">
     <h3>Your determination</h3>
     <p id="c003-det-q">What should happen to this trial?</p>
     <div class="choice-group choice-col" role="group" aria-labelledby="c003-det-q" data-choice-group>
-      <label class="choice"><input type="radio" name="step4_determination" value="Continue unchanged" required>
+      <label class="choice"><input type="radio" name="c003_step4_determination" value="Continue unchanged" required>
         Continue unchanged. The event is unrelated to the intervention.</label>
-      <label class="choice"><input type="radio" name="step4_determination" value="Continue with added monitoring">
+      <label class="choice"><input type="radio" name="c003_step4_determination" value="Continue with added monitoring">
         Continue, with added monitoring for this specific risk.</label>
-      <label class="choice"><input type="radio" name="step4_determination" value="Clinical hold pending redesign">
+      <label class="choice"><input type="radio" name="c003_step4_determination" value="Clinical hold pending redesign">
         Clinical hold. The problem is intrinsic to the reagent and needs a redesign.</label>
-      <label class="choice"><input type="radio" name="step4_determination" value="Withdraw">
+      <label class="choice"><input type="radio" name="c003_step4_determination" value="Withdraw">
         Withdraw the application entirely.</label>
     </div>
     <label for="c003-step4_why">Justify your determination. Set out what you found, and how you found it.</label>
-    <textarea id="c003-step4_why" name="step4_determination_why" required></textarea>
+    <textarea id="c003-step4_why" name="c003_step4_determination_why" required></textarea>
     <label for="c003-step4_fix">Propose a fix: a new design, a new guide, whatever you would take forward. Be specific enough that someone could order what you are proposing.</label>
-    <textarea id="c003-step4_fix" name="step4_fix" class="seq" required></textarea>
+    <textarea id="c003-step4_fix" name="c003_step4_fix" class="seq" required></textarea>
+  </section>
+
+
+        <a class="totop" href="#top">↑ back to the three files</a>
   </section>
 
   <section class="card">
@@ -1138,28 +1112,25 @@
 
   </form>
 
-        <a class="totop" href="#top">↑ back to the three files</a>
-  </section>
-
 </div>
 
 <script>
-  // three independent worksheets on one page, each posting on its own
-  document.querySelectorAll('form.worksheet').forEach(function (form) {
+  // one worksheet covering all three files, submitted once at the end
+  (function () {
+    var form = document.querySelector('form.worksheet');
+    if (!form) return;
     var btn = form.querySelector('button[type="submit"]');
     var status = form.querySelector('.submit-status');
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
-      // one name field at the top serves all three worksheets
-      var who = document.getElementById('student_name');
-      if (!who.value.trim()) {
+      if (!form.checkValidity()) {
+        var first = form.querySelector(':invalid');
         status.className = 'submit-status err';
-        status.textContent = '\u26a0\ufe0f Put your name in the box at the top of the page first.';
-        who.focus(); who.scrollIntoView({ block: 'center' });
+        status.textContent = '\u26a0\ufe0f Something is still blank. Jumping you to it.';
+        if (first) { first.scrollIntoView({ block: 'center' }); }
+        form.reportValidity();
         return;
       }
-      form.querySelector('.namesync').value = who.value.trim();
-      if (!form.checkValidity()) { form.reportValidity(); return; }
       btn.disabled = true; btn.textContent = 'Submitting\u2026';
       status.className = 'submit-status'; status.textContent = '';
       try {
@@ -1177,7 +1148,7 @@
         btn.disabled = false; btn.textContent = 'Submit review';
       }
     });
-  });
+  })();
 
   document.querySelectorAll('[data-choice-group]').forEach(function (group) {
     var multi = group.hasAttribute('data-choice-multi');

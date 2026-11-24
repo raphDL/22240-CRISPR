@@ -198,28 +198,30 @@ company's delivery hypothesis. That is the error the case exists to catch.
 
 ## Where student answers land
 
-All three cases post to `https://formspree.io/f/mnpdoqyy`, so every submission
-carries a hidden **`case`** field (`001` here) to sort the inbox by.
-`step4_determination` and `step4_determination_why` are identical across all
-three, so determinations stay comparable.
+One submission per student covers all three cases. The page is a single form
+with one **Submit review** button at the very bottom, posting to
+`https://formspree.io/f/mnpdoqyy`. There is no longer a `case` field, because
+every row is all three files at once; fields are prefixed `c001_`, `c002_` and
+`c003_` instead, so the three determinations sit in their own columns and can
+be compared across a student as well as across the class.
 
-- Step 1: `step1_codon_from` (expect **ATG**), `step1_codon_to` (expect
-  **ACG**), `step1_exon` (expect **exon 1**), `step1_variant_consequence`,
-  `step1_as_intended` (expect **Yes**, the company's report is accurate)
-- Step 2: `step2_what_happened`, one open box carrying the whole
+- Step 1: `c001_step1_codon_from` (expect **ATG**), `c001_step1_codon_to` (expect
+  **ACG**), `c001_step1_exon` (expect **exon 1**), `c001_step1_variant_consequence`,
+  `c001_step1_as_intended` (expect **Yes**, the company's report is accurate)
+- Step 2: `c001_step2_what_happened`, one open box carrying the whole
   reconstruction. There is no separate protein-length field any more, so the
   numbers have to be read out of the prose. A complete answer names the second
   cytosine at **chr7:117,480,098**, cites **ClinVar 53980**, reconstructs
   codon 2 as `CAG` to `TAG`, and lands on **1 amino acid against 1,480**. An
   answer that says "a bystander broke it" without reconstructing the codon has
   not done the work: that is the line to hold.
-- Step 3: `step3_dose` (expect **No, actively worse**), `step3_dose_reasoning`,
-  `step3_fix_choice` (**Keep the editor, change the guide RNA** is the trap and
-  is wrong; the other two are both right), `step3_fix` (the design)
-- Step 4: `step4_determination`, `step4_determination_why` (carries the
+- Step 3: `c001_step3_dose` (expect **No, actively worse**), `c001_step3_dose_reasoning`,
+  `c001_step3_fix_choice` (**Keep the editor, change the guide RNA** is the trap and
+  is wrong; the other two are both right), `c001_step3_fix` (the design)
+- Step 4: `c001_step4_determination`, `c001_step4_determination_why` (carries the
   required changes too)
 
-`step1_as_intended` is the one place students often go wrong in the opposite
+`c001_step1_as_intended` is the one place students often go wrong in the opposite
 direction: the company's claim **is** true. Marking it "No" usually means they
 have conflated "the reported edit happened" with "the treatment worked".
 

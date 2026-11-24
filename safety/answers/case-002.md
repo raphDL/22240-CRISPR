@@ -213,24 +213,26 @@ the company does.
 
 ## Where student answers land
 
-Posts to `https://formspree.io/f/mnpdoqyy`, shared with Cases 001 and 003, so
-every submission carries a hidden **`case`** field (`001` here). The step 4
-determination fields are deliberately identical across all three cases so the
-determinations are comparable.
+One submission per student covers all three cases. The page is a single form
+with one **Submit review** button at the very bottom, posting to
+`https://formspree.io/f/mnpdoqyy`. There is no longer a `case` field, because
+every row is all three files at once; fields are prefixed `c001_`, `c002_` and
+`c003_` instead, so the three determinations sit in their own columns and can
+be compared across a student as well as across the class.
 
-- Step 1: `step1_codon_from` (expect **GAG**), `step1_codon_to` (expect
-  **GTG**), `step1_exon` (expect **exon 1**), `step1_n_changes` (expect **1**)
-- Step 2: `step2_mechanism`, `step2_alternative_ruled_out`, `step2_fix_choice`
+- Step 1: `c002_step1_codon_from` (expect **GAG**), `c002_step1_codon_to` (expect
+  **GTG**), `c002_step1_exon` (expect **exon 1**), `c002_step1_n_changes` (expect **1**)
+- Step 2: `c002_step2_mechanism`, `c002_step2_alternative_ruled_out`, `c002_step2_fix_choice`
   (**Design a new guide RNA** / **Design a new donor**, both defensible, donor
-  is stronger), `step2_fix` (a sequence, graded against the two routes above)
-- Step 3: `step3_claim` (expect **Technically true but misleading**),
-  `step3_globin_fate`
-- Step 4: `step4_determination`, `step4_determination_why`
+  is stronger), `c002_step2_fix` (a sequence, graded against the two routes above)
+- Step 3: `c002_step3_claim` (expect **Technically true but misleading**),
+  `c002_step3_globin_fate`
+- Step 4: `c002_step4_determination`, `c002_step4_determination_why`
 
-`step3_globin_fate` now carries both halves, where the beta-globin went and
-what that means for the participant, and `step4_determination_why` carries both
-the justification and the required changes. No case has a separate
-`step4_company_actions` box any more.
+`c002_step3_globin_fate` carries both halves, where the beta-globin went and
+what that means for the participant, and `c002_step4_determination_why` carries
+both the justification and the required changes. No case has a separate
+company-actions box any more.
 
 ## What is invented and what is real
 

@@ -117,7 +117,7 @@ tool is named.
 Everything in the sections above is instructor scaffolding now. It is the
 account a complete answer would contain, not a sequence of prompts the student
 is walked through. The whole investigation has to come out in
-`step4_determination_why`.
+`c003_step4_determination_why`.
 
 Students who have done Cases 001 and 002 have met the method already: pull the
 sequence, search it properly, check what is at every site it hits. That is the
@@ -129,18 +129,20 @@ explanation", which is exactly the company's error and a good thing to discuss.
 
 ## Where student answers land
 
-All three cases post to `https://formspree.io/f/mnpdoqyy`, so every submission
-carries a hidden **`case`** field (`003` here) to sort the inbox by.
-`step4_determination` and `step4_determination_why` are identical across all
-three, so the determinations stay comparable.
+One submission per student covers all three cases. The page is a single form
+with one **Submit review** button at the very bottom, posting to
+`https://formspree.io/f/mnpdoqyy`. There is no longer a `case` field, because
+every row is all three files at once; fields are prefixed `c001_`, `c002_` and
+`c003_` instead, so the three determinations sit in their own columns and can
+be compared across a student as well as across the class.
 
 Three fields only:
 
-- `step4_determination` (expect **Clinical hold pending redesign**)
-- `step4_determination_why`, which now carries the entire investigation
-- `step4_fix`, the proposed replacement design
+- `c003_step4_determination` (expect **Clinical hold pending redesign**)
+- `c003_step4_determination_why`, which now carries the entire investigation
+- `c003_step4_fix`, the proposed replacement design
 
-**`step4_determination_why` is the whole case.** The prompt now says "set out
+**`c003_step4_determination_why` is the whole case.** The prompt now says "set out
 what you found, and how you found it", which asks for the account without
 hinting what the account contains. A complete answer names the
 second site, says how it was found, explains why cutting it produces the
@@ -151,7 +153,7 @@ of how they got there has probably guessed from the gene names.
 
 An answer that stops at "off-target effects" has not done the case.
 
-**`step4_fix`** wants a guide, or an explicit argument that no guide at this
+**`c003_step4_fix`** wants a guide, or an explicit argument that no guide at this
 locus is safe and the strategy must change. "Design a more specific guide" is
 not a fix. See **Determination, and the fix** above for what to check it
 against.
