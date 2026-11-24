@@ -142,17 +142,21 @@ company's delivery hypothesis. That is the error the case exists to catch.
 
 ## Where student answers land
 
-Both cases post to `https://formspree.io/f/mnpdoqyy`, so every submission
-carries a hidden **`case`** field (`002` here) to sort the inbox by. The step 4
-determination fields are deliberately identical across the two cases.
+All three cases post to `https://formspree.io/f/mnpdoqyy`, so every submission
+carries a hidden **`case`** field (`002` here) to sort the inbox by.
+`step4_determination` and `step4_determination_why` are identical across all
+three, so determinations stay comparable.
 
-- Step 1: `step1_variant_consequence`, `step1_as_intended` (expect **Yes**, the
-  company's report is accurate), `step1_what_is_restored`
-- Step 2: `step2_all_changes`, `step2_evidence`, `step2_edited_allele`,
-  `step2_protein_length` (expect **1**), `step2_wt_length` (expect **1480**)
+- Step 1: `step1_variant_consequence` (both halves now: what the variant does
+  to the codon, and what the correction should give back), `step1_as_intended`
+  (expect **Yes**, the company's report is accurate)
+- Step 2: `step2_all_changes` (changes, effects and evidence in one box),
+  `step2_edited_allele`, `step2_protein_length` (expect **1**),
+  `step2_wt_length` (expect **1480**)
 - Step 3: `step3_dose` (expect **No, actively worse**), `step3_dose_reasoning`,
   `step3_qc_flaw`
-- Step 4: `step4_determination`, `step4_determination_why`, `step4_company_actions`
+- Step 4: `step4_determination`, `step4_determination_why` (carries the
+  required changes too)
 
 `step1_as_intended` is the one place students often go wrong in the opposite
 direction: the company's claim **is** true. Marking it "No" usually means they
