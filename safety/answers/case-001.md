@@ -147,6 +147,13 @@ NGG. With SpCas9 there is no guide that fixes this.
    donor is also precise, but needs a double-strand break in airway
    epithelium, which is a much harder sell than an LNP-delivered editor.
 
+**What counts as a design.** The question asks for something orderable, not a
+sequence specifically, because only one of the three routes is a sequence. For
+route 1 that is an editor named and the existing guide kept. For route 2 an
+editor named and a repositioned protospacer given. For route 3 a pegRNA with
+its spacer and RT template, or a donor with its homology arms. A one-word
+answer like "prime editing" is not a design.
+
 **The point to land:** a base editor cannot be aimed at a single base. The
 window is a property of the enzyme, not of the guide. Moving the guide moves
 the window; it does not shrink it. Any real fix must shrink the window, remove
