@@ -88,32 +88,52 @@ being destroyed after they are made. Only re-cutting does that. Inefficiency
 probably does contribute to the modest 34% starting point, and a good answer
 says both are operating. The one that explains the *decline* is re-cutting.
 
-**The fix. Both routes work, and "either would work" is the best answer.**
-The page now asks them to choose, so expect all three and credit any of them
-that is argued correctly.
+**The fix. They pick a route and hand in a sequence.** Both routes are
+defensible, but they are not equally strong, and the difference is the point.
 
-**Change the donor**, the standard fix and the more robust one. Carry a silent,
-synonymous change in the protospacer or PAM alongside the correction. Once
-incorporated, the repaired allele no longer matches the guide, so it becomes a
-stable end state and corrections accumulate instead of draining. This is what
-real HDR donors do, and it is stronger than the guide route because it can
-break the PAM outright rather than relying on a single mismatch.
+**Route 1, a new donor. The stronger answer.** Keep the single corrective base
+and add one silent change that destroys the guide's PAM. The trial's PAM is
+`CGG` at chr11:5,226,988-5,226,990, which is CDS c.32-34, sitting inside codon
+11, `GCC`, alanine. The wobble base c.33 can go to T, A or G and stay alanine,
+and all three kill the PAM:
 
-**Change the guide**, so that the correction itself destroys the target. Pick a
-guide whose protospacer covers the variant close to the PAM.
-`GTAACGGCAGACTTCTCCAC` `AGG`, plus strand, does it: the variant is at
-protospacer **position 19 of 20, two bases from the PAM**, so a repaired allele
-carries a seed mismatch and Cas9 stops cutting. Verified against GRCh38.
+| change | codon | plus strand | new PAM | still NGG |
+|---|---|---|---|---|
+| c.33C>T | GCC to GCT | chr11:5,226,989 G>A | CAG | no |
+| c.33C>A | GCC to GCA | chr11:5,226,989 G>T | CTG | no |
+| c.33C>G | GCC to GCG | chr11:5,226,989 G>C | CCG | no |
+
+`c.33C>T` is the natural pick. A repaired allele then has no NGG at that
+position, so Cas9 cannot engage it at all. That is a hard block. A silent
+change in the seed also works and is worth full credit, but it is second best,
+for the reason below.
+
+**Route 2, a new guide.** `GTAACGGCAGACTTCTCCAC` `AGG`, plus strand. The
+corrected base lands at protospacer **position 19 of 20**, one base short of
+the PAM:
+
+```
+                   1         2
+patient  5'-GTAACGGCAGACTTCTCCAC-AGG-3'
+repaired 5'-GTAACGGCAGACTTCTCCTC-AGG-3'
+                              ^ the corrected base
+```
+
+That is about as PAM-proximal as a mismatch gets, so it is the best place a
+single mismatch can sit. **It is still only a single mismatch, and the PAM
+survives.** SpCas9 tolerates some seed mismatches, so this attenuates cutting
+rather than abolishing it. Credit the design and then push on exactly that:
+why is a destroyed PAM safer than one seed mismatch? A student who gets there
+has understood the whole case.
 
 **A trap inside the trap.** `CATGGTGCATCTGACTCCTG` `TGG` looks like the obvious
-choice, because it sits directly over the variant. **It does not work**, and an
-earlier version of this key said it did. The variant is **PAM position 1, not
-in the protospacer at all**. The patient's PAM is TGG; correcting the allele
-makes it AGG, which is still NGG, and the protospacer stays a perfect 20 of 20.
-Cas9 keeps cutting. If a student proposes it, mark it wrong and use it: a
-change blocks Cas9 only if it lands in the protospacer seed or breaks the GG of
-the PAM, and this one does neither. That same rule is why Case 003's exact
-off-target matters.
+guide, because it sits directly over the variant. **It does not work.** The
+variant is **PAM position 1, not in the protospacer at all**. The patient's PAM
+is TGG; correcting the allele makes it AGG, which is still NGG, and the
+protospacer stays a perfect 20 of 20. Cas9 keeps cutting. Mark it wrong and use
+it: a change blocks Cas9 only if it lands in the protospacer seed or breaks the
+GG of the PAM, and this one does neither. That same rule is why Case 003's
+exact off-target matters.
 
 ## Step 3. Account for the clinical outcome
 
@@ -199,8 +219,8 @@ determinations are comparable.
 - Step 1: `step1_codon_from` (expect **GAG**), `step1_codon_to` (expect
   **GTG**), `step1_exon` (expect **exon 1**), `step1_n_changes` (expect **1**)
 - Step 2: `step2_mechanism`, `step2_alternative_ruled_out`, `step2_fix_choice`
-  (**Change the donor** / **Change the guide RNA** / **Either would work**, all
-  three defensible), `step2_fix`
+  (**Design a new guide RNA** / **Design a new donor**, both defensible, donor
+  is stronger), `step2_fix` (a sequence, graded against the two routes above)
 - Step 3: `step3_claim` (expect **Technically true but misleading**),
   `step3_globin_fate`
 - Step 4: `step4_determination`, `step4_determination_why`

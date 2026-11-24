@@ -681,14 +681,13 @@
     <textarea id="c001-step2_mech" name="step2_mechanism" required></textarea>
     <label for="c001-step2_alt">A colleague says the corrected fraction is simply low because HDR is inefficient. What in the data argues against that?</label>
     <textarea id="c001-step2_alt" name="step2_alternative_ruled_out" required></textarea>
-    <label>What would have prevented this?</label>
+    <label>How would you fix it?</label>
     <div class="choice-group" data-choice-group>
-      <label class="choice"><input type="radio" name="step2_fix_choice" value="Change the donor" required> Change the donor</label>
-      <label class="choice"><input type="radio" name="step2_fix_choice" value="Change the guide RNA"> Change the guide RNA</label>
-      <label class="choice"><input type="radio" name="step2_fix_choice" value="Either would work"> Either would work</label>
+      <label class="choice"><input type="radio" name="step2_fix_choice" value="Design a new guide RNA" required> Design a new guide RNA</label>
+      <label class="choice"><input type="radio" name="step2_fix_choice" value="Design a new donor"> Design a new donor</label>
     </div>
-    <label for="c001-step2_fix">Say exactly what you would change, and why that stops it.</label>
-    <textarea id="c001-step2_fix" name="step2_fix" required></textarea>
+    <label for="c001-step2_fix">Now design it. For a guide, give the 20 nt protospacer and its PAM. For a donor, give the sequence with every change you made marked. Then say why your design stops the re-cutting.</label>
+    <textarea id="c001-step2_fix" name="step2_fix" class="seq" required></textarea>
   </section>
 
   <section class="card step">
