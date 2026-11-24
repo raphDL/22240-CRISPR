@@ -681,7 +681,13 @@
     <textarea id="c001-step2_mech" name="step2_mechanism" required></textarea>
     <label for="c001-step2_alt">A colleague says the corrected fraction is simply low because HDR is inefficient. What in the data argues against that?</label>
     <textarea id="c001-step2_alt" name="step2_alternative_ruled_out" required></textarea>
-    <label for="c001-step2_fix">What single change to the donor would have prevented this?</label>
+    <label>What would have prevented this?</label>
+    <div class="choice-group" data-choice-group>
+      <label class="choice"><input type="radio" name="step2_fix_choice" value="Change the donor" required> Change the donor</label>
+      <label class="choice"><input type="radio" name="step2_fix_choice" value="Change the guide RNA"> Change the guide RNA</label>
+      <label class="choice"><input type="radio" name="step2_fix_choice" value="Either would work"> Either would work</label>
+    </div>
+    <label for="c001-step2_fix">Say exactly what you would change, and why that stops it.</label>
     <textarea id="c001-step2_fix" name="step2_fix" required></textarea>
   </section>
 

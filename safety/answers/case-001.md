@@ -88,18 +88,32 @@ being destroyed after they are made. Only re-cutting does that. Inefficiency
 probably does contribute to the modest 34% starting point, and a good answer
 says both are operating. The one that explains the *decline* is re-cutting.
 
-**The fix.** A silent, synonymous change in the protospacer or PAM carried on
-the donor. Once incorporated alongside the correction, the repaired allele no
-longer matches the guide and becomes a stable end state, so corrections
-accumulate instead of draining.
+**The fix. Both routes work, and "either would work" is the best answer.**
+The page now asks them to choose, so expect all three and credit any of them
+that is argued correctly.
 
-Accept also: use a guide whose protospacer overlaps the variant in its
-**PAM-proximal seed**, so the correction itself blocks re-cutting. Two such
-guides exist within a few bases of this one, `CATGGTGCATCTGACTCCTG` `TGG`
-(variant at protospacer position 18) and `GTAACGGCAGACTTCTCCAC` `AGG` (position
-19). Worth raising in discussion even if nobody finds it: a mismatch only blocks
-Cas9 if it lands in the seed, which is also why Case 003's exact off-target
-matters.
+**Change the donor**, the standard fix and the more robust one. Carry a silent,
+synonymous change in the protospacer or PAM alongside the correction. Once
+incorporated, the repaired allele no longer matches the guide, so it becomes a
+stable end state and corrections accumulate instead of draining. This is what
+real HDR donors do, and it is stronger than the guide route because it can
+break the PAM outright rather than relying on a single mismatch.
+
+**Change the guide**, so that the correction itself destroys the target. Pick a
+guide whose protospacer covers the variant close to the PAM.
+`GTAACGGCAGACTTCTCCAC` `AGG`, plus strand, does it: the variant is at
+protospacer **position 19 of 20, two bases from the PAM**, so a repaired allele
+carries a seed mismatch and Cas9 stops cutting. Verified against GRCh38.
+
+**A trap inside the trap.** `CATGGTGCATCTGACTCCTG` `TGG` looks like the obvious
+choice, because it sits directly over the variant. **It does not work**, and an
+earlier version of this key said it did. The variant is **PAM position 1, not
+in the protospacer at all**. The patient's PAM is TGG; correcting the allele
+makes it AGG, which is still NGG, and the protospacer stays a perfect 20 of 20.
+Cas9 keeps cutting. If a student proposes it, mark it wrong and use it: a
+change blocks Cas9 only if it lands in the protospacer seed or breaks the GG of
+the PAM, and this one does neither. That same rule is why Case 003's exact
+off-target matters.
 
 ## Step 3. Account for the clinical outcome
 
@@ -184,7 +198,9 @@ determinations are comparable.
 
 - Step 1: `step1_codon_from` (expect **GAG**), `step1_codon_to` (expect
   **GTG**), `step1_exon` (expect **exon 1**), `step1_n_changes` (expect **1**)
-- Step 2: `step2_mechanism`, `step2_alternative_ruled_out`, `step2_fix`
+- Step 2: `step2_mechanism`, `step2_alternative_ruled_out`, `step2_fix_choice`
+  (**Change the donor** / **Change the guide RNA** / **Either would work**, all
+  three defensible), `step2_fix`
 - Step 3: `step3_claim` (expect **Technically true but misleading**),
   `step3_globin_fate`
 - Step 4: `step4_determination`, `step4_determination_why`
