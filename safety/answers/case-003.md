@@ -140,7 +140,9 @@ Three fields only:
 - `step4_determination_why`, which now carries the entire investigation
 - `step4_fix`, the proposed replacement design
 
-**`step4_determination_why` is the whole case.** A complete answer names the
+**`step4_determination_why` is the whole case.** The prompt now says "set out
+what you found, and how you found it", which asks for the account without
+hinting what the account contains. A complete answer names the
 second site, says how it was found, explains why cutting it produces the
 clinical picture, and only then justifies the hold. Grade the method as hard as
 the finding: a student who says they ran a genome-wide search and names the
