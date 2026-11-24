@@ -1,240 +1,197 @@
-# Answers: Case 001, Haemolyne-1
+# Answers: Case 001, Alveon-CF
 
 Short key. This is the **easiest of the three safety cases** by design, and the
-intended entry point: Case 001, then 002, then 003.
+intended entry point: Case 001, then 002, then 003. Step 2 is a single open
+question, so the whole case turns on one reconstruction rather than on a chain
+of separate moves.
+
+The discovery pipeline that found this case is in
+`../../crispr-safety/`, and the allele reconstruction is
+`scripts/09_reconstruct_alleles.py`.
 
 ## The case in one line
 
-The donor restores wild-type sequence and nothing else, so the repaired allele
-is still a perfect match for the guide. Cas9 cuts it again, NHEJ turns it into a
-frameshift, and because an indel destroys the target site while a correction
-does not, every cycle drains alleles into the null pool. The participant's
-sickle alleles are converted into beta-zero null alleles, which is a worse
-disease.
+The intended edit genuinely worked. The same editing window contained a second
+cytosine, and converting it put a stop codon at residue 2, so the company
+restored the start codon and then terminated translation immediately after it.
+**1,480 amino acids become 1.**
 
-## Step 1. Characterise the repair strategy
+## Step 1. Verify the company's claim
 
-**The codon.** *HBB* codon 7 is **GAG**, glutamate. The participant's variant
-is `NM_000518.5:c.20A>T`, which makes it **GTG**, valine. So **GAG to GTG**,
-Glu7Val. Checked against ENST00000335295: the CDS opens
-`ATG GTG CAT CTG ACT CCT GAG GAG ...` and c.19-21 is that first GAG.
+**The variant.** `NC_000007.14:g.117480096T>C`, ClinVar
+[53622](https://www.ncbi.nlm.nih.gov/clinvar/variation/53622), Pathogenic.
 
-This question exists to catch the students who never built the patient's allele
-correctly. *HBB* sits on the **minus strand** of chr11, so anyone who reads the
-plus-strand genomic sequence straight off and counts codons from the left gets
-nonsense. They have to reverse complement, or import the transcript rather than
-the region.
+**The codon and the exon**, the two orientation checks. Codon 1, **`ATG` to
+`ACG`**, in **exon 1 of 27** (chr7:117,480,025-117,480,147). *CFTR* is on the
+**plus** strand, so unlike Case 002 there is no reverse complement to trip over
+here; what this pair checks is simply that they landed on codon 1 and know it.
+Note that p.Met1Thr alone is not enough to answer it: Met is always ATG, but
+Thr is ACA, ACC, ACG or ACT, so they have to read the actual sequence to get
+ACG. The bystander at c.4 is in exon 1 as well.
 
-**The exon.** **Exon 1**, of three. c.20 maps to chr11:5,227,002, and exon 1
-runs chr11:5,226,930-5,227,071, so the variant and the whole 100 nt donor
-(5,226,935-5,227,034) sit inside it.
+Codon 1 of *CFTR* is at **chr7:117,480,095-117,480,097**, reference `ATG`. The
+patient's T>C at 117,480,096 makes it **`ACG`**, threonine. This is a
+**start-lost** variant, p.Met1Thr: there is no initiator codon, which is why the
+patient has no CFTR protein to begin with. ClinVar's own name for it is
+`NM_000492.4(CFTR):c.2T>C (p.Met1Thr)`, and VEP returns `start_lost`,
+codons `aTg/aCg`.
 
-**One change.** The donor differs from the participant at exactly one position,
-chr11:5,227,002, where the participant's A is replaced by the reference T. That
-is the correction, reverting HbS to HbA.
+The submission states **p.Met1Thr**, so the amino acid change is given. That is
+deliberate and it is a trap rather than a gift: written out, Met1Thr reads like
+an ordinary missense, one residue swapped at the front of a 1,480 residue
+protein. The work is noticing that residue 1 is the **initiator**, so this is
+not a protein with one wrong amino acid, it is no protein at all. A student who
+treats it as a minor missense has missed the case before it starts.
 
-**Nothing else.** The donor is 100 nt of unmodified reference sequence,
-chr11:5,226,935-5,227,034. Verified: it matches GRCh38 across all 100 bases.
-There is no silent change, no PAM disruption, nothing to stop re-cutting.
+**The intended correction.** C>T at 117,480,096 restores `ATG`. The company's
+logic is sound and their QC result is truthful.
 
-**The target site is untouched.** The protospacer occupies
-chr11:5,226,968-5,226,987 and the PAM chr11:5,226,988-5,226,990. The corrective
-base at 5,227,002 is **12 bp beyond the end of the PAM**, entirely outside the
-23 bp footprint.
+**Protospacer position.** The guide starts at chr7:117,480,091, so
+117,480,096 is position **6**, inside the stated 4 to 8 window.
 
-```
-ACGTTCACCTTGCCCCACAGGGCAGTAACGGCAGACTTCTCCACAGGAGTCAGATG
-        ================|===PPP           ^
-        protospacer     cut  PAM          corrective base, 18 bp from the cut
+## Step 2a. The editing window
 
-target in the participant's allele : CTTGCCCCACAGGGCAGTAA CGG
-target in a repaired allele        : CTTGCCCCACAGGGCAGTAA CGG   identical
-```
+Window positions 4 to 8 are chr7:**117,480,094-117,480,098**. On the patient's
+plus strand they read `C A C G C`.
 
-The target reads identically before and after repair, 20 out of 20 with the PAM
-included. The page does not ask for this any more, and that is the point: a
-student has to go looking for it. One who does has the case.
+**Three cytosines**, not one:
 
-## Step 2. Account for the manufacturing data
+| Position | GRCh38 | Note |
+|---|---|---|
+| 4 | chr7:117,480,094 | immediately 5' of the ATG |
+| 6 | chr7:117,480,096 | the disease base, the intended edit |
+| 8 | chr7:117,480,098 | the one that matters |
 
-**Mechanism.** Cas9 persists in the cells for days after electroporation. It
-cannot tell a repaired allele from an unrepaired one, because they present the
-same protospacer and PAM. So a corrected allele is re-cut, and most re-cuts are
-repaired by NHEJ rather than by the donor, producing an indel.
+The central point of the case: a cytosine base editor deaminates every
+susceptible C in its window. It cannot be aimed at one of them.
 
-The key observation, and the one to push students toward:
+## Step 2b. The consequential base
 
-| Allele state | Still a Cas9 substrate? |
-|---|---|
-| Sickle | yes |
-| Corrected | **yes**, the donor changed nothing in the target site |
-| Indel | **no**, the indel destroys the protospacer |
+**chr7:117,480,098, C>T.** ClinVar
+[53980](https://www.ncbi.nlm.nih.gov/clinvar/variation/53980), **Pathogenic**,
+nonsense, 3-star review.
 
-The indel is the only **stable** outcome. Correction is a waypoint, not a
-destination. For as long as Cas9 is active, alleles drain out of both the sickle
-pool and the corrected pool and accumulate irreversibly in the null pool. That
-is why corrected alleles fall 34% to 11% while indels rise 41% to 78%, and why
-the unmodified fraction falls too.
+Codon 2 is chr7:117,480,098-117,480,100, reference **`CAG`** (glutamine).
+Converting the first base gives **`TAG`**, a stop codon. **p.Gln2Ter.**
 
-**Ruling out "HDR is just inefficient".** This is the question that stops a
-student answering step 2 with a shrug, so it is worth the space. Inefficient
-HDR is a perfectly reasonable hypothesis, and the cut being 18 bp from the
-variant genuinely does cost conversion efficiency.
+**The third cytosine, position 4 at 117,480,094,** sits immediately 5' of the
+start codon. It is in the 5' UTR, not the coding sequence, so converting it
+changes the Kozak context and could affect initiation efficiency but does not
+alter the protein sequence. Credit students who identify it as non-coding; extra
+credit for naming the Kozak consequence rather than dismissing it as irrelevant.
 
-**The time course decides it.** Inefficient HDR gives a **low but flat**
-corrected fraction: whatever is made by 24 hours stays made. Here the corrected
-fraction **declines**, 34% to 19% to 11%, which means corrected alleles are
-being destroyed after they are made. Only re-cutting does that. Inefficiency
-probably does contribute to the modest 34% starting point, and a good answer
-says both are operating. The one that explains the *decline* is re-cutting.
-
-**The fix. They pick a route and hand in a sequence.** Both routes are
-defensible, but they are not equally strong, and the difference is the point.
-
-**Route 1, a new donor. The stronger answer.** Keep the single corrective base
-and add one silent change that destroys the guide's PAM. The trial's PAM is
-`CGG` at chr11:5,226,988-5,226,990, which is CDS c.32-34, sitting inside codon
-11, `GCC`, alanine. The wobble base c.33 can go to T, A or G and stay alanine,
-and all three kill the PAM:
-
-| change | codon | plus strand | new PAM | still NGG |
-|---|---|---|---|---|
-| c.33C>T | GCC to GCT | chr11:5,226,989 G>A | CAG | no |
-| c.33C>A | GCC to GCA | chr11:5,226,989 G>T | CTG | no |
-| c.33C>G | GCC to GCG | chr11:5,226,989 G>C | CCG | no |
-
-`c.33C>T` is the natural pick. A repaired allele then has no NGG at that
-position, so Cas9 cannot engage it at all. That is a hard block. A silent
-change in the seed also works and is worth full credit, but it is second best,
-for the reason below.
-
-**Route 2, a new guide.** `GTAACGGCAGACTTCTCCAC` `AGG`, plus strand. The
-corrected base lands at protospacer **position 19 of 20**, one base short of
-the PAM:
+## Step 2c. Reconstruct the edited allele
 
 ```
-                   1         2
-patient  5'-GTAACGGCAGACTTCTCCAC-AGG-3'
-repaired 5'-GTAACGGCAGACTTCTCCTC-AGG-3'
-                              ^ the corrected base
+reference    ... A G A C C A T G C A G A G G T C ...
+patient      ... A G A C C A C G C A G A G G T C ...     ACG, no start codon
+after edit   ... A G A C T A T G T A G A G G T C ...
+                         ^      ^^^   ^^^
+                      Kozak    ATG    TAG
 ```
 
-That is about as PAM-proximal as a mismatch gets, so it is the best place a
-single mismatch can sit. **It is still only a single mismatch, and the PAM
-survives.** SpCas9 tolerates some seed mismatches, so this attenuates cutting
-rather than abolishing it. Credit the design and then push on exactly that:
-why is a destroyed PAM safer than one seed mismatch? A student who gets there
-has understood the whole case.
+| Codon | After editing | Amino acid |
+|---|---|---|
+| 1 | `ATG` | Met, **start restored** |
+| 2 | `TAG` | **stop** |
+| 3 | `AGG` | never translated |
 
-**A trap inside the trap.** `CATGGTGCATCTGACTCCTG` `TGG` looks like the obvious
-guide, because it sits directly over the variant. **It does not work.** The
-variant is **PAM position 1, not in the protospacer at all**. The patient's PAM
-is TGG; correcting the allele makes it AGG, which is still NGG, and the
-protospacer stays a perfect 20 of 20. Cas9 keeps cutting. Mark it wrong and use
-it: a change blocks Cas9 only if it lands in the protospacer seed or breaks the
-GG of the PAM, and this one does neither. That same rule is why Case 003's
-exact off-target matters.
+**Protein length: 1 amino acid**, against a reference CFTR of **1,480**.
+Verified by translating the full MANE transcript NM_000492.4 with all window
+conversions applied.
 
-## Step 3. Account for the clinical outcome
+**Why a dose increase cannot help.** Both conversions happen on the same
+molecule, in the same window, in the same editing event. Every allele that
+carries the intended correction also carries the stop. Raising the dose raises
+the fraction of alleles that are edited, which raises the fraction that are
+null. The company's proposal makes the outcome worse, not better, and the 71%
+figure is the strongest evidence against their own hypothesis.
 
-**The company's claim is technically true and misleading.** HbS really did fall
-from 89% to 9%. It fell because *HBB was knocked out*, not because it was
-repaired.
+**Why no truncated protein appeared on the blot.** Translation stops after a
+single methionine. There is no truncated protein to detect because there is no
+protein: a one-residue product is not resolvable on any gel, and a transcript
+with a stop codon this close to the start is a nonsense-mediated decay
+substrate. Accept either reasoning.
 
-**Where the beta-globin went.** 78% of alleles carry frameshift indels in HBB
-and produce no beta-globin at all. Only 11% were corrected, which is why HbA
-reached just 5%. Both HbA and HbS need beta-globin, so both are nearly gone:
-together they fall from 7.48 to 0.85 g/dL, which is 11% of baseline, and total
-haemoglobin **falls** from 8.4 to 6.1 g/dL.
+## Steps 3 and 4. Dose proposal and determination
 
-The whole of step 3 turns on one observation: **HbS fell and HbA did not rise to
-replace it.** In a successful correction the two move together, because every
-allele that stops making HbS starts making HbA. Here the beta-globin went
-nowhere. It stopped being made.
+**Clinical hold** is the expected answer, and the required change is to the
+**assay**, not only to the guide.
 
-**If someone asks what the other 86% is.** Fetal haemoglobin, HbF, which is
-built from a different globin gene and needs no beta-globin, which is exactly
-why it is still there. It is off the chart on purpose: this is a CRISPR course
-and the case does not need it. Answer it if it comes up, and note that a rising
-HbF is not the therapy working, it is what is left once everything else has
-gone.
+The company's QC states its own scope: "base call reported at g.117480096". It
+reported a single position and was blind to the rest of the window. The result
+it produced was accurate and completely misleading.
 
-**What it means for them**, the second half of the same answer. The
-participant makes almost no beta-globin and needs transfusions for life. Named, that is beta-zero thalassemia, but do not require
-the name: this is a CRISPR course and most of the class has not done
-haematology. "They have swapped one blood disease for another" is the answer.
-The absence of vaso-occlusive crises is real and is not evidence of benefit: a
-patient who makes almost no beta-globin cannot sickle.
+What the company must change:
 
-This is worse than where they started. Expect some students to argue it is a
-trade rather than a worsening, since crises have stopped. That is a good
-discussion rather than a wrong answer, but transfusion dependence with iron
-chelation for life, on top of myeloablative conditioning already undergone, is
-not a favourable exchange.
+- **Report base calls across the entire protospacer and flanking sequence**, not
+  at the intended position alone.
+- **Report allele-level outcomes**, not per-position frequencies. "71% edited at
+  position 6" and "71% of alleles are null" are the same number describing
+  opposite results, and only haplotype-resolved reads can tell them apart. This
+  is the transferable lesson of the case.
+- Redesign the guide so the window excludes 117,480,098, or move to an editor
+  with a narrower window, and show by reconstruction that no other editable base
+  in the new window is consequential.
+- Add a **protein-level endpoint** to the release criteria. A western blot would
+  have caught this at day 28 and in fact did; it simply was not treated as
+  disqualifying.
 
-## Step 4. Determination
-
-**Clinical hold** is expected. The defect is in the reagent design and no dose,
-schedule or conditioning change addresses it.
-
-What the company must do:
-
-- Redesign the donor with a blocking mutation, or move to a seed-overlapping
-  guide, and show by time course that the corrected fraction is now **stable**
-  rather than declining.
-- Change the release specification. "At least 70% total editing" passed a
-  product that was 78% null alleles. Total editing is the wrong quantity; the
-  specification must be written on the **corrected** fraction, with a maximum
-  permitted indel fraction.
-- Report allele outcomes over time, not at a single harvest point.
-- Follow up the dosed participants for transfusion dependence and iron overload,
-  and establish whether the graft is reversible.
-
-The release-specification point is the regulatory heart of the case and worth
-marking separately: the product met its specification and was still unfit.
+Students who recommend "continue with added monitoring" have usually not worked
+out that the edit and the damage are inseparable. Push on that.
 
 ## Difficulty: what the page deliberately does not say
 
-The page states the trial, the reagent, the full donor sequence and the data,
-and nothing else. It does not say the target site survives repair, does not use
-the words re-cutting or blocking mutation, does not mention seed regions, and
-does not name thalassemia. Headings are neutral.
+This case is built to be hard. The submission packet gives the variant, the
+guide, the PAM, the start coordinate and the QC result, and stops there. It does
+**not** state the editor's activity window, so a student has to look up BE4max
+themselves; it does not say the editor acts on more than one base, does not use
+the word bystander, and does not give the length of normal CFTR. The company's
+QC line reports a single position, and nothing draws attention to that.
 
-What makes this the **easiest** of the three: the discovery is a sequence
-comparison with no database lookup, and the page hands over all three sequences
-needed to make it. Case 002 requires ClinVar and a codon reconstruction; Case
-003 requires a genome-wide search and an expression argument.
+The earlier draft annotated the packet with "ASSAY SCOPE: base call reported at
+g.117480096", which handed over the whole finding. That is gone. The narrowness
+of the assay is still discoverable, because the QC line plainly reports one
+coordinate, but the student has to notice it.
 
-The intended failure mode is a student who accepts the 90% HbS reduction as
-success and attributes the transfusion requirement to conditioning, exactly as
-the company does.
+If they stall, the collapsed **"If you are not sure where to start"** block
+explains how to pull the locus and warns that the reference carries the healthy
+base. It says nothing about windows or second cytosines.
+
+Expect longer than 20 minutes. The intended failure mode is a student who
+confirms the correction, cannot explain the missing protein, and accepts the
+company's delivery hypothesis. That is the error the case exists to catch.
 
 ## Where student answers land
 
-Posts to `https://formspree.io/f/mnpdoqyy`, shared with Cases 002 and 003, so
-every submission carries a hidden **`case`** field (`001` here). The step 4
-determination fields are deliberately identical across all three cases so the
-determinations are comparable.
+All three cases post to `https://formspree.io/f/mnpdoqyy`, so every submission
+carries a hidden **`case`** field (`001` here) to sort the inbox by.
+`step4_determination` and `step4_determination_why` are identical across all
+three, so determinations stay comparable.
 
-- Step 1: `step1_codon_from` (expect **GAG**), `step1_codon_to` (expect
-  **GTG**), `step1_exon` (expect **exon 1**), `step1_n_changes` (expect **1**)
-- Step 2: `step2_mechanism`, `step2_alternative_ruled_out`, `step2_fix_choice`
-  (**Design a new guide RNA** / **Design a new donor**, both defensible, donor
-  is stronger), `step2_fix` (a sequence, graded against the two routes above)
-- Step 3: `step3_claim` (expect **Technically true but misleading**),
-  `step3_globin_fate`
-- Step 4: `step4_determination`, `step4_determination_why`
+- Step 1: `step1_codon_from` (expect **ATG**), `step1_codon_to` (expect
+  **ACG**), `step1_exon` (expect **exon 1**), `step1_variant_consequence`,
+  `step1_as_intended` (expect **Yes**, the company's report is accurate)
+- Step 2: `step2_what_happened`, one open box carrying the whole
+  reconstruction. There is no separate protein-length field any more, so the
+  numbers have to be read out of the prose. A complete answer names the second
+  cytosine at **chr7:117,480,098**, cites **ClinVar 53980**, reconstructs
+  codon 2 as `CAG` to `TAG`, and lands on **1 amino acid against 1,480**. An
+  answer that says "a bystander broke it" without reconstructing the codon has
+  not done the work: that is the line to hold.
+- Step 3: `step3_dose` (expect **No, actively worse**), `step3_dose_reasoning`,
+  `step3_qc_flaw`
+- Step 4: `step4_determination`, `step4_determination_why` (carries the
+  required changes too)
 
-`step3_globin_fate` now carries both halves, where the beta-globin went and
-what that means for the participant, and `step4_determination_why` carries both
-the justification and the required changes. Cases 002 and 003 still have the
-separate `step4_company_actions` box.
+`step1_as_intended` is the one place students often go wrong in the opposite
+direction: the company's claim **is** true. Marking it "No" usually means they
+have conflated "the reported edit happened" with "the treatment worked".
 
 ## What is invented and what is real
 
-Invented: the trial, the company, the product, the participant, the
-manufacturing percentages and the haemoglobin values. Real: the gene, the sickle
-variant and its coordinate, the guide and PAM, the 100 nt donor (verified
-identical to GRCh38 chr11:5,226,935-5,227,034), the fact that the protospacer
-lies entirely outside the donor's single change, and the two alternative
-seed-overlapping guides.
+Invented: the trial, the company, the product, the participant, the QC
+percentage and the clinical findings. Real: the gene, both variants and their
+ClinVar classifications and accessions, the protospacer, the PAM, the GRCh38
+coordinates, the codon structure, and the reconstructed protein length. All
+verified against a fresh Ensembl fetch.

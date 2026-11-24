@@ -79,14 +79,16 @@ exercise you want a short link for.
 
   | Case | Mechanism | Difficulty |
   |---|---|---|
-  | 001 Haemolyne-1 | HDR donor with no re-cutting protection | ★☆☆ |
-  | 002 Alveon-CF | base editor bystander in the window | ★★☆ |
+  | 001 Alveon-CF | base editor bystander in the window | ★☆☆ |
+  | 002 Haemolyne-1 | HDR donor with no re-cutting protection | ★★☆ |
   | 003 FGF-Restore | Cas9 exact off-target in a paralog | ★★★ |
 
   The numbering runs easiest to hardest, so working through them in order is the intended path.
-  Case 001 is a sequence comparison with everything needed on the page, 002 adds ClinVar and a
-  codon reconstruction, 003 needs a genome-wide search and an expression argument. Cases 002 and
-  003 came out of the screen in `crispr-safety/`.
+  Case 001 turns on one reconstruction and asks for it as a single open question. Case 002 is a
+  sequence comparison with everything needed on the page, but it wants a time course read, a
+  competing explanation ruled out and a replacement reagent designed. Case 003 needs a
+  genome-wide search and an expression argument. Cases 001 and 003 came out of the screen in
+  `crispr-safety/`.
 
   Answer keys live in `safety/answers/`, one per case. Short links `c1/`, `c2/` and `c3/` jump
   straight to a case; `safety/case-00N/` still redirects for any link handed out earlier. All
