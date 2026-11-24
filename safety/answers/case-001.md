@@ -115,27 +115,54 @@ substrate. Accept either reasoning.
 
 ## Steps 3 and 4. Dose proposal and determination
 
-**Clinical hold** is the expected answer, and the required change is to the
-**assay**, not only to the guide.
+**The dose.** **No, actively worse.** Both conversions happen on the same
+molecule in the same editing event, so every allele carrying the correction
+also carries the stop. More dose means more null alleles.
 
-The company's QC states its own scope: "base call reported at g.117480096". It
-reported a single position and was blind to the rest of the window. The result
-it produced was accurate and completely misleading.
+### The design question, and why "change the guide RNA" is the trap
 
-What the company must change:
+This is the option most students will take, and it is **wrong**. Searching
+every plus-strand protospacer with an NGG PAM across
+chr7:117,480,050-117,480,160, **exactly one** places the target base inside a
+BE4max window at all, and it is the guide the company already used. It
+necessarily carries both bystanders.
 
-- **Report base calls across the entire protospacer and flanking sequence**, not
-  at the intended position alone.
-- **Report allele-level outcomes**, not per-position frequencies. "71% edited at
-  position 6" and "71% of alleles are null" are the same number describing
-  opposite results, and only haplotype-resolved reads can tell them apart. This
-  is the transferable lesson of the case.
-- Redesign the guide so the window excludes 117,480,098, or move to an editor
-  with a narrower window, and show by reconstruction that no other editable base
-  in the new window is consequential.
-- Add a **protein-level endpoint** to the release criteria. A western blot would
-  have caught this at day 28 and in fact did; it simply was not treated as
-  disqualifying.
+To leave 117,480,098 out of the window the protospacer would have to start at
+117,480,089 or 117,480,090. The PAMs there are `TCT` and `CTG`. Neither is
+NGG. With SpCas9 there is no guide that fixes this.
+
+**What does work:**
+
+1. **Keep the guide, change the editor.** A narrowed-window CBE, YE1 or an
+   eA3A-derived editor, with an activity window around positions 5 to 7, covers
+   chr7:117,480,095-117,480,097. That is the target cytosine and neither
+   bystander. Same guide, same delivery, minimal change. The strongest answer.
+2. **Change the editor's PAM requirement.** A PAM-flexible editor, SpRY or NG,
+   can use the protospacer starting at 117,480,089, whose window is
+   117,480,092-117,480,096. It still converts 117,480,094, but that base is in
+   the 5' UTR: it alters Kozak context, not protein sequence. Acceptable if the
+   student says so.
+3. **Change the strategy.** Prime editing writes the one intended base with no
+   activity window, so bystanders are not a category that exists. HDR with a
+   donor is also precise, but needs a double-strand break in airway
+   epithelium, which is a much harder sell than an LNP-delivered editor.
+
+**The point to land:** a base editor cannot be aimed at a single base. The
+window is a property of the enzyme, not of the guide. Moving the guide moves
+the window; it does not shrink it. Any real fix must shrink the window, remove
+it, or accept everything inside it.
+
+### Determination
+
+**Clinical hold** is the expected answer. The company must also stop reporting
+**per-position** edit frequencies and report **allele-level** outcomes instead.
+Their amplicon sequencing already covers the whole window, so the bystander is
+sitting in their own data; what failed was the analysis, which was keyed to the
+intended base. "71% edited at position 6" and "71% of alleles are null" are the
+same number describing opposite results, and only haplotype-resolved reads
+distinguish them. That is the transferable lesson. A protein-level release
+endpoint would also have caught it, and in fact did: the western blot was run
+and simply not treated as disqualifying.
 
 Students who recommend "continue with added monitoring" have usually not worked
 out that the edit and the damage are inseparable. Push on that.
@@ -180,7 +207,8 @@ three, so determinations stay comparable.
   answer that says "a bystander broke it" without reconstructing the codon has
   not done the work: that is the line to hold.
 - Step 3: `step3_dose` (expect **No, actively worse**), `step3_dose_reasoning`,
-  `step3_qc_flaw`
+  `step3_fix_choice` (**Keep the editor, change the guide RNA** is the trap and
+  is wrong; the other two are both right), `step3_fix` (the design)
 - Step 4: `step4_determination`, `step4_determination_why` (carries the
   required changes too)
 

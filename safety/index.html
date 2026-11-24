@@ -695,8 +695,17 @@
     </div>
     <label for="c001-step3_why">Justify your answer from your reconstruction.</label>
     <textarea id="c001-step3_why" name="step3_dose_reasoning" required></textarea>
-    <label for="c001-step3_qc">Their QC result was accurate. Why did it not catch this?</label>
-    <textarea id="c001-step3_qc" name="step3_qc_flaw" required></textarea>
+    <label>How would you fix it?</label>
+    <div class="choice-group choice-col" data-choice-group>
+      <label class="choice"><input type="radio" name="step3_fix_choice" value="Keep the editor, change the guide RNA" required>
+        Keep the editor, change the guide RNA.</label>
+      <label class="choice"><input type="radio" name="step3_fix_choice" value="Keep the guide, change the editor">
+        Keep the guide, change the editor.</label>
+      <label class="choice"><input type="radio" name="step3_fix_choice" value="Change the editing strategy">
+        Change the editing strategy.</label>
+    </div>
+    <label for="c001-step3_design">Now design it. Name the reagent and give any sequence it needs.</label>
+    <textarea id="c001-step3_design" name="step3_fix" class="seq" required></textarea>
   </section>
 
   <section class="card step">
