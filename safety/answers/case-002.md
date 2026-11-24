@@ -19,7 +19,16 @@ restored the start codon and then terminated translation immediately after it.
 Codon 1 of *CFTR* is at **chr7:117,480,095-117,480,097**, reference `ATG`. The
 patient's T>C at 117,480,096 makes it **`ACG`**, threonine. This is a
 **start-lost** variant, p.Met1Thr: there is no initiator codon, which is why the
-patient has no CFTR protein to begin with.
+patient has no CFTR protein to begin with. ClinVar's own name for it is
+`NM_000492.4(CFTR):c.2T>C (p.Met1Thr)`, and VEP returns `start_lost`,
+codons `aTg/aCg`.
+
+The submission states **p.Met1Thr**, so the amino acid change is given. That is
+deliberate and it is a trap rather than a gift: written out, Met1Thr reads like
+an ordinary missense, one residue swapped at the front of a 1,480 residue
+protein. The work is noticing that residue 1 is the **initiator**, so this is
+not a protein with one wrong amino acid, it is no protein at all. A student who
+treats it as a minor missense has missed the case before it starts.
 
 **The intended correction.** C>T at 117,480,096 restores `ATG`. The company's
 logic is sound and their QC result is truthful.
