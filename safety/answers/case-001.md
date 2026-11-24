@@ -125,8 +125,8 @@ and the case does not need it. Answer it if it comes up, and note that a rising
 HbF is not the therapy working, it is what is left once everything else has
 gone.
 
-**The new condition.** The participant makes almost no beta-globin and needs
-transfusions for life. Named, that is beta-zero thalassemia, but do not require
+**What it means for them**, the second half of the same answer. The
+participant makes almost no beta-globin and needs transfusions for life. Named, that is beta-zero thalassemia, but do not require
 the name: this is a CRISPR course and most of the class has not done
 haematology. "They have swapped one blood disease for another" is the answer.
 The absence of vaso-occlusive crises is real and is not evidence of benefit: a
@@ -186,8 +186,13 @@ determinations are comparable.
   **GTG**), `step1_exon` (expect **exon 1**), `step1_n_changes` (expect **1**)
 - Step 2: `step2_mechanism`, `step2_alternative_ruled_out`, `step2_fix`
 - Step 3: `step3_claim` (expect **Technically true but misleading**),
-  `step3_globin_fate`, `step3_new_condition`
-- Step 4: `step4_determination`, `step4_determination_why`, `step4_company_actions`
+  `step3_globin_fate`
+- Step 4: `step4_determination`, `step4_determination_why`
+
+`step3_globin_fate` now carries both halves, where the beta-globin went and
+what that means for the participant, and `step4_determination_why` carries both
+the justification and the required changes. Cases 002 and 003 still have the
+separate `step4_company_actions` box.
 
 ## What is invented and what is real
 
